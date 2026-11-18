@@ -7,6 +7,12 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\AiMessages;
+use App\Models\DoctorProfile;
+use App\Models\AiPhotos;
+use App\Models\Appointments;
+use App\Models\DoctorReviews;
+
 
 class User extends Authenticatable
 {
@@ -45,5 +51,25 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function ai_messages(){
+        return $this->hasMany(AiMessages::class);
+    }
+
+    public function doctor_profile(){
+        return $this->hasOne(DoctorProfile::class);
+    }
+
+    public function ai_photos(){
+        return $this->hasMany(AiPhotos::class);
+    }
+
+    public function appointments(){
+        return $this->hasMany(Appointments::class);
+    }
+
+    public function doctor_reviews(){
+        return $this->hasMany(DoctorReviews::class);
     }
 }

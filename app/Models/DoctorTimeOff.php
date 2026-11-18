@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\DoctorProfile;
+
+class DoctorTimeOff extends Model
+{
+    //
+
+    public function doctor_profile(){
+        return $this->belongsTo(DoctorProfile::class);
+    }
+
+
+
+}
