@@ -1,59 +1,61 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# MedAssist Dental
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+MedAssist Dental is a Laravel frontend for exploring dental specialties, finding dentists, and previewing appointment booking. It includes 38 desktop screens across the public site, account flow, patient portal, dentist workspace, and clinic administration. The interface supports English and Arabic, with a right-to-left layout in Arabic.
 
-## About Laravel
+## Project references
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Miro database schema](https://miro.com/app/board/uXjVEM0sPeY=/?share_link_id=20996196368)
+- [Figma product design](https://www.figma.com/design/J5piMSsJScs8gRjD0dVl38/MedAssist-Dental-%E2%80%94-Complete-Figma-Product-Design?node-id=3-2768&t=KjRTMNjR2VPQEsis-1)
+- [Trello project board invitation](https://trello.com/invite/b/6afd52643fff919485c17707/ATTIab64841c9d783c723a57e8753929029dDE3D6304/medassit)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Run locally
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The project uses Laravel 12, PHP 8.2 or newer, Composer, and SQLite. Enable the PHP `pdo_sqlite` and `mbstring` extensions. The Blade views load CSS and JavaScript directly from `public/`, so the preview does not require an npm build.
 
-## Learning Laravel
+On a fresh copy, open PowerShell in the project folder and run:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+```powershell
+composer install
+if (!(Test-Path .env)) { Copy-Item .env.example .env }
+php artisan key:generate
+if (!(Test-Path database/database.sqlite)) { New-Item -ItemType File database/database.sqlite | Out-Null }
+php artisan migrate
+php artisan serve --host=127.0.0.1 --port=8018 --no-reload
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+For an already configured copy, run only the last command. Keep the server running while using the localhost links.
 
-## Laravel Sponsors
+## Preview pages
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Area | Local link |
+| --- | --- |
+| Public homepage | [Home](http://127.0.0.1:8018/) |
+| Dentist directory | [Find a dentist](http://127.0.0.1:8018/dentists) |
+| Appointment flow | [Start booking](http://127.0.0.1:8018/patient/booking) |
+| Account screens | [Sign-in preview](http://127.0.0.1:8018/login) |
+| Patient portal | [Patient dashboard](http://127.0.0.1:8018/patient) |
+| Dentist workspace | [Dentist dashboard](http://127.0.0.1:8018/dentist) |
+| Clinic administration | [Admin dashboard](http://127.0.0.1:8018/admin) |
+| Arabic interface | [Arabic homepage](http://127.0.0.1:8018/?lang=ar) · [Arabic admin](http://127.0.0.1:8018/admin?lang=ar) |
 
-### Premium Partners
+Use the **العربية** or **English** switch to change languages. The selection follows you across pages during the session.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Project structure
 
-## Contributing
+| Path | Purpose |
+| --- | --- |
+| `routes/web.php` | Web routes for the frontend and original demo |
+| `app/Http/Controllers/DesktopController.php` | Screen rendering, locale selection, and booking preview data |
+| `config/desktop.php` | Desktop screen and route definitions |
+| `config/desktop-content.php` | Sample data for the desktop screens |
+| `resources/views/desktop/layouts/` | Shared Blade layouts extended by the screen view |
+| `resources/views/desktop/partials/` | Shared navigation, role sidebars, language switch, and UI markup |
+| `resources/views/desktop/screens/` | Screen templates |
+| `public/css/desktop.css` | Frontend styles and right-to-left layout support |
+| `lang/ar.json` | Arabic translations |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Implementation status
 
-## Code of Conduct
+The dentist directory and admin record filters work with sample data. The account screens, booking confirmation, and record editing are frontend previews. Authentication, real appointment reservations, and permanent record changes remain pending. The Miro board is the reference for the application schema. The local migrations currently initialize Laravel's starter tables.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Run the existing test suite with `php artisan test`. List available routes with `php artisan route:list --except-vendor`.
