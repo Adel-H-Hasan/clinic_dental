@@ -19,6 +19,6 @@ class DoctorAppointmentTypes extends Model
     }
 
      public function appointments(){
-        return $this->hasMany(Appointments::class);
+        return $this->hasMany(Appointments::class, 'doctor_appointment_type_id');
     }
 }

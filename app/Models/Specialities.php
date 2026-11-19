@@ -10,6 +10,6 @@ class Specialities extends Model
     //
 
     public function doctor_profile(){
-        return $this->hasMany(DoctorProfile::class);
+        return $this->hasMany(DoctorProfile::class, 'speciality_id');
     }
 }
