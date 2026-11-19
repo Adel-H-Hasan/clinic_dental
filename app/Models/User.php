@@ -3,21 +3,22 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\AiMessages;
 use App\Models\DoctorProfile;
-use App\Models\AiPhotos;
+use App\Models\AiImageAnalyses;
 use App\Models\Appointments;
-use App\Models\DoctorReviews;
+use App\Models\DentalReviews;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +28,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -53,23 +55,19 @@ class User extends Authenticatable
         ];
     }
 
-    public function ai_messages(){
-        return $this->hasMany(AiMessages::class);
-    }
-
     public function doctor_profile(){
         return $this->hasOne(DoctorProfile::class);
     }
 
-    public function ai_photos(){
-        return $this->hasMany(AiPhotos::class);
+    public function ai_image_analysis(){
+        return $this->hasMany(AiImageAnalyses::class);
     }
 
     public function appointments(){
-        return $this->hasMany(Appointments::class);
+        return $this->hasMany(Appointments::class, 'patient_id');
     }
 
-    public function doctor_reviews(){
-        return $this->hasMany(DoctorReviews::class);
+    public function dental_reviews(){
+        return $this->hasMany(DentalReviews::class, 'patient_id');
     }
 }

@@ -7,8 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Specialities;
 use App\Models\DoctorAppointmentTypes;
-use App\Models\DoctorTimeOff;
-use App\Models\DoctorReviews;
+use App\Models\DentalReviews;
 use App\Models\DoctorSchedules;
 use App\Models\MedicalNotes;
 
@@ -29,12 +28,8 @@ class DoctorProfile extends Model
          return $this->hasMany(DoctorAppointmentTypes::class);
     }
 
-     public function doctor_time_off(){
-         return $this->hasMany(DoctorTimeOff::class);
-    }
-
-     public function doctor_reviews(){
-         return $this->hasMany(DoctorReviews::class);
+    public function dental_reviews(){
+         return $this->hasMany(DentalReviews::class);
     }
 
      public function doctor_schedules(){

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->date('date_of_birth')->nullable();
             $table->enum('gender',['male','female'])->nullable();
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->rememberToken();
             $table->timestamps();
              $table->softDeletes();

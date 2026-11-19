@@ -7,7 +7,7 @@ use App\Models\DoctorProfile;
 use App\Models\Appointments;
 use App\Models\User;
 
-class DoctorReviews extends Model
+class DentalReviews extends Model
 {
     //
 
@@ -20,6 +20,6 @@ class DoctorReviews extends Model
     }
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'patient_id');
     }
 }

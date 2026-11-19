@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctor_time_offs', function (Blueprint $table) {
+        Schema::create('ai_image_analyses', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('doctor_profile_id')->constrained()->cascadeOnDelete();
-            $table->dateTime('start_at');
-            $table->dateTime('end_at');
-            $table->string('reason')->nullable();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('image_url');
+            $table->text('ai_analyses');
             $table->timestamps();
-
-             $table->index(['doctor_profile_id', 'start_at']);
         });
     }
 
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctor_time_offs');
+        Schema::dropIfExists('ai_image_analyses');
     }
 };

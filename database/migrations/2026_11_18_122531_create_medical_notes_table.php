@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('medical_notes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('appointment_id')->unique()->constrained()->restrictOnDelete();
+            $table->foreignId('appointment_id')->constrained()->restrictOnDelete();
             $table->foreignId('doctor_profile_id')->constrained()->cascadeOnUpdate();
             $table->text('diagnosis');
+            $table->datetime('next_visit')->nullable();
             $table->text('prescription')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();

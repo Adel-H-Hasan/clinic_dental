@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 
-class AiMessages extends Model
+class AiImageAnalyses extends Model
 {
     //
 
