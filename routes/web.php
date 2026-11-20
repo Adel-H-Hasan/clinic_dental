@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorProfileController;
+use App\Http\Controllers\DoctorSchedulesController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,21 @@ Route::middleware(['auth', 'doctorOnly'])
     ->name('doctor.')
     ->group(function () {
         Route::singleton('/profile', DoctorProfileController::class);
+
+        Route::get('/schedules', [DoctorSchedulesController::class, 'index'])
+            ->name('schedules.index');
+
+        Route::post('/schedules', [DoctorSchedulesController::class, 'store'])
+            ->name('schedules.store');
+
+        Route::get('/schedules/{id}/edit', [DoctorSchedulesController::class, 'edit'])
+            ->name('schedules.edit');
+
+        Route::put('/schedules/{id}', [DoctorSchedulesController::class, 'update'])
+            ->name('schedules.update');
+
+        Route::delete('/schedules/{id}', [DoctorSchedulesController::class, 'destroy'])
+            ->name('schedules.destroy');
     });
 
 // Patient route
