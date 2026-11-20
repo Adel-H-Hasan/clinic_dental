@@ -9,7 +9,8 @@ class Specialities extends Model
 {
     //
     protected $fillable=[
-        'name'
+        'name',
+        'description'
     ];
 
     public function doctor_profile(){
