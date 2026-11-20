@@ -8,7 +8,12 @@ use App\Models\DoctorProfile;
 use App\Models\Appointments;
 class DoctorAppointmentTypes extends Model
 {
-    //
+    protected $fillable = [
+        'appointment_type_id',
+        'duration_minutes',
+        'price',
+    ];
+
 
     public function appointment_type(){
         return $this->belongsTo(AppointmentTypes::class);
