@@ -54,7 +54,6 @@ class UserController extends Controller
         // writes that change to the database
         $user->save ();
 
-        $user->update($data);
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 }
