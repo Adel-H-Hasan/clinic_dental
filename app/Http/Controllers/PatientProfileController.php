@@ -2,40 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PatientProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
     /**
      * Display the specified resource.
      */
     public function show(Request $request)
     {
-        //
+        $patient = $request->user();
+
+        return view('patient.profile.show', compact('patient'));
     }
 
     /**
@@ -43,7 +23,9 @@ class PatientProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        //
+        $patient = $request->user();
+
+        return view('patient.profile.edit', compact('patient'));
     }
 
     /**
@@ -51,14 +33,18 @@ class PatientProfileController extends Controller
      */
     public function update(Request $request)
     {
-        //
-    }
+        $user = $request->user();
+    
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user)],
+            'phone' => ['required', 'string', 'max:20'],
+            'date_of_birth' => ['nullable', 'date', 'before_or_equal:today'],
+            'gender' => ['nullable', 'in:male,female']
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Request $request)
-    {
-        //
+        $user->update ($data);
+
+        return redirect()->route('patient.profile.show')->with('success', 'Patient updated successfully');
     }
 }
