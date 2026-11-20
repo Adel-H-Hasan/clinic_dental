@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('phone')->unique();
+            $table->string('phone');
             $table->enum('role',['admin','patient','doctor'])->default('patient');
             $table->date('date_of_birth')->nullable();
             $table->enum('gender',['male','female'])->nullable();
@@ -26,7 +26,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-             
             $table->index('role');
         });
 

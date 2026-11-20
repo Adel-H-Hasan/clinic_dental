@@ -53,6 +53,7 @@ class AuthController extends Controller
         return redirect()->route('verification.notice');;
     }
 
+    
     public function sendResetLink(Request $request) {}
 
     public function showResetPasswordForm() {}

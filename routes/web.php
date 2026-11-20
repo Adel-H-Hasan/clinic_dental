@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorProfileController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 // Todo: create the middlewares
@@ -23,6 +23,7 @@ Route::middleware(['auth', 'adminOnly'])
 
         Route::resource('/users', UserController::class)
             ->only('index', 'show', 'edit', 'update');
+
     });
 
 
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'patientOnly'])
     ->name('patient.')
     ->group(function () {
         Route::singleton('/profile', PatientProfileController::class);
+        
     });
 
 // Auth routes
@@ -66,7 +68,26 @@ Route::middleware('guest')
             ->name('password.update');
     });
 
+Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    //? mark this user’s email as verified.
+    // Sets their email_verified_at from null to the current date and time.
+    // If the email is already verified, it keeps the original timestamp.
+    $request->fulfill();
+
+    return redirect()->intended(route('patient.profile.show'));
+    
+    // Laravel’s built-in middleware for checking that the link Laravel generated hasn’t been changed or expired.
+})->middleware(['auth', 'signed'])->name('verification.verify');;
+
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
+    
+    Route::view ('email/verify', 'auth.verify-email')->name('verification.notice');
 });
+
+// Add a route for the verification link
+// User model now implements //? MustVerifyEmail,
+// register() already calls //? event(new Registered($user)).
+// Laravel needs a route named //? verification.
+// verify to build the link it puts in the email.
