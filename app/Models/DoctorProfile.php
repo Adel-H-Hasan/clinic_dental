@@ -14,7 +14,12 @@ use App\Models\MedicalNotes;
 
 class DoctorProfile extends Model
 {
-    //
+    protected $fillable = [
+        // 'user_id',
+        // 'speciality_id',
+        'license_number',
+        'consultation_fee'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
