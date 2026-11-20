@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorAppointmentTypesController;
 use App\Http\Controllers\DoctorProfileController;
 use App\Http\Controllers\DoctorSchedulesController;
 use App\Http\Controllers\PatientProfileController;
@@ -47,6 +48,21 @@ Route::middleware(['auth', 'doctorOnly'])
 
         Route::delete('/schedules/{id}', [DoctorSchedulesController::class, 'destroy'])
             ->name('schedules.destroy');
+
+        Route::get('/services', [DoctorAppointmentTypesController::class, 'index'])
+            ->name('services.index');
+
+        Route::post('/services', [DoctorAppointmentTypesController::class, 'store'])
+            ->name('services.store');
+
+        Route::get('/services/{id}/edit', [DoctorAppointmentTypesController::class, 'edit'])
+            ->name('services.edit');
+
+        Route::put('/services/{id}', [DoctorAppointmentTypesController::class, 'update'])
+            ->name('services.update');
+
+        Route::delete('/services/{id}', [DoctorAppointmentTypesController::class, 'destroy'])
+            ->name('services.destroy');
     });
 
 // Patient route
