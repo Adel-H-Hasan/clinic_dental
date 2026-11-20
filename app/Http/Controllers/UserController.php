@@ -2,32 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
-    }
+        $users = User::whereIn('role', ['patient', 'doctor'])->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -35,7 +23,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::whereIn('role', ['patient', 'doctor'])->findOrFail ($id);
+
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -43,7 +33,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::whereIn('role', ['patient', 'doctor'])->findOrFail ($id);
+        
+        return view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -51,14 +43,17 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
-    }
+        $user = User::whereIn('role', ['patient', 'doctor'])->findOrFail ($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $data = $request->validate([
+            'is_active' => ['required', 'boolean']
+        ]);
+
+        // copies the submitted status onto the selected user in memory.
+        $user->is_active = $data['is_active'];
+        // writes that change to the database
+        $user->save ();
+
+        return redirect()->route('admin.users.index')->with('success', 'User updated successfully');
     }
 }

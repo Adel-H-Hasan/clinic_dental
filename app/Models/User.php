@@ -12,10 +12,11 @@ use App\Models\DoctorProfile;
 use App\Models\AiImageAnalyses;
 use App\Models\Appointments;
 use App\Models\DentalReviews;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, SoftDeletes;
@@ -29,7 +30,10 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'gender',
         'password',
+        'date_of_birth',
+
     ];
 
     /**
