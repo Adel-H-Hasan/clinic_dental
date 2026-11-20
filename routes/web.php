@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorAppointmentTypesController;
 use App\Http\Controllers\DoctorProfileController;
 use App\Http\Controllers\DoctorSchedulesController;
+use App\Http\Controllers\MedicalNotesController;
+use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +65,30 @@ Route::middleware(['auth', 'doctorOnly'])
 
         Route::delete('/services/{id}', [DoctorAppointmentTypesController::class, 'destroy'])
             ->name('services.destroy');
+
+        Route::get('/appointments/{id}/medical-notes', [MedicalNotesController::class, 'index'])
+            ->name('appointments.medical-notes.index');
+
+        Route::post('/appointments/{id}/medical-notes', [MedicalNotesController::class, 'store'])
+            ->name('appointments.medical-notes.store');
+
+        Route::get('/appointments/{id}/medical-notes/{noteId}/edit', [MedicalNotesController::class, 'edit'])
+            ->name('appointments.medical-notes.edit');
+
+        Route::put('/appointments/{id}/medical-notes/{noteId}', [MedicalNotesController::class, 'update'])
+            ->name('appointments.medical-notes.update');
+
+        Route::post('/appointments/{id}/medical-notes/{noteId}/review', [MedicalNotesController::class, 'review'])
+            ->name('appointments.medical-notes.review');
+
+        Route::post('/medical-notes/{noteId}/report', [MedicalReportsController::class, 'store'])
+            ->name('medical-notes.report.store');
+
+        Route::get('/medical-notes/{noteId}/report/review', [MedicalReportsController::class, 'review'])
+            ->name('medical-notes.report.review');
+
+        Route::post('/medical-notes/{noteId}/report/approve', [MedicalReportsController::class, 'approve'])
+            ->name('medical-notes.report.approve');
     });
 
 // Patient route
@@ -72,6 +98,9 @@ Route::middleware(['auth', 'patientOnly'])
     ->name('patient.')
     ->group(function () {
         Route::singleton('/profile', PatientProfileController::class);
+
+        Route::get('/reports/{reportId}', [MedicalReportsController::class, 'show'])
+            ->name('reports.show');
     });
 
 // Auth routes
