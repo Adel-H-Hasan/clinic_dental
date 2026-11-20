@@ -39,7 +39,7 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'max:20'],
+            'phone' => ['required', 'string', 'max:20', 'regex:/\A\+[1-9][0-9]{1,14}\z/'],
             'gender' => ['nullable', 'in:male,female'],
             'date_of_birth' => ['nullable', 'date', 'before_or_equal:today']
         ]);
