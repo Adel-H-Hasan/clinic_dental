@@ -21,6 +21,11 @@ class MedicalNotes extends Model
         return $this->belongsTo(Appointments::class);
     }
 
+    public function medical_report()
+    {
+        return $this->hasOne(MedicalReport::class, 'medical_note_id');
+    }
+
     public function petient_vacation()
     {
         return $this->hasOne(PatientVacations::class, 'medical_note_id');
