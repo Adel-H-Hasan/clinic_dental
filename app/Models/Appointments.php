@@ -26,7 +26,16 @@ class Appointments extends Model
         return $this->hasMany(MedicalNotes::class, 'appointment_id');
     }
 
+<<<<<<< HEAD
     protected $casts = [
     'scheduled_at' => 'datetime',
+=======
+    protected $fillable = [
+    'patient_id',
+    'doctor_appointment_type_id',
+    'scheduled_at',
+    'status',
+    'reason',
+>>>>>>> 39d83e754ad98f7ac58c127a23d4982564bcb1b5
 ];
 }
