@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorAppointmentTypesController;
@@ -14,6 +16,8 @@ use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
+// Number of middlewares used => 7
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,13 +31,16 @@ Route::middleware(['auth', 'adminOnly'])
 
         Route::resource('/users', UserController::class)
             ->only('index', 'show', 'edit', 'update');
-    });
 
+        Route::resource('appointment-types', AppointmentTypesController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+    });
 
 Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
+        //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
 
         Route::get('/schedules', [DoctorSchedulesController::class, 'index'])
@@ -89,10 +96,15 @@ Route::middleware(['auth', 'doctorOnly'])
 
         Route::post('/medical-notes/{noteId}/report/approve', [MedicalReportsController::class, 'approve'])
             ->name('medical-notes.report.approve');
+
+        Route::patch('/appointments/{id}/status', [AppointmentsController::class, 'updateStatus'])
+            ->name('appointments.status');
+
+        Route::get('/appointments', [AppointmentsController::class, 'doctorIndex'])
+            ->name('appointments.index');
     });
 
 // Patient route
-//? singleton() => generates exactly show, edit, and update
 //? verified => user can't go to their pages after register until they verify email
 Route::middleware(['auth', 'patientOnly', 'verified'])
     ->prefix('patient')
@@ -102,10 +114,27 @@ Route::middleware(['auth', 'patientOnly', 'verified'])
 
         Route::get('/reports/{reportId}', [MedicalReportsController::class, 'show'])
             ->name('reports.show');
+
+        Route::get('/appointments', [AppointmentsController::class, 'index'])
+            ->name('appointments.index');
+
+        Route::post('/appointments', [AppointmentsController::class, 'store'])
+            ->name('appointments.store');
+
+        Route::patch('/appointments/{id}/cancel', [AppointmentsController::class, 'cancel'])
+            ->whereNumber('id')
+            ->name('appointments.cancel');
+
+        Route::patch('/appointments/{id}/reschedule', [AppointmentsController::class, 'reschedule'])
+            ->whereNumber('id')
+            ->name('appointments.reschedule');
+
+        Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])
+            ->whereNumber('id')
+            ->name('appointments.show');
     });
 
 // Auth routes
-//? match() => combine get and post
 Route::middleware('guest')
     ->group(function () {
         Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
@@ -141,7 +170,8 @@ Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
 
     return redirect()->route('login')
         ->with('status', 'Your email is verified. You can now log in.');
-    // Signed: Laravel’s built-in middleware for checking that the link Laravel generated hasn’t been changed or expired.
+    // Signed: Laravel’s built-in middleware 
+    //for checking that the link Laravel generated hasn’t been changed or expired.
 })->middleware('signed')->name('verification.verify');;
 
 
