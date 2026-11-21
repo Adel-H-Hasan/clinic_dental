@@ -40,9 +40,9 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $fallback = match ($request->user()->role) {
-            'patient' => route ('patient.profile.index'),
-            'doctor' => route ('doctor.profile.index'),
-            'admin' => route ('admin.profile.index'),
+            'patient' => route('patient.profile.index'),
+            'doctor' => route('doctor.profile.index'),
+            'admin' => route('admin.profile.index'),
         };
 
         return redirect()->intended($fallback);
@@ -54,12 +54,38 @@ class AuthController extends Controller
             return view('auth.register');
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'max:20', 'regex:/\A\+[1-9][0-9]{1,14}\z/'],
-            'gender' => ['nullable', 'in:male,female'],
-            'date_of_birth' => ['nullable', 'date', 'before_or_equal:today']
+            'name' => [
+                'required',
+                'string',
+                'max:255'
+            ],
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users', 'email')
+            ],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\p{P}\p{S}]).*\z/us',
+                'confirmed'
+            ],
+            'phone' => [
+                'required',
+                'string',
+                'max:20',
+                'regex:/\A\+[1-9][0-9]{1,14}\z/'
+            ],
+            'gender' => [
+                'nullable',
+                'in:male,female'
+            ],
+            'date_of_birth' => [
+                'nullable',
+                'date',
+                'before_or_equal:today'
+            ]
         ]);
 
         $user = User::create($data);
