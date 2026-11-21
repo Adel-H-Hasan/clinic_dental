@@ -10,6 +10,10 @@
 <body>
     <form method="POST" action="{{ route('password.update') }}">
         @csrf
+        @error('email')
+            <p role="alert">{{ $message }}</p>
+            <a href="{{ route('password.request') }}">Request a new reset link</a>
+        @enderror
 
         <p>Choose a new password for <strong>{{ $email }}</strong>.</p>
 
@@ -23,7 +27,7 @@
         @enderror
 
         <br>
-        
+
         <label for="password_confirmation">Confirm new password</label>
         <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password"
             required>

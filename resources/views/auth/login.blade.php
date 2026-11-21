@@ -27,16 +27,16 @@
 
             <p>
                 <label for="password">Password (at least 8 characters)</label><br>
-                <input type="password" id="password" name="password" autocomplete="new-password" minlength="8"
+                <input type="password" id="password" name="password" autocomplete="current-password" minlength="8"
                     required>
                 @error('password')
                     <br><span>{{ $message }}</span>
                 @enderror
             </p>
+            <label><input type="checkbox" name="remember" value="1"> Remember me</label>
 
             <button type="submit">Login</button>
         </form>
-        <label><input type="checkbox" name="remember" value="1"> Remember me</label>
         <br>
         <a href="{{ route('password.request') }}">Forgot password?</a>
     </main>

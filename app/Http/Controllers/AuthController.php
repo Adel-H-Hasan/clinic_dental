@@ -140,7 +140,7 @@ class AuthController extends Controller
         $status = Password::reset($data, function (User $user, string $password){
             // laravel found the user from $data
             $user->password = $password;
-            $user->setRememberToken(Str::random(60));
+            $user->setRememberToken(Str::random(64));
             $user->save();
 
             event(new PasswordReset($user));
