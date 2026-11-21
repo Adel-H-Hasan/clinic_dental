@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'medassist_ai' => [
+        'url' => env('MEDASSIST_AI_URL', 'http://127.0.0.1:8001'),
+        'token' => env('MEDASSIST_AI_TOKEN'),
+        'timeout' => (int) env('MEDASSIST_AI_TIMEOUT', 900),
+    ],
 
     /*
     |--------------------------------------------------------------------------

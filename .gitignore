@@ -22,3 +22,23 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Python environment and generated files
+medassist-ai-engine/.venv/
+medassist-ai-engine/**/__pycache__/
+*.pyc
+
+# AI model weights and local caches
+*.safetensors
+*.ckpt
+*.pth
+*.pt
+medassist-ai-engine/.cache/
+
+# Local AI test images and backups
+medassist-ai-engine/test_smile.jpeg
+medassist-ai-engine/mask_preview.png
+medassist-ai-engine/app/main_backup.py
+
+# Local environment secrets
+.env
+medassist-ai-engine/.env
