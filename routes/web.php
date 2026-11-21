@@ -181,8 +181,6 @@ Route::middleware('auth')->group(function () {
         ->name('logout.submit');
 });
 
-// Add a route for the verification link
-// User model now implements //? MustVerifyEmail,
-// register() already calls //? event(new Registered($user)).
-// Laravel needs a route named //? verification.
-// verify to build the link it puts in the email.
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -29,7 +32,7 @@ class AuthController extends Controller
             }
 
             return true;
-        });
+        }, $request->boolean('remember'));
 
         if (! $signedIn) {
             return back()
@@ -40,7 +43,7 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $fallback = match ($request->user()->role) {
-            'patient' => route('patient.profile.index'),
+            'patient' => route('patient.profile.show'),
             'doctor' => route('doctor.dashboard'),
             'admin' => route('admin.dashboard'),
         };
@@ -96,11 +99,61 @@ class AuthController extends Controller
     }
 
 
-    public function sendResetLink(Request $request) {}
+    public function sendResetLink(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email']
+        ]);
 
-    public function showResetPasswordForm() {}
+        Password::sendResetLink($data);
 
-    public function resetPassword() {}
+        return back()->with('status', 'If an account exists for this email, you will receive a password reset link.');
+    }
+
+    public function showResetPasswordForm(Request $request, string $token)
+    {
+        return view('auth.reset-password', [
+            'token' => $token,
+            'email' => $request->query('email')
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            'token' => ['required', 'string'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/\A(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[\p{P}\p{S}]).*\z/us',
+                'confirmed'
+            ]
+        ]);
+
+        //* Laravel checks the reset link.
+        // It finds the user by the email in $data and checks that the token matches and hasn’t expired.
+        // If the check fails, Laravel skips the callback and returns a failure status.
+        //* Old 'Remember me' cookies can no longer sign the user in. This is separate from the reset token in the email.
+        //event(new PasswordReset($user)) ===> announces that the reset succeeded so any registered listeners can react.
+        $status = Password::reset($data, function (User $user, string $password){
+            // laravel found the user from $data
+            $user->password = $password;
+            $user->setRememberToken(Str::random(60));
+            $user->save();
+
+            event(new PasswordReset($user));
+        });
+
+        if ($status === Password::PasswordReset)
+            return redirect()->route('login')
+            ->with('status', 'Your password has been saved. You can now log in.');
+
+        return back()->withErrors([
+            'email' => 'This password reset link is invalid or has expired. Please request a new one.',
+        ]);
+    }
 
     public function logout(Request $request)
     {
