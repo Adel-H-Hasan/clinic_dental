@@ -9,8 +9,7 @@
 
 <body>
     <h1>Check your email</h1>
-    <p class="color:green">We sent a verification link to {{ auth()->user()->email }}.</p>
-    <p>Open the link to verify your account.</p>
+    <p>We sent a verification link to the email address you registered with.</p>
 </body>
 
 </html>

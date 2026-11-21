@@ -15,32 +15,40 @@ use App\Models\MedicalNotes;
 class DoctorProfile extends Model
 {
     protected $fillable = [
-        'user_id',
         'speciality_id',
         'license_number',
-        'consultation_fee'
+        'bio',
+        'years_experience',
+        'consultation_fee',
+        'image',
     ];
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function speciality(){
+    public function speciality()
+    {
         return $this->belongsTo(Specialities::class);
     }
 
-    public function doctor_appointment_types(){
-         return $this->hasMany(DoctorAppointmentTypes::class);
+    public function doctor_appointment_types()
+    {
+        return $this->hasMany(DoctorAppointmentTypes::class);
     }
 
-    public function dental_reviews(){
-         return $this->hasMany(DentalReviews::class);
+    public function dental_reviews()
+    {
+        return $this->hasMany(DentalReviews::class);
     }
 
-     public function doctor_schedules(){
-         return $this->hasMany(DoctorSchedules::class);
+    public function doctor_schedules()
+    {
+        return $this->hasMany(DoctorSchedules::class);
     }
-     public function medical_notes(){
-         return $this->hasMany(MedicalNotes::class);
+    public function medical_notes()
+    {
+        return $this->hasMany(MedicalNotes::class);
     }
 }

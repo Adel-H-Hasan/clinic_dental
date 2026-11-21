@@ -199,6 +199,9 @@ Route::middleware('auth')->group(function () {
         ->name('logout.submit');
 });
 
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.
 
 // MedAssist AI Smile Simulation - Abdullah
 
