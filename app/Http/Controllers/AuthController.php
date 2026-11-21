@@ -27,8 +27,7 @@ class AuthController extends Controller
         ->withErrors(['email', 'Unable to sign in with these credentials.'])
         ->onlyInput('email');
 
-        Auth::attempt($data);
-        return redirect()->intended('/');
+        return redirect()->intended('patient/profile/');
     }
 
     public function register(Request $request) {
@@ -47,8 +46,6 @@ class AuthController extends Controller
         $user = User::create ($data);
 
         event(new Registered($user));
-
-        Auth::login($user);
 
         return redirect()->route('verification.notice');;
     }

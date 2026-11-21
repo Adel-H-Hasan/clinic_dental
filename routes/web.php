@@ -9,7 +9,9 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+// use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
 // Todo: create the middlewares
@@ -27,7 +29,6 @@ Route::middleware(['auth', 'adminOnly'])
 
         Route::resource('/users', UserController::class)
             ->only('index', 'show', 'edit', 'update');
-
     });
 
 
@@ -94,7 +95,8 @@ Route::middleware(['auth', 'doctorOnly'])
 
 // Patient route
 //? singleton() => generates exactly show, edit, and update
-Route::middleware(['auth', 'patientOnly'])
+//? verified => user can't go to their pages after register until they verify email
+Route::middleware(['auth', 'patientOnly', 'verified'])
     ->prefix('patient')
     ->name('patient.')
     ->group(function () {
@@ -126,24 +128,30 @@ Route::middleware('guest')
 
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
             ->name('password.update');
+
+        Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
     });
 
-Route::get('email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
-    //? mark this user’s email as verified.
-    // Sets their email_verified_at from null to the current date and time.
-    // If the email is already verified, it keeps the original timestamp.
-    $request->fulfill();
+Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
+    $user = User::findOrFail ($id);
 
-    return redirect()->intended(route('patient.profile.show'));
-    
-    // Laravel’s built-in middleware for checking that the link Laravel generated hasn’t been changed or expired.
-})->middleware(['auth', 'signed'])->name('verification.verify');;
+     $expectedHash = sha1($user->getEmailForVerification());
+     abort_unless(hash_equals($expectedHash, $hash), 403);
+
+     if (! $user->hasVerifiedEmail() && $user->markEmailAsVerified()) {
+        event(new Verified($user));
+    }
+
+    return redirect()->route('login')
+        ->with('status', 'Your email is verified. You can now log in.');
+    // Signed: Laravel’s built-in middleware for checking that the link Laravel generated hasn’t been changed or expired.
+})->middleware('signed')->name('verification.verify');;
+
+
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
-    
-    Route::view ('email/verify', 'auth.verify-email')->name('verification.notice');
 });
 
 // Add a route for the verification link
