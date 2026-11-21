@@ -153,3 +153,37 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
 });
+
+
+// MedAssist AI Smile Simulation - Abdullah
+
+Route::post('/smile-simulation/upload', [
+    \App\Http\Controllers\AiImageAnalysesController::class,
+    'store'
+])->middleware('auth')->name('smile.upload');
+
+Route::get('/smile-simulation', function () {
+    return redirect()->route('smile.ai.create');
+})->name('smile.create');
+
+// Home page
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+// Contact page
+Route::view('/contact', 'contact')->name('contact');
+
+// Language switcher
+Route::get('/language/{locale}', function (string $locale) {
+    if (!in_array($locale, ['ar', 'en'], true)) {
+        abort(404);
+    }
+
+    session(['locale' => $locale]);
+
+    return redirect()->route('home');
+})->name('language.switch');
+
+// Smile AI routes
+require __DIR__.'/smile-ai.routes.php';
