@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DoctorProfile;
 
 class DoctorController extends Controller
 {
@@ -12,15 +13,17 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        //
+        $doctors = DoctorProfile::where('is_active', true)->get();
+
+        return view('admin.doctors.index', compact('doctors'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data = validator()
     }
 
     /**

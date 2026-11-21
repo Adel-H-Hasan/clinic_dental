@@ -41,8 +41,8 @@ class AuthController extends Controller
 
         $fallback = match ($request->user()->role) {
             'patient' => route('patient.profile.index'),
-            'doctor' => route('doctor.profile.index'),
-            'admin' => route('admin.profile.index'),
+            'doctor' => route('doctor.dashboard'),
+            'admin' => route('admin.dashboard'),
         };
 
         return redirect()->intended($fallback);

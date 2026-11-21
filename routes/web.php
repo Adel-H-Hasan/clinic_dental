@@ -14,8 +14,6 @@ use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
-// Todo: create the middlewares
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -110,7 +108,6 @@ Route::middleware(['auth', 'patientOnly', 'verified'])
 //? match() => combine get and post
 Route::middleware('guest')
     ->group(function () {
-        //Todo: use $request->isMethod('get')
         Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
             ->name('login');
 
