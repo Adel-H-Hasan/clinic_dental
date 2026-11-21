@@ -13,6 +13,7 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DoctorDashboardController;
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
@@ -51,7 +52,7 @@ Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
-        Route::view('/dashboard', 'doctor.dashboard')->name('dashboard');
+        Route::get('/dashboard', [DoctorDashboardController::class,'index'])->name('dashboard');
 
         //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);

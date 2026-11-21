@@ -13,7 +13,7 @@ class DoctorDashboardController extends Controller
     {
         
     
-        $doctor = DoctorProfile::findOrFail(1);
+        $doctor=$request->user()->doctor_profile;
 
        $appointments = $doctor->doctor_appointment_types()
          ->with([
@@ -42,13 +42,22 @@ class DoctorDashboardController extends Controller
          ->map(function ($monthlyAppointments) {
         return $monthlyAppointments->count();
           });
-        dd($appointmentsPerMonth);
+        
 
+          dd([
+    'laravel_now' => now()->toDateTimeString(),
+    'app_timezone' => config('app.timezone'),
+    'appointment_times' => $appointments->pluck('scheduled_at'),
+]);
           //upcoming appontments
         $upcomingAppointments = $appointments->filter(function ($appointment) {
          return $appointment->scheduled_at->isFuture()
         && $appointment->status === 'confirmed';
          });
+
+         $nextAppointment = $upcomingAppointments
+         ->sortBy('scheduled_at')
+         ->first();
 
         return view('doctor.dashboard', compact(
            'doctor',
@@ -57,7 +66,9 @@ class DoctorDashboardController extends Controller
            'totalAppointments',
            'pendingAppointments',
            'totalPatients',
-           'upcomingAppointments'
+           'upcomingAppointments',
+           'appointmentsPerMonth',
+           'nextAppointment'
             ));
 
      
