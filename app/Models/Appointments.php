@@ -25,4 +25,12 @@ class Appointments extends Model
     public function medical_notes(){
         return $this->hasMany(MedicalNotes::class, 'appointment_id');
     }
+
+    protected $fillable = [
+    'patient_id',
+    'doctor_appointment_type_id',
+    'scheduled_at',
+    'status',
+    'reason',
+];
 }

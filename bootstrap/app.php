@@ -12,9 +12,16 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
 
-        // Apply the selected language to web requests
+        // Language middleware - Abdullah
         $middleware->web(append: [
             \App\Http\Middleware\SetLocale::class,
+        ]);
+
+        // Role middleware - Team
+        $middleware->alias([
+            'adminOnly' => \App\Http\Middleware\AdminOnly::class,
+            'doctorOnly' => \App\Http\Middleware\DoctorOnly::class,
+            'patientOnly' => \App\Http\Middleware\PatientOnly::class,
         ]);
 
     })

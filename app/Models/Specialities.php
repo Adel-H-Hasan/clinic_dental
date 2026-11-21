@@ -8,6 +8,10 @@ use App\Models\DoctorProfile;
 class Specialities extends Model
 {
     //
+    protected $fillable=[
+        'name',
+        'description'
+    ];
 
     public function doctor_profile(){
         return $this->hasMany(DoctorProfile::class, 'speciality_id');
