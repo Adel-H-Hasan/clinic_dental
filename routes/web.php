@@ -3,6 +3,8 @@
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SpecialitiesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorAppointmentTypesController;
 use App\Http\Controllers\DoctorProfileController;
@@ -27,6 +29,15 @@ Route::middleware(['auth', 'adminOnly'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/specialities', [SpecialitiesController::class, 'index'])->name('specialities.index');
+        Route::get('/specialities/create', [SpecialitiesController::class, 'create'])->name('specialities.create');
+        Route::post('/specialities', [SpecialitiesController::class, 'store'])->name('specialities.store');
+        Route::get('/specialities/{id}', [SpecialitiesController::class, 'edit'])->name('specialities.edit');
+        Route::put('/specialities/{id}', [SpecialitiesController::class, 'update'])->name('specialities.update');
+        Route::delete('/specialities/{id}', [SpecialitiesController::class, 'destroy'])->name('specialities.destroy');
+
         Route::resource('/doctors', DoctorController::class);
 
         Route::resource('/users', UserController::class)
@@ -40,6 +51,8 @@ Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
+        Route::view('/dashboard', 'doctor.dashboard')->name('dashboard');
+
         //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
 
