@@ -9,7 +9,7 @@
 
 <body>
     <main>
-        <h1>Login as a patient</h1>
+        <h1>Login</h1>
         @if (session('status'))
             <p style="color:green" role="status">{{ session('status') }}</p>
         @endif

@@ -10,9 +10,10 @@ use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         if ($request->isMethod('get'))
-            return view ('auth.login');
+            return view('auth.login');
 
         $data = $request->validate([
             'email' => ['required', 'email'],
@@ -22,17 +23,35 @@ class AuthController extends Controller
         // Laravel looks for an account with that email and is_active = true
         $data['is_active'] = true;
 
-        if (! Auth::attempt($data))
-            return back ()
-        ->withErrors(['email', 'Unable to sign in with these credentials.'])
-        ->onlyInput('email');
+        $signedIn = Auth::attemptWhen($data, function (User $user) {
+            if ($user->role === 'patient') {
+                return $user->hasVerifiedEmail();
+            }
 
-        return redirect()->intended('patient/profile/');
+            return true;
+        });
+
+        if (! $signedIn) {
+            return back()
+                ->withErrors(['email' => 'Unable to sign in. If you registered as a patient, verify your email first.'])
+                ->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+
+        $fallback = match ($request->user()->role) {
+            'patient' => route ('patient.profile.index'),
+            'doctor' => route ('doctor.profile.index'),
+            'admin' => route ('admin.profile.index'),
+        };
+
+        return redirect()->intended($fallback);
     }
 
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         if ($request->isMethod('get'))
-            return view ('auth.register');
+            return view('auth.register');
 
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -43,14 +62,14 @@ class AuthController extends Controller
             'date_of_birth' => ['nullable', 'date', 'before_or_equal:today']
         ]);
 
-        $user = User::create ($data);
+        $user = User::create($data);
 
         event(new Registered($user));
 
         return redirect()->route('verification.notice');;
     }
 
-    
+
     public function sendResetLink(Request $request) {}
 
     public function showResetPasswordForm() {}
@@ -65,5 +84,4 @@ class AuthController extends Controller
 
         return redirect('/');
     }
-
-    }
+}
