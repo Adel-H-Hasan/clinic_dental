@@ -13,6 +13,10 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
+<<<<<<< HEAD
+=======
+use App\Http\Controllers\DoctorDashboardController;
+>>>>>>> 7dcd5cf5b5166ef7be32f84ca6e7f5b7dbf032aa
 // use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
@@ -51,7 +55,11 @@ Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
+<<<<<<< HEAD
         Route::view('/dashboard', 'doctor.dashboard')->name('dashboard');
+=======
+        Route::get('/dashboard', [DoctorDashboardController::class,'index'])->name('dashboard');
+>>>>>>> 7dcd5cf5b5166ef7be32f84ca6e7f5b7dbf032aa
 
         //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
@@ -189,6 +197,13 @@ Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
 
 
 
+<<<<<<< HEAD
+=======
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.
+
+>>>>>>> 7dcd5cf5b5166ef7be32f84ca6e7f5b7dbf032aa
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
