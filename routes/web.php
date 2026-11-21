@@ -1,7 +1,10 @@
 <?php
 
-use App\Http\Controllers\Admin\SpecialitiesController;
+use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SpecialitiesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorAppointmentTypesController;
 use App\Http\Controllers\DoctorProfileController;
@@ -10,56 +13,47 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\DoctorDashboardController;
 
-// Todo: create the middlewares
+// Number of middlewares used => 7
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin/specialities',[SpecialitiesController::class,'index'])
-->name('admin.specialities.index');
-
-Route::get('/admin/specialities/create',[SpecialitiesController::class,'create'])
-->name('admin.specialities.create');
-
-Route::post('/admin/specialities',[SpecialitiesController::class,'store'])
-->name('admin.specialities.store');
-
-Route::get('/admin/specialities/{id}',[SpecialitiesController::class,'edit'])
-->name('admin.specialities.edit');
-
-Route::put('admin/specialities/{id}',[SpecialitiesController::class,'update'])
-->name('admin.specialities.update');
-
-Route::delete('/admin/specialities/{id}',[SpecialitiesController::class,'destroy'])
-->name('admin.specialities.destroy');
-
-Route::get('admin/dashboard',[DashboardController::class,'index'])
-->name('admin.dashboard');
-
-Route::get('doctor/dashboard',[DoctorDashboardController::class,'index'])
-->name('doctor.dashboard');
 // Admin doctors CRUD routes
 Route::middleware(['auth', 'adminOnly'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/specialities', [SpecialitiesController::class, 'index'])->name('specialities.index');
+        Route::get('/specialities/create', [SpecialitiesController::class, 'create'])->name('specialities.create');
+        Route::post('/specialities', [SpecialitiesController::class, 'store'])->name('specialities.store');
+        Route::get('/specialities/{id}', [SpecialitiesController::class, 'edit'])->name('specialities.edit');
+        Route::put('/specialities/{id}', [SpecialitiesController::class, 'update'])->name('specialities.update');
+        Route::delete('/specialities/{id}', [SpecialitiesController::class, 'destroy'])->name('specialities.destroy');
+
         Route::resource('/doctors', DoctorController::class);
 
         Route::resource('/users', UserController::class)
             ->only('index', 'show', 'edit', 'update');
-    });
 
+        Route::resource('appointment-types', AppointmentTypesController::class)
+            ->only(['index', 'store', 'update', 'destroy']);
+    });
 
 Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
+        Route::view('/dashboard', 'doctor.dashboard')->name('dashboard');
+
+        //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
 
         Route::get('/schedules', [DoctorSchedulesController::class, 'index'])
@@ -115,11 +109,17 @@ Route::middleware(['auth', 'doctorOnly'])
 
         Route::post('/medical-notes/{noteId}/report/approve', [MedicalReportsController::class, 'approve'])
             ->name('medical-notes.report.approve');
+
+        Route::patch('/appointments/{id}/status', [AppointmentsController::class, 'updateStatus'])
+            ->name('appointments.status');
+
+        Route::get('/appointments', [AppointmentsController::class, 'doctorIndex'])
+            ->name('appointments.index');
     });
 
 // Patient route
-//? singleton() => generates exactly show, edit, and update
-Route::middleware(['auth', 'patientOnly'])
+//? verified => user can't go to their pages after register until they verify email
+Route::middleware(['auth', 'patientOnly', 'verified'])
     ->prefix('patient')
     ->name('patient.')
     ->group(function () {
@@ -127,13 +127,29 @@ Route::middleware(['auth', 'patientOnly'])
 
         Route::get('/reports/{reportId}', [MedicalReportsController::class, 'show'])
             ->name('reports.show');
+
+        Route::get('/appointments', [AppointmentsController::class, 'index'])
+            ->name('appointments.index');
+
+        Route::post('/appointments', [AppointmentsController::class, 'store'])
+            ->name('appointments.store');
+
+        Route::patch('/appointments/{id}/cancel', [AppointmentsController::class, 'cancel'])
+            ->whereNumber('id')
+            ->name('appointments.cancel');
+
+        Route::patch('/appointments/{id}/reschedule', [AppointmentsController::class, 'reschedule'])
+            ->whereNumber('id')
+            ->name('appointments.reschedule');
+
+        Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])
+            ->whereNumber('id')
+            ->name('appointments.show');
     });
 
 // Auth routes
-//? match() => combine get and post
 Route::middleware('guest')
     ->group(function () {
-        //Todo: use $request->isMethod('get')
         Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
             ->name('login');
 
@@ -151,9 +167,66 @@ Route::middleware('guest')
 
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
             ->name('password.update');
+
+        Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
     });
+
+Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
+    $user = User::findOrFail ($id);
+
+     $expectedHash = sha1($user->getEmailForVerification());
+     abort_unless(hash_equals($expectedHash, $hash), 403);
+
+     if (! $user->hasVerifiedEmail() && $user->markEmailAsVerified()) {
+        event(new Verified($user));
+    }
+
+    return redirect()->route('login')
+        ->with('status', 'Your email is verified. You can now log in.');
+    // Signed: Laravel’s built-in middleware 
+    //for checking that the link Laravel generated hasn’t been changed or expired.
+})->middleware('signed')->name('verification.verify');;
+
+
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
 });
+
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.
+
+// MedAssist AI Smile Simulation - Abdullah
+
+Route::post('/smile-simulation/upload', [
+    \App\Http\Controllers\AiImageAnalysesController::class,
+    'store'
+])->middleware('auth')->name('smile.upload');
+
+Route::get('/smile-simulation', function () {
+    return redirect()->route('smile.ai.create');
+})->name('smile.create');
+
+// Home page
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
+
+// Contact page
+Route::view('/contact', 'contact')->name('contact');
+
+// Language switcher
+Route::get('/language/{locale}', function (string $locale) {
+    if (!in_array($locale, ['ar', 'en'], true)) {
+        abort(404);
+    }
+
+    session(['locale' => $locale]);
+
+    return redirect()->route('home');
+})->name('language.switch');
+
+// Smile AI routes
+require __DIR__.'/smile-ai.routes.php';
