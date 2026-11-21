@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\AuthController;
@@ -10,10 +11,7 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
-// Todo: create the middlewares
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,7 +30,6 @@ Route::middleware(['auth', 'adminOnly'])
         Route::resource('appointment-types', AppointmentTypesController::class)
             ->only(['index', 'store', 'update', 'destroy']);
     });
-
 
 Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
@@ -93,10 +90,15 @@ Route::middleware(['auth', 'doctorOnly'])
 
         Route::post('/medical-notes/{noteId}/report/approve', [MedicalReportsController::class, 'approve'])
             ->name('medical-notes.report.approve');
+
+        Route::patch('/appointments/{id}/status', [AppointmentsController::class, 'updateStatus'])
+            ->name('appointments.status');
+
+        Route::get('/appointments', [AppointmentsController::class, 'doctorIndex'])
+            ->name('appointments.index');
     });
 
-// Patient route
-//? singleton() => generates exactly show, edit, and update
+// Patient routes
 Route::middleware(['auth', 'patientOnly'])
     ->prefix('patient')
     ->name('patient.')
@@ -105,13 +107,29 @@ Route::middleware(['auth', 'patientOnly'])
 
         Route::get('/reports/{reportId}', [MedicalReportsController::class, 'show'])
             ->name('reports.show');
+
+        Route::get('/appointments', [AppointmentsController::class, 'index'])
+            ->name('appointments.index');
+
+        Route::post('/appointments', [AppointmentsController::class, 'store'])
+            ->name('appointments.store');
+
+        Route::patch('/appointments/{id}/cancel', [AppointmentsController::class, 'cancel'])
+            ->whereNumber('id')
+            ->name('appointments.cancel');
+
+        Route::patch('/appointments/{id}/reschedule', [AppointmentsController::class, 'reschedule'])
+            ->whereNumber('id')
+            ->name('appointments.reschedule');
+
+        Route::get('/appointments/{id}', [AppointmentsController::class, 'show'])
+            ->whereNumber('id')
+            ->name('appointments.show');
     });
 
 // Auth routes
-//? match() => combine get and post
 Route::middleware('guest')
     ->group(function () {
-        //Todo: use $request->isMethod('get')
         Route::match(['get', 'post'], '/login', [AuthController::class, 'login'])
             ->name('login');
 
