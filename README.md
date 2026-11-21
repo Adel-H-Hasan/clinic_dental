@@ -59,3 +59,82 @@ Use the **العربية** or **English** switch to change languages. The select
 The dentist directory and admin record filters work with sample data. The account screens, booking confirmation, and record editing are frontend previews. Authentication, real appointment reservations, and permanent record changes remain pending. The Miro board is the reference for the application schema. The local migrations currently initialize Laravel's starter tables.
 
 Run the existing test suite with `php artisan test`. List available routes with `php artisan route:list --except-vendor`.
+
+
+
+## Team Setup - Windows 11 + XAMPP
+
+### 1. Update the project
+
+```powershell
+git pull origin main
+composer install
+```
+
+### 2. Configure Laravel
+
+If `.env` does not exist:
+
+```powershell
+Copy-Item .env.example .env
+php artisan key:generate
+```
+
+Configure MySQL credentials and database name in `.env`.
+
+Set `MEDASSIST_AI_TOKEN` to a unique random secret.
+Keep the token private.
+
+Then run:
+
+```powershell
+php artisan optimize:clear
+php artisan migrate
+php artisan storage:link
+```
+
+### 3. Install Python AI dependencies
+
+Requires Python 3.11.
+
+From the Laravel project root:
+
+```powershell
+.\medassist-ai-engine\setup.ps1
+```
+
+Run this setup once per computer.
+
+### 4. Start Laravel
+
+Open terminal 1:
+
+```powershell
+php artisan serve
+```
+
+### 5. Start the AI engine
+
+Open terminal 2:
+
+```powershell
+.\medassist-ai-engine\run.ps1
+```
+
+The AI engine runs at http://127.0.0.1:8001.
+
+### 6. Verify the AI connection
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8001/health
+```
+
+Note: `model_loaded: false` may appear before the model is initialized.
+
+### Important
+
+- Never commit `.env` or real API tokens.
+- Python virtual environments and SDXL model weights are not included in Git.
+- The first AI generation may require downloading model weights.
+- AI generation requires sufficient RAM/VRAM.
+- Each developer must configure their local environment.
