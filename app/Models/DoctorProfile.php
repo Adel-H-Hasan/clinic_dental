@@ -15,10 +15,6 @@ use App\Models\MedicalNotes;
 class DoctorProfile extends Model
 {
     protected $fillable = [
-<<<<<<< HEAD
-=======
-        'user_id',
->>>>>>> 7dcd5cf5b5166ef7be32f84ca6e7f5b7dbf032aa
         'speciality_id',
         'license_number',
         'bio',
