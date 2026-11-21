@@ -15,6 +15,7 @@ class DoctorDashboardController extends Controller
     
         $doctor=$request->user()->doctor_profile;
 
+
        $appointments = $doctor->doctor_appointment_types()
          ->with([
         'appointment_type',
@@ -44,11 +45,7 @@ class DoctorDashboardController extends Controller
           });
         
 
-          dd([
-    'laravel_now' => now()->toDateTimeString(),
-    'app_timezone' => config('app.timezone'),
-    'appointment_times' => $appointments->pluck('scheduled_at'),
-]);
+  
           //upcoming appontments
         $upcomingAppointments = $appointments->filter(function ($appointment) {
          return $appointment->scheduled_at->isFuture()
