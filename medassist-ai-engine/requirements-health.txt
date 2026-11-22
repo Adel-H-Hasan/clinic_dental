@@ -1,0 +1,7 @@
+# HTTP/image validation tests only. This does not install an AI inference engine.
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+python-multipart>=0.0.9
+pillow>=10,<13
+numpy>=1.26,<3
+httpx>=0.28,<1

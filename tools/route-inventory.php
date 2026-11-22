@@ -1,0 +1,5 @@
+<?php
+// Generate a machine-readable route/view inventory without running controller actions.
+require __DIR__.'/../vendor/autoload.php';$app=require __DIR__.'/../bootstrap/app.php';$app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
+$rows=[];foreach(Illuminate\Support\Facades\Route::getRoutes() as $route){$action=$route->getActionName();$views=[];if(str_contains($action,'@')){[$class,$method]=explode('@',$action);if(class_exists($class)&&method_exists($class,$method)){$r=new ReflectionMethod($class,$method);$lines=file($r->getFileName());$source=implode('',array_slice($lines,$r->getStartLine()-1,$r->getEndLine()-$r->getStartLine()+1));preg_match_all('/(?:view|->view)\(\s*[\'"]([^\'"]+)/',$source,$matches);$views=$matches[1];}}$rows[]=['method'=>implode('|',$route->methods()),'uri'=>$route->uri(),'name'=>$route->getName(),'middleware'=>$route->gatherMiddleware(),'action'=>$action,'views'=>$views];}
+file_put_contents(__DIR__.'/../output/qa-evidence/route-page-inventory.json',json_encode($rows,JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES));echo count($rows)." routes inventoried\n";

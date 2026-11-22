@@ -3,6 +3,8 @@
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SpecialitiesController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorAppointmentTypesController;
 use App\Http\Controllers\DoctorProfileController;
@@ -11,17 +13,54 @@ use App\Http\Controllers\MedicalNotesController;
 use App\Http\Controllers\MedicalReportsController;
 use App\Http\Controllers\PatientProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DoctorDashboardController;
+// use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use App\Models\User;
+use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
 
+// Number of middlewares used => 7
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('taqweem-landing');
+})->name('landing');
+
+Route::get('/dentists', [\App\Http\Controllers\WorkspaceController::class, 'directory'])->name('dentists.index');
+Route::get('/dentists/{id}', [\App\Http\Controllers\WorkspaceController::class, 'dentist'])->whereNumber('id')->name('dentists.show');
+Route::middleware(['auth', 'patientOnly', 'verified'])->prefix('patient')->name('patient.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('dashboard');
+    Route::get('/booking', [\App\Http\Controllers\WorkspaceController::class, 'booking'])->name('booking');
+    Route::post('/booking/review', [\App\Http\Controllers\WorkspaceController::class, 'reviewBooking'])->name('booking.review');
+    Route::get('/booking/review', function () {
+        if (session('success') === 'Appointment booked successfully.') return view('patient.booking-success');
+        session()->reflash();
+        return redirect()->route('patient.booking');
+    });
+    Route::get('/visits/{id}', [\App\Http\Controllers\WorkspaceController::class, 'detail'])->whereNumber('id')->name('visits.show');
 });
+
+// Additive HTML screens: retain the original appointment JSON contracts.
+Route::get('/patient/workspace', [\App\Http\Controllers\WorkspaceController::class, 'patient'])
+    ->middleware(['auth', 'patientOnly', 'verified'])->name('patient.workspace');
+Route::get('/doctor/workspace', [\App\Http\Controllers\WorkspaceController::class, 'doctor'])
+    ->middleware(['auth', 'doctorOnly'])->name('doctor.workspace');
+Route::get('/admin/service-catalog', [\App\Http\Controllers\WorkspaceController::class, 'types'])
+    ->middleware(['auth', 'adminOnly'])->name('admin.types.workspace');
 
 // Admin doctors CRUD routes
 Route::middleware(['auth', 'adminOnly'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::get('/specialities', [SpecialitiesController::class, 'index'])->name('specialities.index');
+        Route::get('/specialities/create', [SpecialitiesController::class, 'create'])->name('specialities.create');
+        Route::post('/specialities', [SpecialitiesController::class, 'store'])->name('specialities.store');
+        Route::get('/specialities/{id}', [SpecialitiesController::class, 'edit'])->name('specialities.edit');
+        Route::put('/specialities/{id}', [SpecialitiesController::class, 'update'])->name('specialities.update');
+        Route::delete('/specialities/{id}', [SpecialitiesController::class, 'destroy'])->name('specialities.destroy');
+
         Route::resource('/doctors', DoctorController::class);
 
         Route::resource('/users', UserController::class)
@@ -35,6 +74,9 @@ Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
+        Route::get('/dashboard', [DoctorDashboardController::class,'index'])->name('dashboard');
+
+        //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
 
         Route::get('/schedules', [DoctorSchedulesController::class, 'index'])
@@ -98,8 +140,9 @@ Route::middleware(['auth', 'doctorOnly'])
             ->name('appointments.index');
     });
 
-// Patient routes
-Route::middleware(['auth', 'patientOnly'])
+// Patient route
+//? verified => user can't go to their pages after register until they verify email
+Route::middleware(['auth', 'patientOnly', 'verified'])
     ->prefix('patient')
     ->name('patient.')
     ->group(function () {
@@ -147,20 +190,51 @@ Route::middleware('guest')
 
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
             ->name('password.update');
+
+
     });
+
+Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
+Route::post('email/verification-notification', \App\Http\Controllers\VerificationNotificationController::class)
+    ->middleware('throttle:6,1')->name('verification.send');
+
+Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
+    $user = User::findOrFail ($id);
+
+     $expectedHash = sha1($user->getEmailForVerification());
+     abort_unless(hash_equals($expectedHash, $hash), 403);
+
+     if (! $user->hasVerifiedEmail() && $user->markEmailAsVerified()) {
+        event(new Verified($user));
+    }
+
+    return redirect()->route('login')
+        ->with('status', 'Your email is verified. You can now log in.');
+    // Signed: Laravel’s built-in middleware 
+    //for checking that the link Laravel generated hasn’t been changed or expired.
+})->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
+
+
+
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])
         ->name('logout.submit');
 });
 
+// When a patient registers, the Registered event triggers the verification email.
+// Laravel uses the verification.verify route to generate the signed link in that email.
+// When the patient opens the link, this route verifies their email and redirects them to login.
 
 // MedAssist AI Smile Simulation - Abdullah
 
 Route::post('/smile-simulation/upload', [
     \App\Http\Controllers\AiImageAnalysesController::class,
     'store'
-])->middleware('auth')->name('smile.upload');
+])->middleware(['auth', 'patientOnly', 'verified'])->name('smile.upload');
 
 Route::get('/smile-simulation', function () {
     return redirect()->route('smile.ai.create');
@@ -182,7 +256,12 @@ Route::get('/language/{locale}', function (string $locale) {
 
     session(['locale' => $locale]);
 
-    return redirect()->route('home');
+    $return = request()->query('return', '/');
+    if (!is_string($return) || !str_starts_with($return, '/') || str_starts_with($return, '//') || str_contains($return, '\\') || preg_match('/[\x00-\x20]/', $return)) {
+        $return = '/';
+    }
+    session()->reflash();
+    return redirect($return);
 })->name('language.switch');
 
 // Smile AI routes

@@ -7,7 +7,8 @@ import io
 import os
 import hmac
 import threading
-
+import importlib.util
+import logging
 from functools import lru_cache
 from typing import Literal
 
@@ -26,6 +27,7 @@ from fastapi import (
 )
 
 from fastapi.responses import Response
+from starlette.concurrency import run_in_threadpool
 
 
 app = FastAPI(
@@ -55,7 +57,11 @@ TREATMENTS = {
         "cosmetic dental veneers"
     ),
     "straightening": (
-        "evenly aligned natural teeth, subtle orthodontic correction"
+        "realistic orthodontic smile simulation with straight, evenly aligned teeth, "
+        "corrected crowded and rotated upper and lower front teeth, "
+        "natural-looking dental arches, improved alignment and reduced gaps, "
+        "realistic gumline and dental anatomy, preserve original enamel color, "
+        "no cosmetic whitening, natural lighting"
     ),
     "comprehensive": (
         "natural white straight teeth, balanced attractive smile, "
@@ -173,7 +179,9 @@ def pipeline():
 
     # Reduce GPU memory usage.
     if device == "cuda":
-        pipe.enable_model_cpu_offload()
+        pipe.enable_sequential_cpu_offload()
+        pipe.enable_vae_slicing()
+        pipe.enable_vae_tiling()
     else:
         pipe.to("cpu")
 
@@ -297,12 +305,15 @@ async def read_image(file):
 
 @app.get("/health")
 def health():
+    required = ("torch", "diffusers", "mediapipe", "transformers", "accelerate", "safetensors")
+    missing = [name for name in required if importlib.util.find_spec(name) is None]
+    loaded = pipeline.cache_info().currsize > 0
     return {
-        "status": "ok",
+        "status": "ok" if loaded else "degraded",
         "engine": "sdxl-inpainting",
-        "model_loaded": (
-            pipeline.cache_info().currsize > 0
-        ),
+        "model_loaded": loaded,
+        "missing_dependencies": missing,
+        "token_configured": bool(os.getenv("MEDASSIST_AI_TOKEN")) and not os.getenv("MEDASSIST_AI_TOKEN", "").startswith("REPLACE_"),
     }
 
 
@@ -316,7 +327,7 @@ def capabilities():
         "engine": "sdxl-inpainting",
         "treatments": list(TREATMENTS),
         "clinical_accuracy": "not validated",
-        "model": MODEL_ID,
+        "model": "sdxl-inpainting",
     }
 
 
@@ -351,14 +362,33 @@ async def simulate(
 ):
 
     image = await read_image(file)
+    # Keep the ASGI event loop responsive during CPU/GPU work.
+    return await run_in_threadpool(generate, image, mode, treatment, strength)
+
+
+def generate(image, mode, treatment, strength):
+    if not MODEL_LOCK.acquire(blocking=False):
+        raise HTTPException(status_code=503, detail="Generation is busy; try again later")
+    try:
+        return generate_locked(image, mode, treatment, strength)
+    finally:
+        MODEL_LOCK.release()
+
+
+def generate_locked(image, mode, treatment, strength):
 
     try:
         mask = mouth_mask(image)
 
-    except RuntimeError as exc:
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logging.getLogger("uvicorn.error").exception(
+            "Smile AI face detection failed"
+        )
         raise HTTPException(
             status_code=503,
-            detail=str(exc),
+            detail="Face detection unavailable",
         ) from exc
 
     # Resize for SDXL inference.
@@ -373,62 +403,71 @@ async def simulate(
     )
 
     try:
-        with MODEL_LOCK:
+        # The caller owns MODEL_LOCK, including the shared face detector.
 
-            pipe, device = pipeline()
+        pipe, device = pipeline()
 
-            import torch
+        import torch
 
-            with torch.inference_mode():
+        with torch.inference_mode():
 
-                result = pipe(
-                    prompt=(
-                        TREATMENTS[treatment]
-                        + ", photorealistic teeth, "
-                        "preserve face identity, "
-                        "natural lighting"
-                    ),
+            result = pipe(
+                prompt=(
+                    TREATMENTS[treatment]
+                    + ", photorealistic teeth, "
+                    "preserve face identity, "
+                    "natural lighting"
+                ),
 
-                    negative_prompt=(
-                        "deformed face, "
-                        "extra teeth, "
-                        "missing teeth, "
-                        "uncanny, "
-                        "cartoon, "
-                        "distorted gums, "
-                        "blurry"
-                    ),
+                negative_prompt=(
+                    "deformed face, extra teeth, missing teeth, uncanny, "
+                    "cartoon, distorted gums, blurry"
+                    + (
+                        ", teeth whitening, bleached enamel, unnaturally white teeth"
+                        if treatment == "straightening"
+                        else ""
+                    )
+                ),
 
-                    image=image_small,
+                image=image_small,
 
-                    mask_image=mask_small,
+                mask_image=mask_small,
 
-                    strength={
+                # A higher denoising strength allows more shape changes for
+                # straightening; keep the original presets for other treatments.
+                strength=(
+                    {
+                        "natural": 0.75,
+                        "moderate": 0.85,
+                        "bright": 0.90,
+                    }[strength]
+                    if treatment == "straightening"
+                    else {
                         "natural": 0.60,
                         "moderate": 0.75,
                         "bright": 0.90,
-                    }[strength],
+                    }[strength]
+                ),
 
-                    guidance_scale=7.5,
+                guidance_scale=7.5,
 
-                    num_inference_steps=int(
-                        os.getenv(
-                            "MEDASSIST_INFERENCE_STEPS",
-                            "20",
-                        )
-                    ),
+                num_inference_steps=int(
+                    os.getenv(
+                        "MEDASSIST_INFERENCE_STEPS",
+                        "20",
+                    )
+                ),
 
-                ).images[0]
+            ).images[0]
 
     except Exception as exc:
+        logging.getLogger("uvicorn.error").exception(
+            "Smile AI inference failed"
+        )
 
-        # Do not expose internal errors to clients.
         raise HTTPException(
             status_code=503,
-            detail=(
-                "Model unavailable or generation failed; "
-                "check Python logs and GPU memory"
-            ),
+            detail="Model unavailable or generation failed",
         ) from exc
 
     # Restore original image dimensions.

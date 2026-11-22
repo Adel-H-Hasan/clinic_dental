@@ -18,6 +18,8 @@ class AiImageAnalysesController extends Controller
                 'message' => 'Please login first.'
             ], 401);
         }
+        abort_unless($user->is_active, 403);
+        if ($user->role === 'patient') abort_unless($user->hasVerifiedEmail(), 403);
 
         // 2. التحقق من الصورة المرفوعة
         $validated = $request->validate([
@@ -34,6 +36,7 @@ class AiImageAnalysesController extends Controller
             'smile-simulations/' . $user->id,
             'local'
         );
+        abort_unless(is_string($path) && $path !== '', 503);
 
         // 4. إنشاء سجل في قاعدة البيانات
         try {
@@ -42,6 +45,8 @@ class AiImageAnalysesController extends Controller
                 'image_url' => $path,
                 'before_image' => $path,
                 'after_image' => null,
+                // Required by the existing schema; empty means no analysis has run.
+                'ai_analyses' => '',
             ]);
         } catch (\Throwable $e) {
             Storage::disk('local')->delete($path);
@@ -50,9 +55,10 @@ class AiImageAnalysesController extends Controller
 
         // 5. إرجاع نتيجة نجاح العملية
         return response()->json([
-            'message' => 'Image uploaded successfully.',
+            'message' => __('Image uploaded. Automatic analysis is not available yet.'),
             'analysis_id' => $analysis->id,
             'status' => 'pending',
+            'processing_available' => false,
         ], 201);
     }
 }

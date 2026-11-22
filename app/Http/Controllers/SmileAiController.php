@@ -26,6 +26,9 @@ class SmileAiController extends Controller
         $data = $request->validated();
 
         try {
+            if (!function_exists('imagecreatefromstring')) {
+                throw new RuntimeException('Image processing unavailable');
+            }
             $output = $ai->simulate(
                 $request->file('image'),
                 $data['mode'],
@@ -62,16 +65,13 @@ class SmileAiController extends Controller
 
             $disk = Storage::disk('local');
 
-            if (!$disk->put($prefix . '/before.png', $beforePng)) {
-                throw new RuntimeException('Cannot save original');
-            }
-
-            if (!$disk->put($prefix . '/after.png', $output)) {
-                $disk->delete($prefix . '/before.png');
-
-                throw new RuntimeException(
-                    'Cannot save generated image'
-                );
+            try {
+                if (!$disk->put($prefix . '/before.png', $beforePng) || !$disk->put($prefix . '/after.png', $output)) {
+                    throw new RuntimeException('Cannot save preview');
+                }
+            } catch (Throwable $failure) {
+                $disk->deleteDirectory($prefix);
+                throw $failure;
             }
 
             // Save preview information in the browser session.
@@ -87,6 +87,9 @@ class SmileAiController extends Controller
             ];
 
             if (count($previews) > 10) {
+                foreach (array_keys(array_slice($previews, 0, count($previews) - 10, true)) as $expiredId) {
+                    if (Str::isUuid($expiredId)) $disk->deleteDirectory('private/smile-ai-previews/'.$expiredId);
+                }
                 $previews = array_slice(
                     $previews,
                     -10,
@@ -107,7 +110,6 @@ class SmileAiController extends Controller
                 'SDXL Smile Simulation failed',
                 [
                     'type' => get_class($e),
-                    'message' => $e->getMessage(),
                 ]
             );
 
@@ -128,7 +130,7 @@ class SmileAiController extends Controller
     public function show(Request $request, string $id)
     {
         $item = $this->item($request, $id);
-        return view('smile-simulation.ai-result', compact('item'));
+        return response()->view('smile-simulation.ai-result', compact('item'))->header('Cache-Control', 'private, no-store');
     }
     public function image(Request $request, string $id, string $side)
     {
@@ -148,6 +150,6 @@ class SmileAiController extends Controller
     public function gallery(Request $request)
     {
         $items = collect($request->session()->get('smile_previews', []))->reverse()->map(fn($item) => (object)$item);
-        return view('smile-simulation.ai-gallery', compact('items'));
+        return response()->view('smile-simulation.ai-gallery', compact('items'))->header('Cache-Control', 'private, no-store');
     }
 }

@@ -37,7 +37,8 @@ class SmileAiClient
                 'X-AI-Token' => $token
             ])
                 ->connectTimeout(10)
-                ->timeout(540)
+                ->timeout(max(1, min(540, (int) config('services.medassist_ai.timeout', 540))))
+                ->withoutRedirecting()
                 ->attach(
                     'file',
                     $stream,
@@ -63,14 +64,15 @@ class SmileAiClient
             )
         ) {
             throw new RuntimeException(
-                'AI HTTP ' . $response->status() . ': ' .
-                    mb_substr($response->body(), 0, 400)
+                'AI HTTP ' . $response->status()
             );
         }
 
+        $dimensions = @getimagesizefromstring($response->body());
         if (
             strlen($response->body()) > 25 * 1024 * 1024 ||
-            !@getimagesizefromstring($response->body())
+            !$dimensions || $dimensions[2] !== IMAGETYPE_PNG ||
+            $dimensions[0] * $dimensions[1] > 16_000_000
         ) {
             throw new RuntimeException(
                 'Invalid image returned by AI service'
