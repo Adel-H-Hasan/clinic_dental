@@ -10,6 +10,13 @@ use App\Models\MedicalNotes;
 
 class Appointments extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'scheduled_at' => 'datetime',
+        ];
+    }
+
     public function user(){
         return $this->belongsTo(User::class, 'patient_id');
     }
