@@ -17,8 +17,9 @@ class DoctorOnly
     {
         $user = $request->user();
 
-        if ($user['role'] !== 'doctor')
+        if (! $user || $user->role !== 'doctor' || ! $user->doctor_profile || ! $user->doctor_profile->is_active) {
             abort(403);
+        }
 
         return $next($request);
     }

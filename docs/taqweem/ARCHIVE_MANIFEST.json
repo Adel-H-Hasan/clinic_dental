@@ -1,0 +1,1206 @@
+[
+  {
+    "path": ".editorconfig",
+    "sha256": "F78CC5A2EF8BA61AD956D0F5DB453748A981270F6A1B9F4A5A00DF8690E7946D"
+  },
+  {
+    "path": ".gitattributes",
+    "sha256": "A40EB27EE0B545CA5B5542DAAF99FEC51F84F23B3766A6353864EF2A115BC51C"
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "E2F7283DBCE0A8DF1D0075E210EBAB98AA41566E8CD4FE9178675F4DC11109C2"
+  },
+  {
+    "path": "app/Http/Controllers/Admin/DashboardController.php",
+    "sha256": "627CAE968AC92341EAF13A896E68B4D5FCF407D4A814FF80EC298120FF3781A8"
+  },
+  {
+    "path": "app/Http/Controllers/Admin/DoctorController.php",
+    "sha256": "14D7177CC2B76D53DAAE793E3D9223B63439FBAFEF4267463FCB8A9C125B712C"
+  },
+  {
+    "path": "app/Http/Controllers/Admin/SpecialitiesController.php",
+    "sha256": "C87222004A9D885414860DFE2D18C18EF7E387A5AD6AA239A29531E934D6A118"
+  },
+  {
+    "path": "app/Http/Controllers/AiImageAnalysesController.php",
+    "sha256": "F616E61F8CBF143CB3B14326C9503298068C537D24F0B8D9E3B1C06BFE3D0D1F"
+  },
+  {
+    "path": "app/Http/Controllers/AiMessagesController.php",
+    "sha256": "1F1094344021DAC58AB8CA29F1CC4BC4177B57EB4F3AC1578843F95BE0A7FDC8"
+  },
+  {
+    "path": "app/Http/Controllers/AppointmentsController.php",
+    "sha256": "8DF3009B85EB16E475409F8E8F347042903B1111874FB249AFD6DFD621B348A1"
+  },
+  {
+    "path": "app/Http/Controllers/AppointmentTypesController.php",
+    "sha256": "4D9EE400F7810A94B9A307C8A781C0577DF722AB64B891C7E70B451E68D8B479"
+  },
+  {
+    "path": "app/Http/Controllers/AuthController.php",
+    "sha256": "050F186A529761E3AE09B8BA47BC4B32A5291BD447368536ED897CAA46B09B83"
+  },
+  {
+    "path": "app/Http/Controllers/Controller.php",
+    "sha256": "25D1C1EF8E6CC8A376553FAACFBA2B07D9DFAEE9BDBB84F14F77517580E9DEB1"
+  },
+  {
+    "path": "app/Http/Controllers/DentalReviewsController.php",
+    "sha256": "E48C3C0D439A1660A9FC88EF4DF4DB7B9D916481C1E944DD61A219528DB3A7AB"
+  },
+  {
+    "path": "app/Http/Controllers/DoctorAppointmentTypesController.php",
+    "sha256": "85BD6AE09F06300FB28A9303CF8DC85D11A9261C929593C2E88C0CC6234D3576"
+  },
+  {
+    "path": "app/Http/Controllers/DoctorDashboardController.php",
+    "sha256": "34112ADC7BE21D911C01312759BEF6945FE16ED5BC4B0FCF08FB72B18E1EE46A"
+  },
+  {
+    "path": "app/Http/Controllers/DoctorProfileController.php",
+    "sha256": "70FA3522C90429935AAD911B75BC205BE1F3B74C256BBCE73DC1EB2EAC722BC1"
+  },
+  {
+    "path": "app/Http/Controllers/DoctorSchedulesController.php",
+    "sha256": "5AC2D2BE3123D374291C5E4FA1036C88D1E2503C83EB9279E5CB2016A12BA5B9"
+  },
+  {
+    "path": "app/Http/Controllers/MedicalNotesController.php",
+    "sha256": "B4FDBF8F2C3CC34485138ED0743D8CB040C065DC7560790EB4D25E6EA0D42228"
+  },
+  {
+    "path": "app/Http/Controllers/MedicalReportsController.php",
+    "sha256": "695ED3441C92F6BA2B96B87C67922046C77BAAA400F2FE3B4F9D27BA760D80B7"
+  },
+  {
+    "path": "app/Http/Controllers/PatientProfileController.php",
+    "sha256": "B7E78CA4DFB7F90E486187F9D22073D21D92EF11181D0858712F5CE53AB913B8"
+  },
+  {
+    "path": "app/Http/Controllers/PatientVacationController.php",
+    "sha256": "CF89207070894583E6764D4346B50EFF68A3E632DD3389B66DD25553038976DF"
+  },
+  {
+    "path": "app/Http/Controllers/SmileAiController.php",
+    "sha256": "8DF7C950FA455A8985B8BEC3A6D3E4BCA90714D73BE2DD35B2626C8E7F76CDF0"
+  },
+  {
+    "path": "app/Http/Controllers/TempController.php",
+    "sha256": "023F0717E020C0E347EB94D1FCA60527F9E59FCA672334F184E40CB6A26A287F"
+  },
+  {
+    "path": "app/Http/Controllers/UserController.php",
+    "sha256": "D60D73BA9918FF3003AEBFB795BEF928758B3ECC3F42D7DA82A9791AF80D2BF7"
+  },
+  {
+    "path": "app/Http/Controllers/WorkspaceController.php",
+    "sha256": "CA83C23035547AFEC5DB4E4099D2530A4F6621AA3DDAB6A644E6FE3F901D9E5F"
+  },
+  {
+    "path": "app/Http/Middleware/AdminOnly.php",
+    "sha256": "153F3E424AC24F38697C497D4BAAEA3EDDB21A9EB1C786D59EE91C2733FA12AB"
+  },
+  {
+    "path": "app/Http/Middleware/DoctorOnly.php",
+    "sha256": "0AF07FE2DA9F14358C906179DC32E353C0BB6187DF2384947A9C08CB57F16BEF"
+  },
+  {
+    "path": "app/Http/Middleware/PatientOnly.php",
+    "sha256": "B2072C66F40CCED6EE8B6116C4466CF94564735C671DD904C124EB1FEF1D6649"
+  },
+  {
+    "path": "app/Http/Middleware/SetLocale.php",
+    "sha256": "05DDB9DA13324FEA70458199A0A3F84DBFCE7107C49484121F46D710468A4A1A"
+  },
+  {
+    "path": "app/Http/Requests/GenerateSmileRequest.php",
+    "sha256": "D6A140360C3EE66AE74A9D9E1A5FECF114A20786E1C5684514D7333D8B73E579"
+  },
+  {
+    "path": "app/Models/AiImageAnalyses.php",
+    "sha256": "440BBC7CD049FC6A901CA1CBD1C9132420C774BEFF29A14B8F48D0A355B0D0B8"
+  },
+  {
+    "path": "app/Models/Appointments.php",
+    "sha256": "665C66BEA5CFC67C5294CF25E17A11F548152ACD8569502B4FE5436BD7BDFA12"
+  },
+  {
+    "path": "app/Models/AppointmentTypes.php",
+    "sha256": "76EE010EAD0FD60D960915BC859E4A2BC29FE22901E349206C4A9945A73B330E"
+  },
+  {
+    "path": "app/Models/DentalReviews.php",
+    "sha256": "5AFC9B50DB3EA877F6CC01BDCB14883E28D65AE1C08E43A4A8A744ECDA700CB7"
+  },
+  {
+    "path": "app/Models/DoctorAppointmentTypes.php",
+    "sha256": "C9C15EF39FF0849AAF1303ECDA564BF1E441786CFC70D5E5A05FD75CD0454C48"
+  },
+  {
+    "path": "app/Models/DoctorProfile.php",
+    "sha256": "472409CA2FA78F1081A89F6A4612B2EA161EE88781E0724BF6751918A8B6CE08"
+  },
+  {
+    "path": "app/Models/DoctorSchedules.php",
+    "sha256": "B69C90816A7DA21DE5BEDCD83DE93CCC39DC87DF58FFCFE3D503008A602537A3"
+  },
+  {
+    "path": "app/Models/MedicalNotes.php",
+    "sha256": "E22E95F31BBF1B9149329152D58FD20AF6CF02F55E928C46A74B2E2B6DCDD174"
+  },
+  {
+    "path": "app/Models/MedicalReport.php",
+    "sha256": "3A865C474A531690E993AA302B209F706B345C215001D7AADF07689AD69C18B0"
+  },
+  {
+    "path": "app/Models/PatientVacations.php",
+    "sha256": "9E01729F4C7435EA7668E05546A6610F9664D1AE7E54E25CAC5CC8226FBCA587"
+  },
+  {
+    "path": "app/Models/Specialities.php",
+    "sha256": "F5728E5B73FFC2CE5AF2603221B6ED8290BF8B855FFCFA13C0C15C295988A77F"
+  },
+  {
+    "path": "app/Models/User.php",
+    "sha256": "A007E155506DCC721B5923D28180BE0987C964D4A251EE6DD805B842661C77CB"
+  },
+  {
+    "path": "app/Providers/AppServiceProvider.php",
+    "sha256": "CAF306EF6A25A547BBB7EDD5508A39B51C365083EB6DD58378CF2242018E94C7"
+  },
+  {
+    "path": "app/Services/GeminiClient.php",
+    "sha256": "27CF389E1C9160ADC7994760110FD0139D2E36A2BEBE3F8B305C55264769AD38"
+  },
+  {
+    "path": "app/Services/GeminiNoteReviewer.php",
+    "sha256": "C3667ED4191F62934697094C74D1F06144E439740DDE21B113584FE95A8E6543"
+  },
+  {
+    "path": "app/Services/SmileAiClient.php",
+    "sha256": "F522C1FB8083605A3B6C8D910C352B00C6D5A93876591D6726E5813819D0B888"
+  },
+  {
+    "path": "artisan",
+    "sha256": "F91A517C0C5D3A904C3F390933964A5E08EC1FC68146882730DAAC4ACA4FFCEC"
+  },
+  {
+    "path": "bootstrap/app.php",
+    "sha256": "F228EF24B8A9505D350A77E0C8655E849701D4F9EE12D0F3CA42935A7516BFD7"
+  },
+  {
+    "path": "bootstrap/providers.php",
+    "sha256": "F720E185207A343D4C19FC99DBB317A4187EFBCD7D38A303A695BBDD77FFB943"
+  },
+  {
+    "path": "CHANGELOG.md",
+    "sha256": "252CC3B880E58633404D0E46027BD97B0C3AB95B77B06F0397CEADBCC2B9605F"
+  },
+  {
+    "path": "composer.json",
+    "sha256": "9023EA01B48D81E3DEBFF88DB0638F1D022AEF0AC8EE4BE03576CAC48BB5215C"
+  },
+  {
+    "path": "composer.lock",
+    "sha256": "64A9127E980745C8C7CF286B61E7E386F1B79746F50A53592B1684F8D722F610"
+  },
+  {
+    "path": "config/app.php",
+    "sha256": "043F507E73762F7F697FA4859E798A73DD1AACA3FC969B0AB1AA5BAC610C44EE"
+  },
+  {
+    "path": "config/auth.php",
+    "sha256": "C7E204E9785C9F596D66FB884B493F658F2327F157646BDB4088EFD6B3A7773F"
+  },
+  {
+    "path": "config/cache.php",
+    "sha256": "B8BCF382283330B94C0A602FF06452DE819041EA709E28EEA5065D51D1D7D085"
+  },
+  {
+    "path": "config/database.php",
+    "sha256": "06759B7B36B8641E9025FE03DD728970C4CB02D5B58FF709CBB0649987B4BFC2"
+  },
+  {
+    "path": "config/filesystems.php",
+    "sha256": "BA7060D7A23E490C3CE830656F6D24AD3CCF5B868E3293F2A12E411959DC5635"
+  },
+  {
+    "path": "config/logging.php",
+    "sha256": "299EC1BA5B5A803C8E20F666AE7628E442E856CC2FF7AC9E2ADB17B97E8AD63B"
+  },
+  {
+    "path": "config/mail.php",
+    "sha256": "C43FF49A31C5F32CE21EB7159F2A4B3CD2F4074EAED5838D265646DBFEDD3474"
+  },
+  {
+    "path": "config/queue.php",
+    "sha256": "6101774DA7C8B79AF46D0028F2B8B31A484C3F7EDA10B76E5B27B6093AD364A4"
+  },
+  {
+    "path": "config/services.php",
+    "sha256": "323F0FA7F9C64B20DBB3413E434365A6296084E2C9F1D65469C936E5082EF8B9"
+  },
+  {
+    "path": "config/session.php",
+    "sha256": "F2E75E189021597E29940C0859C00C3088EC591E403768FFF5143C5687A80F59"
+  },
+  {
+    "path": "database/factories/UserFactory.php",
+    "sha256": "98213B82278DF9BF9E9BFECFAB66E320E470EA5E9838AEC0C377DD41B11D5200"
+  },
+  {
+    "path": "database/migrations/0001_01_01_000000_create_users_table.php",
+    "sha256": "97E9C1A051BFF53D8BD0882F2066EA16FE2E66347FA61C267842351DBB064D85"
+  },
+  {
+    "path": "database/migrations/0001_01_01_000001_create_cache_table.php",
+    "sha256": "2CA8398390ECEF8EAF72AEAC7FEFCE67F7DE631B6F2EC7B7081C8DB8953215DC"
+  },
+  {
+    "path": "database/migrations/0001_01_01_000002_create_jobs_table.php",
+    "sha256": "7C9C712ADF4091C87BF2612F4D0DCCDFA1DF4501553E4AC068B83D7BD5462FA5"
+  },
+  {
+    "path": "database/migrations/2026_11_18_121528_create_specialities_table.php",
+    "sha256": "6C993382ABB27A33D34FBBD60902009CF95B63D893D39830651D8A20547252CF"
+  },
+  {
+    "path": "database/migrations/2026_11_18_121710_create_doctor_profiles_table.php",
+    "sha256": "2C3428211283FBCEAA263B8D189471EE76DE5112CC62B0D803960D8E6DE16BE8"
+  },
+  {
+    "path": "database/migrations/2026_11_18_121936_create_ai_image_analyses_table.php",
+    "sha256": "64DB3087B1B1BB1BE68B6F5E1802E21192EAACB4B72DC51E83A2F946B660E187"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122020_create_appointment_types_table.php",
+    "sha256": "0CA948F9C29A0F5DA5B263780A4AE3330912115FD196485A9CC02393E97B5A05"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122043_create_doctor_appointment_types_table.php",
+    "sha256": "E54F6E05D36348523D492DE4A8D48144BAEE0F405B240D933E246ECD34C642DB"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122436_create_doctor_schedules_table.php",
+    "sha256": "94D84898A03D7D33A70E54D096B1E8E845C6D7BC463C262DB53EA95FDF602438"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122449_create_appointments_table.php",
+    "sha256": "C8F6012B8FC44B3D01D3339C52E89B7652AB71819A20CA20938E49CAB04C5CE1"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122514_create_doctor_reviews_table.php",
+    "sha256": "123D5CA7F59E3B95DCD2922E4FED4CE599E3A9E3AE8584364349B884E527F3F1"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122531_create_medical_notes_table.php",
+    "sha256": "29598A96FE4904DDDF15C26ABEFCE6A829E362B1E55537B987AB46C754917CD2"
+  },
+  {
+    "path": "database/migrations/2026_11_18_122532_create_patient_vacations_table.php",
+    "sha256": "9A0ACE22A3FFBA983B56594E996105F192C92CF4F18C96B96FA9A9500B900682"
+  },
+  {
+    "path": "database/migrations/2026_11_20_000000_create_medical_reports_table.php",
+    "sha256": "C249D09BA48E8E65756986323457C5C0584E1FAD7DA8C29BEF7D99069ADDDEAA"
+  },
+  {
+    "path": "database/migrations/2026_11_20_082621_add_before_after_images_to_ai_image_analyses_table.php",
+    "sha256": "BF7D3C540ECED3FAB0D9C4E267C06D097A6B6500B09548720EA9F1225AE52296"
+  },
+  {
+    "path": "database/seeders/DatabaseSeeder.php",
+    "sha256": "CF8E4B6E48360218BB5534F66419C955288F78338EB8A3DBA9D8AC3394EC3DBC"
+  },
+  {
+    "path": "docs/taqweem/BACKEND_REVIEW_AR.md",
+    "sha256": "EEC0FCC73CC9B3C49F756E97EC9E0DCE1C69338D8D4C61BABD9441C245B0257F"
+  },
+  {
+    "path": "docs/taqweem/CHANGED_FILES.txt",
+    "sha256": "F8DC6F1B2FC7C347BC43C18B5501F99AE615F65B2F06A48022304E8FA907B2DD"
+  },
+  {
+    "path": "docs/taqweem/DELIVERY_AR.md",
+    "sha256": "CFA7578B4CC017A9E1A82586542EB5DEB997D5E910FEB6CA7EA65E2BFCA1A09F"
+  },
+  {
+    "path": "docs/taqweem/FINAL_REVIEW_AR.md",
+    "sha256": "91E9442E73AA231DB3A8AE1CCE2AE8E7DFBF657625148394896CBC7A9415766A"
+  },
+  {
+    "path": "docs/taqweem/PAGE_INVENTORY_AR.md",
+    "sha256": "2FAB9E337D934CDAE623EC45BBD7E57A1781FCEF03880E7CDFC98FEF5778D045"
+  },
+  {
+    "path": "docs/taqweem/REDIRECT_PROPOSAL_AR.md",
+    "sha256": "0737733CD9DFF028ADF45B82A01BCF441644D4BAC3022702C693D941CB4791B8"
+  },
+  {
+    "path": "docs/taqweem/RUN_DEMO_AR.md",
+    "sha256": "F1CBE6C05A6B09665C0EB77E06DAEA0D63CD47E3EFA89EDEFF9CE440C45DCC99"
+  },
+  {
+    "path": "lang/ar.json",
+    "sha256": "5EBE9347F203B51F93543A1548C8518E30BEDC15F7DEB6501088C2B4154EFBA1"
+  },
+  {
+    "path": "lang/ar/auth.php",
+    "sha256": "D008BF98D59447F651D5C32E4CB33CFC45EEB6FF377D666DCB81E248E8996AB6"
+  },
+  {
+    "path": "lang/ar/messages.php",
+    "sha256": "8B1BE31B9AFA42A97A47F1DFB7441E6BE6F1CC9540E5F753D67BCCE3AA7B3C4D"
+  },
+  {
+    "path": "lang/ar/pagination.php",
+    "sha256": "4181C2F551746E5AAFEB2F2855E4A728B042D0254663622DFBFC6FF7E03C71A4"
+  },
+  {
+    "path": "lang/ar/passwords.php",
+    "sha256": "BAC5BB50D1E74E5D7B2F58596C64BCE52C1793BAD35FB6F35405E61C49BD85C9"
+  },
+  {
+    "path": "lang/ar/smile.php",
+    "sha256": "E68F1A6D80089AACD8983456322A3762FDC13A71BF5024C0A1B9EC423AE87732"
+  },
+  {
+    "path": "lang/ar/validation.php",
+    "sha256": "94ECF446D0E210CDE97630DC247C356523B083FDBE3C4135D83FFD8EAD9B8B71"
+  },
+  {
+    "path": "lang/en.json",
+    "sha256": "AADA2198E096066E667275A825819B5D664AC90B160091D3FAE8DA9796D5C613"
+  },
+  {
+    "path": "lang/en/auth.php",
+    "sha256": "029823D4E0F2A8CCE3B9CCB90E3EACDB4C9F28947BA59A5525BD39C14C869716"
+  },
+  {
+    "path": "lang/en/messages.php",
+    "sha256": "D13A54497A0C54A1602CDABCE90EA79F01E866C885349D804BD6C43C2794555F"
+  },
+  {
+    "path": "lang/en/pagination.php",
+    "sha256": "5C9BED6D2C965666D0C8B9F17F93F87CBFC7A240EAD19B3B061764E8238E219F"
+  },
+  {
+    "path": "lang/en/passwords.php",
+    "sha256": "ADC7B6B72A144E9A5321A66C365192C54B85502DE96AF9C6B629A78FC8C0D3B4"
+  },
+  {
+    "path": "lang/en/smile.php",
+    "sha256": "DD1B51845AEBB333A28EF3FFFE7673C9333A6DCE5E7F18B6FE49F832F81B27BB"
+  },
+  {
+    "path": "lang/en/validation.php",
+    "sha256": "B442E327963971F9DF3EA92E571D85C57D9755AC374D9C7E08A57ECBED7F0218"
+  },
+  {
+    "path": "medassist-ai-engine/app/__init__.py",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  {
+    "path": "medassist-ai-engine/app/face_landmarker.task",
+    "sha256": "64184E229B263107BC2B804C6625DB1341FF2BB731874B0BCC2FE6544E0BC9FF"
+  },
+  {
+    "path": "medassist-ai-engine/app/main.py",
+    "sha256": "642BC7E83B260065C6BC713F1FDF601A648CD8D0078D3CAD95995EAE4B0C3A7F"
+  },
+  {
+    "path": "medassist-ai-engine/README.md",
+    "sha256": "CE52946C8EF47D4CD51356F75A2DFE25A3FB58B78B2ED173E087EBFEA19C10D5"
+  },
+  {
+    "path": "medassist-ai-engine/requirements.txt",
+    "sha256": "AFD9BA491B6FA9B4180B9F80F6093FEA57CFBD106780B94082838B30F82265FE"
+  },
+  {
+    "path": "medassist-ai-engine/run.ps1",
+    "sha256": "766103DFFC74DA55C760EA401E8B1A0D9A6B3EDC7BE802C1815B007C437001B6"
+  },
+  {
+    "path": "medassist-ai-engine/upstream/LICENSE",
+    "sha256": "1A9EDD8A7AC0F9CD8A49EBBE2FB9FA80C97645D3AFD797D1C0CAAA9DF2E66BFF"
+  },
+  {
+    "path": "output/qa-evidence/browser-results-ar.json",
+    "sha256": "AF054396D5CB759D0EA39749063EBA92535175E17D4848AB2917CFEA089B08FD"
+  },
+  {
+    "path": "output/qa-evidence/browser-results-en.json",
+    "sha256": "5DA49569B445EE9E4A746E4A292FC38E046CF2DDFFAF1D89AC16A0A0E06330B2"
+  },
+  {
+    "path": "output/qa-evidence/cinematic-results.json",
+    "sha256": "5E126F28FA591A226E60CA7960EFBD7B60F9A94B90311EC9A226E2B71FCB242B"
+  },
+  {
+    "path": "output/qa-evidence/error-locale-results.json",
+    "sha256": "199421AE1CD7B67B5A12CF1F81D944E6F9686A40E5D4E7DF5D007145CE74A29E"
+  },
+  {
+    "path": "output/qa-evidence/final-navigation-phpunit-direct.txt",
+    "sha256": "41F10E3EBEA17AFD0759DBA79660C3E42BF222B39FD53475D61E295A88E30067"
+  },
+  {
+    "path": "output/qa-evidence/final-navigation-phpunit.txt",
+    "sha256": "F39A773C0899BDB767C3443D8201B8841D2BC46FB2A3D6C0C75CA2CCF87591B1"
+  },
+  {
+    "path": "output/qa-evidence/landing-integrity.json",
+    "sha256": "92A5E92AABD0516D182CE613FA86CA4E0FB554E86DE4E8F17AD92C7A531E71A2"
+  },
+  {
+    "path": "output/qa-evidence/landing-unit-tests.txt",
+    "sha256": "BE7F7A332319DAD6599A0A232DEAC3CCC6519C47BF92825A01D0CFA30837BF78"
+  },
+  {
+    "path": "output/qa-evidence/navigation-admin-ar-1440.png",
+    "sha256": "BDA3378F4A0FE3E9549CBABD31531E46D076C58B3424AB0F82F35C3A4B214437"
+  },
+  {
+    "path": "output/qa-evidence/navigation-admin-ar-390.png",
+    "sha256": "4E4D2EB7CF12873535878F4225C9CEB78A377628F73EDE7EB3E4AF02A415F7E3"
+  },
+  {
+    "path": "output/qa-evidence/navigation-admin-en-1440.png",
+    "sha256": "69964DBC1CF07A4B99592EA028A873B535B3E93EF6CAE987D606807CBE05D854"
+  },
+  {
+    "path": "output/qa-evidence/navigation-admin-en-390.png",
+    "sha256": "68F60ABB7C672AFA2C56A0AE2F8493F1C33E0C482CA257811FC488291D398E32"
+  },
+  {
+    "path": "output/qa-evidence/navigation-doctor-ar-1440.png",
+    "sha256": "ACD3BFDEEDC0F7CE0B6D938E29F9FCB541347D7EACB5A651017466D116DBFC14"
+  },
+  {
+    "path": "output/qa-evidence/navigation-doctor-ar-390.png",
+    "sha256": "13F15382A15B06EE66432D6010A4FA4AA19F86E23AD8F3C132D585EB8A185527"
+  },
+  {
+    "path": "output/qa-evidence/navigation-doctor-en-1440.png",
+    "sha256": "35D35C6DD5B2CB59B411CD3BA7B24FBA21843A5B9227B7DE3B04C8EB20C616BF"
+  },
+  {
+    "path": "output/qa-evidence/navigation-doctor-en-390.png",
+    "sha256": "5A095DA2045713596793F1DA1DA38EFE9E37F5B09342C38C6B1E9670C9C226E0"
+  },
+  {
+    "path": "output/qa-evidence/navigation-guest-ar-1440.png",
+    "sha256": "B672B91DA2B6E80249153D2B51F8DC400909E0C049DA17ECCD5063243B283EBF"
+  },
+  {
+    "path": "output/qa-evidence/navigation-guest-ar-390.png",
+    "sha256": "865234AFC6F0F5534D914B72FA18A85181CC06094A1A91F15B7C322334B21648"
+  },
+  {
+    "path": "output/qa-evidence/navigation-guest-en-1440.png",
+    "sha256": "968EBAE7BABA8CE1F21326DEE236167DFD2E7E7B16BCCD36515A896AF2AC8943"
+  },
+  {
+    "path": "output/qa-evidence/navigation-guest-en-390.png",
+    "sha256": "AA39CD69DBBB3D08165ECE2D0C8ECB9A353D4EC612A7C6795D49E2F65357D6F6"
+  },
+  {
+    "path": "output/qa-evidence/navigation-patient-ar-1440.png",
+    "sha256": "ACD3BFDEEDC0F7CE0B6D938E29F9FCB541347D7EACB5A651017466D116DBFC14"
+  },
+  {
+    "path": "output/qa-evidence/navigation-patient-ar-390.png",
+    "sha256": "F157AFEB3D0EFC5174DB1CAA456D4DA9EFCED8357694AB5CE7114C797453DAD5"
+  },
+  {
+    "path": "output/qa-evidence/navigation-patient-en-1440.png",
+    "sha256": "6DF8F4A34A106CE68DCA979A0AB559BBE28165D65BBFA8C21BC014807646F832"
+  },
+  {
+    "path": "output/qa-evidence/navigation-patient-en-390.png",
+    "sha256": "3D3E0E1A6C855777C528BF4069D2EAA34CD29D8F3C663B7E32F3FE630C74C1C0"
+  },
+  {
+    "path": "output/qa-evidence/navigation-results.json",
+    "sha256": "5225C941370032E34298BE81900B911E1ECA79520EB95BD844326C442E477813"
+  },
+  {
+    "path": "output/qa-evidence/responsive-matrix.json",
+    "sha256": "8F72A49265B913553FC3A521062F1AB9EEE7043E69AB969DCCF8957CB5159BAC"
+  },
+  {
+    "path": "output/qa-evidence/service-availability.json",
+    "sha256": "7028F134D830DD3D7800D8B7504E96AE3464829B4C000E868298492DF0972402"
+  },
+  {
+    "path": "output/qa-evidence/syntax-check.txt",
+    "sha256": "C5231923629956CAC127F51A6988B06140E56DD38051638B5ABEE0ECDB9A2B5D"
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "0590C983FB8CFB4748A0E432F20DAF27E4B673F74150D00455D8017F7E315FF1"
+  },
+  {
+    "path": "package.json",
+    "sha256": "D579CA7E2AC0247B745EC2F6AB12C9C5254E34ECD1388C8C7EB2945B99CCDAE1"
+  },
+  {
+    "path": "phpunit.xml",
+    "sha256": "493369CFB7FEEA104DA4BEC214C2CC6526CA2F1B9D937C50A2961FC59CB61AAF"
+  },
+  {
+    "path": "public/.htaccess",
+    "sha256": "B7E379C77639FD56144947DBAE84C84EB466D9C686EA81F2F013AE85421DA923"
+  },
+  {
+    "path": "public/build/assets/app-Bwn9szyo.js",
+    "sha256": "C6EF0CEC3E5A384FE4E216E747D134426B720673DFDA5D4AE62332209E8B73DD"
+  },
+  {
+    "path": "public/build/assets/app-CH-AJY1d.css",
+    "sha256": "9BA18C33FA06127AA537AD50C2A70B9D2CBD72017297DD40A652D812F26A5087"
+  },
+  {
+    "path": "public/build/manifest.json",
+    "sha256": "E9ADEBD91A14940D857451DFB41F59C8BE523EB5F9BCC1BA5C8C78183C7A92C1"
+  },
+  {
+    "path": "public/css/desktop.css",
+    "sha256": "841211D5BDE1672C7996093219F2304FFE05FCAEB4371F1D833D7CEB89F3FC03"
+  },
+  {
+    "path": "public/css/landing-locale.css",
+    "sha256": "6E522AF301F509A55CD99A2F5496B497A5CCFAC95D1FA283141282470181C560"
+  },
+  {
+    "path": "public/css/medassist.css",
+    "sha256": "D857C0EEA13B64338C087F0C67B1E45ACE4DFFECCAA69A88A30C5512E950CDE1"
+  },
+  {
+    "path": "public/css/medical-reports.css",
+    "sha256": "0E68725C0371F5F65DCB4AD6192A9B89A5C38FA56DA947683F1428ECA1094ABC"
+  },
+  {
+    "path": "public/css/smile-ai.css",
+    "sha256": "1FDCB17FB312F68F678251C2BE3D6C017A9173B501326772F25CC68412575260"
+  },
+  {
+    "path": "public/css/workspace.css",
+    "sha256": "6093BC2D7649A306E979FB49E0AFC43F3F69F36E3E4D1C9F42A1F08C66428352"
+  },
+  {
+    "path": "public/favicon.ico",
+    "sha256": "E3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855"
+  },
+  {
+    "path": "public/fonts/cairo-arabic-wght-normal.woff2",
+    "sha256": "748022F50C427456AD66031E855349BE3448EE1F05A5F1EB59574EBE0C686749"
+  },
+  {
+    "path": "public/fonts/CAIRO-LICENSE.txt",
+    "sha256": "AA2B13BF0770C59A7FB7A3B793A7DF5162C9CB5AD540EC81B0C0C1385946845D"
+  },
+  {
+    "path": "public/fonts/inter-latin-wght-normal.woff2",
+    "sha256": "3100E775E8616CD2611BEECFA23A4263D7037586789B43F035236A2E6FBD4C62"
+  },
+  {
+    "path": "public/fonts/INTER-LICENSE.txt",
+    "sha256": "3B0A5FCA3D17942CDE889069889DEDBBBD075E9B599968C82A95F4D944E9B345"
+  },
+  {
+    "path": "public/images/auth-tooth.svg",
+    "sha256": "302F46E3F26A28325098D35495C11C0E86AE74F11220506A1AA9C11FE8B0C0D1"
+  },
+  {
+    "path": "public/index.php",
+    "sha256": "EBA77CBA39695B6BD091FE5211D481F7EBB2CE2D8D26230B5A609465D0A4AFF9"
+  },
+  {
+    "path": "public/js/smile-ai.js",
+    "sha256": "3947BEA0D38E23100AB52FE6CED6FF42E0DA0D3B4C71699CC39F73B27D83C13D"
+  },
+  {
+    "path": "public/js/workspace.js",
+    "sha256": "882852FB2DC9611A89EB1ACAD4D57223D12F39CBA577F429BF196550D73F3227"
+  },
+  {
+    "path": "public/robots.txt",
+    "sha256": "E5C4B84484EE4216E9373BE99380320C25DD94805F99F0A805846F087636553F"
+  },
+  {
+    "path": "public/taqweem-integration/scan-engine.js",
+    "sha256": "1F108CCBA515880F24AC7CEB9E31EE3581570D11DF45AD12D2F4BAE0B3229611"
+  },
+  {
+    "path": "public/taqweem-integration/site.js",
+    "sha256": "F499C69794496DB651725E445244407BC50524415944803447E61A1A3D04FBD4"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/entrance_poster.jpg",
+    "sha256": "7968C80AAD7212199A1577F722FEB3E38D72784661EBF0A863F45672903B7AD2"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/exterior-9.20.jpg",
+    "sha256": "EFB715FA3726C634A2D8E227AFFF15B08856129DB1377ECD278C6055D830C53D"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/exterior-poster.jpg",
+    "sha256": "A3CB1400D5110F94DFC39F60B513A8BEB5BF3680D4270C30B32891DCB29AC386"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/interior-4.50.jpg",
+    "sha256": "2AE56D0EC8AE41993038A4D260852452045B33CBD0E18ECCEF51EDE9EE7557FA"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/interior-5.00.jpg",
+    "sha256": "EE8E5DCE7CC0DC37C52C5D0E5D157BC8364963EC995A378E59F96528C40930A2"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/interior-7.50.jpg",
+    "sha256": "2F878E076C4E24123C5B40391DFEEE8545ACB91BF93679306400E4A8AC7B17F0"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/interior-9.20.jpg",
+    "sha256": "B4FB1C006349347F582957EE6B86A3837893FE7F4EB928D7E6A1ACB2EEE6CECA"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/interior-poster.jpg",
+    "sha256": "24BD64DBA279C1B8BF0B289864C113E38A693A96D626ACD87B341FAC50B6A352"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/portal_monitor_match.jpg",
+    "sha256": "F08C91D816A1B30C50611691F6F98E23B90EBF931591388076E2372B7A7CB229"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/portal_xray_illustrative.svg",
+    "sha256": "F4E8F6CA527D5B177913B086B82C18729381505107ADEA96367DA7EB8737AA6C"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/reception_poster.jpg",
+    "sha256": "E45FF64F3A16D41AD51CFE78B79076DB2271B085498DC207B0EE2E54180343A7"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/tooth_visual_preview.png",
+    "sha256": "D7BE066A9FFFEBD9704BA6A93F3DA9C6B4E9910EF320DE25A99098BC1E969A46"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/treatment_at_9_5.jpg",
+    "sha256": "A0A7728A55DBB07D0BB5678FB57B53D06E993C4B3AA96C4AE27F2CF740D1D7AD"
+  },
+  {
+    "path": "public/taqweem-landing/assets/img/treatment_poster.jpg",
+    "sha256": "652ACE02037CEDC38163C7E27C988BDBBB8F4AC91C432F6229D7EF8A523B4D77"
+  },
+  {
+    "path": "public/taqweem-landing/assets/models/taqweem_molar_web.glb",
+    "sha256": "FA916AC06D8EDD8E6C98B5B6C26AAD1ECFDD2AE0DD95CDFFDAD41E51609BB9CA"
+  },
+  {
+    "path": "public/taqweem-landing/assets/video/entrance_complete_building_scrub.mp4",
+    "sha256": "C396C31457B0D1D70597F7C734D03C0F110D2E20F6FF34F0CFB1A225EF8BE7C2"
+  },
+  {
+    "path": "public/taqweem-landing/assets/video/interior-scrub.mp4",
+    "sha256": "AE84E6469A504065117718B260C89C68B9C7FF228E60F431EEDF450D82232477"
+  },
+  {
+    "path": "public/taqweem-landing/assets/video/treatment.mp4",
+    "sha256": "6E11331EC42B876188A6291CDAC08783A9A4CB49F784DD00F7E695A3A29571FE"
+  },
+  {
+    "path": "public/taqweem-landing/CHANGES_AND_QA_AR.md",
+    "sha256": "6398E349630F606745835973611171AA0891C37036B32D64D8449A1464EDD617"
+  },
+  {
+    "path": "public/taqweem-landing/css/portal.css",
+    "sha256": "FCD16CA08187596506349127F3F4ABC44657F7D47F39D41C342AC7DDC09D2E9E"
+  },
+  {
+    "path": "public/taqweem-landing/css/scan-base.css",
+    "sha256": "F6FD4F3DBE2CED938149F2DF3A0904F51B6AE745F42D72D8C3F3C1328BFB650A"
+  },
+  {
+    "path": "public/taqweem-landing/css/site.css",
+    "sha256": "CD13B0E81ED0D1F44817FA57CA09913A52D7CEF81E837E8EADAAF03AC7A9F25C"
+  },
+  {
+    "path": "public/taqweem-landing/index.html",
+    "sha256": "1B08B13BEC533A801896A614728C4731BC546170A8FB5BEF6DB1D51E0C9BCFF0"
+  },
+  {
+    "path": "public/taqweem-landing/js/portal.js",
+    "sha256": "6E1B2C15DBB0373B483AA5B43262875EEF97AF29A2146DC143403EF77D9F7315"
+  },
+  {
+    "path": "public/taqweem-landing/js/scan-engine.js",
+    "sha256": "0E332411297912A2E4FC2B99F6E07E67D51D4AEBE70531CC00D6652FF9F94BEA"
+  },
+  {
+    "path": "public/taqweem-landing/js/site.js",
+    "sha256": "4A7E4319494BEB5425C4FBD66946DD696E595847C7DD520726489BBEAE360D2D"
+  },
+  {
+    "path": "public/taqweem-landing/MANIFEST_SHA256.txt",
+    "sha256": "4AEDA8E4B7879030F598BDF4408329F631632F09BF9F265035AF3893DB22F9B2"
+  },
+  {
+    "path": "public/taqweem-landing/QA_REPORT.md",
+    "sha256": "0B05D9E3D37029FEBB7D923B9EA8B363A1B214519FA7A8BB0B41B7D0B067EF58"
+  },
+  {
+    "path": "public/taqweem-landing/qa/BASELINE_v3_QA_REPORT.md",
+    "sha256": "0B05D9E3D37029FEBB7D923B9EA8B363A1B214519FA7A8BB0B41B7D0B067EF58"
+  },
+  {
+    "path": "public/taqweem-landing/qa/PORTAL_ASSET_STORYBOARD.jpg",
+    "sha256": "EBC840793A6A0F3FBE22209DD1D7811C32F52AC76163C5870F1DCB634B6F2852"
+  },
+  {
+    "path": "public/taqweem-landing/qa/tooth_000.png",
+    "sha256": "6B543EEC9864188B3BB41C60651BCCBF81F836D77698BAE91480ABF7A5EB6413"
+  },
+  {
+    "path": "public/taqweem-landing/qa/tooth_055.png",
+    "sha256": "265D3E9DE8278097DE518A0A27CEB8C36F5355CF5B9D26ECB2946241B3EB3671"
+  },
+  {
+    "path": "public/taqweem-landing/qa/tooth_100.png",
+    "sha256": "3DB5CCEFAF8B5E9B5408F93BAFA4F35952462F666DBD1542EE69C0A158F9ACE3"
+  },
+  {
+    "path": "public/taqweem-landing/qa/tooth_stain_to_clean_preview.jpg",
+    "sha256": "1DE49F179D2E54A3CB7BAA46282EF360393BC679FA0CB15FAADC912D13F3F9BD"
+  },
+  {
+    "path": "public/taqweem-landing/qa/UI_PREVIEW_DESKTOP.jpg",
+    "sha256": "9482C0A5B20278B862B15BCD0899F148693B66467FB2112219FA9D87860878F5"
+  },
+  {
+    "path": "public/taqweem-landing/qa/UI_PREVIEW_MOBILE.jpg",
+    "sha256": "CA8F94C89151601D53DBB21FABE69A237E400420CA3FCF0576157E43F1C05474"
+  },
+  {
+    "path": "public/taqweem-landing/README_AR.md",
+    "sha256": "2E04F954F002A9FE6A85FE9F6D5384908F2AB87ADD6C734428EC11FA61466433"
+  },
+  {
+    "path": "public/taqweem-landing/router.php",
+    "sha256": "B03C136CCC3444F9A1AB149E55C6EE991C466416C5301EC43783649567BCE7BE"
+  },
+  {
+    "path": "public/taqweem-landing/RUN_PREVIEW_WINDOWS.bat",
+    "sha256": "BDFB99C875F6F7935CFDEA308C088F8E9F2052500C0F3632F30E3C0DFB1E3741"
+  },
+  {
+    "path": "public/taqweem-landing/tests/handoff_curve_test.js",
+    "sha256": "062958423D3C45B48859028189512F62ABCB54F394E3DA7A0155BAFD18F7E9A5"
+  },
+  {
+    "path": "public/taqweem-landing/tests/portal_geometry_test.js",
+    "sha256": "765AE7A1BB0C4D062FF2F3C288C397485BA7CC3C7CBA009E4D766D459CDFDA0F"
+  },
+  {
+    "path": "public/taqweem-landing/V4_1_VIDEO_REVIEW_AND_QA.md",
+    "sha256": "6909C7503A3D7A518D2AE2D862F7E4F2286E1ED4B3B35814D6586E9F946EFC4A"
+  },
+  {
+    "path": "public/taqweem-landing/VIDEO_MANIFEST.txt",
+    "sha256": "37BB8CA4073DFC1E5A33DB03FF4C85E4C4CA848F329851A010F0A2BDDEF1A4A9"
+  },
+  {
+    "path": "README.md",
+    "sha256": "D12FCC90DFFFE4C4733424A1410EF04DFCEC0BD4C4B7D06A37F9AFF3B9C5B7F2"
+  },
+  {
+    "path": "resources/css/app.css",
+    "sha256": "9F49ED837FDC773B89A294D1E86DC68828EF2F774D7E797BA5F89C2A08C84760"
+  },
+  {
+    "path": "resources/js/app.js",
+    "sha256": "CF6DAB196C721F6911FF99CC4F910897F978599A2D289971A316A5FC33091F94"
+  },
+  {
+    "path": "resources/js/bootstrap.js",
+    "sha256": "6FD9FC82E68FA915A882F4E227B9FAACBE7BFD66CB953C628840E83BDA6B72F4"
+  },
+  {
+    "path": "resources/views/admin/appointment-types.blade.php",
+    "sha256": "70229022598D85AE4480E9D121ECDD464EDE4B40CAEFB546A99EDAB0F2B00294"
+  },
+  {
+    "path": "resources/views/admin/dashboard.blade.php",
+    "sha256": "0D41B6FE5EF75AAFE8A0C4F13DD2D423A10378967008A34324779443F2C06C5C"
+  },
+  {
+    "path": "resources/views/admin/doctors/create.blade.php",
+    "sha256": "6306C2DD70ED72F6BD2058C8558CF62CA5C0EE6EA13236E9E11DEDCB4E1D8E60"
+  },
+  {
+    "path": "resources/views/admin/doctors/edit.blade.php",
+    "sha256": "7246FE68B66E203B6B0A954FB4A36745AEA63BA0783B0925C1E39F054D11F841"
+  },
+  {
+    "path": "resources/views/admin/doctors/index.blade.php",
+    "sha256": "1F74FBF4755BEF976018746DF024502BD8D95931B15579E78664B609AC5D10E3"
+  },
+  {
+    "path": "resources/views/admin/doctors/show.blade.php",
+    "sha256": "FAA7DDEFCD906564A82AE278FB8B7393591E221F57EADB017284EAF04AA66550"
+  },
+  {
+    "path": "resources/views/admin/specialities/create.blade.php",
+    "sha256": "144D51A6E07C076B276858D2A5C5E1AD7D2DB15AD6ABE1D62143810BA2C81FA0"
+  },
+  {
+    "path": "resources/views/admin/specialities/edit.blade.php",
+    "sha256": "76DA1BC8EE6AC60EBE6E3B8C911E485106D6301AA59CE198DA62B571086D1345"
+  },
+  {
+    "path": "resources/views/admin/specialities/index.blade.php",
+    "sha256": "AFED1AD3D847C6B27A3F58B6771DFA1E586F77A30B862B990218AFF806EA2FBC"
+  },
+  {
+    "path": "resources/views/admin/users/edit.blade.php",
+    "sha256": "8B6B7D4B19827E63D3251FB6293041209974004FD60B1347C4C23C12D63887A4"
+  },
+  {
+    "path": "resources/views/admin/users/index.blade.php",
+    "sha256": "07FC020043CC7D09B7C4EE40285E11635066877578387FBF4B46AC433825000F"
+  },
+  {
+    "path": "resources/views/admin/users/show.blade.php",
+    "sha256": "9F26C65CE9EB42C005351784915B888C95AAD396E816E604D8E6B2CEFAB5AA87"
+  },
+  {
+    "path": "resources/views/auth/forgot-password.blade.php",
+    "sha256": "0009E072B049B8498FC9A3CBF7E067F2C4B7CDD27E9A4B87CD6A737402839FB2"
+  },
+  {
+    "path": "resources/views/auth/login.blade.php",
+    "sha256": "85F2A025525CD376AE7A670E2EEA9CB94E81CD01AA6F041D084983F674739149"
+  },
+  {
+    "path": "resources/views/auth/register.blade.php",
+    "sha256": "FD4756AF70BF800278028A14A0E7DB1D027B745F5B0CD7BCE4F433544AF0ECEF"
+  },
+  {
+    "path": "resources/views/auth/reset-password.blade.php",
+    "sha256": "9A6EE67E2DE58C6DF939FA64D80EB12AB2B9DC3616093FF3BD80949C22772DA4"
+  },
+  {
+    "path": "resources/views/auth/verify-email.blade.php",
+    "sha256": "DD9692778B775A915AA7D039E408669B4DC4F0B55D8FB9073A6E193F0B09CC62"
+  },
+  {
+    "path": "resources/views/components/auth-shell.blade.php",
+    "sha256": "39448C92499744130FA0824C43210C126DC4DAD509763299FFD57063BAA7B3F6"
+  },
+  {
+    "path": "resources/views/components/badge.blade.php",
+    "sha256": "6709D6BFD8D16C45E4CEDF3B35DCFBDF1E68F58DA14D6C514C9D895E399B55E1"
+  },
+  {
+    "path": "resources/views/components/feedback.blade.php",
+    "sha256": "9AA0453513B89F96CD197623440C959DBED5A958B2083FEB1E914E20D2428718"
+  },
+  {
+    "path": "resources/views/components/footer.blade.php",
+    "sha256": "CC92A73F787902BF10F5CD7A4397E14C8B00C79D3B0A5C9016B37B26149C5442"
+  },
+  {
+    "path": "resources/views/components/icon.blade.php",
+    "sha256": "DBB5C5C62C562D497C4D4447A749B9D27556BCD3AF495BA7E6092EB800B84615"
+  },
+  {
+    "path": "resources/views/components/language-switch.blade.php",
+    "sha256": "8DDFF63E4C48C80130AAFE6036060816D4F2BE06D92B4ED31EFF87B5CBDB714F"
+  },
+  {
+    "path": "resources/views/components/navbar.blade.php",
+    "sha256": "4241ED06FA6E455632698858018774AF27F90489532D23117A0F777F7FE63429"
+  },
+  {
+    "path": "resources/views/components/stat.blade.php",
+    "sha256": "048DCC5EBDF0A499EC39CC91EB1A9F05CF395168F208B16A00D1DC96A29A4034"
+  },
+  {
+    "path": "resources/views/components/workspace.blade.php",
+    "sha256": "26F0FF227E69E6D6F3441B1F6F1EC0011BB6B15A5FDEF5BDCEE1C25637BC91BA"
+  },
+  {
+    "path": "resources/views/contact.blade.php",
+    "sha256": "FA26FA5D65434153C65061D9A5E17D0342ACFC048EB68BD927EB5DAD7ADAC25F"
+  },
+  {
+    "path": "resources/views/doctor/appointments.blade.php",
+    "sha256": "CC1BFD59DC0D9E6CDA1035B3A02902A723EB3A7593BC68DCF6A980964688DE49"
+  },
+  {
+    "path": "resources/views/doctor/dashboard.blade.php",
+    "sha256": "34950500AB7EA0FD82D249CEB8622C5EB9400AFEFEB280943AE52240AD740E9D"
+  },
+  {
+    "path": "resources/views/doctor/medical-notes/edit.blade.php",
+    "sha256": "56743C57062EE095891E4E2E887E366D6456D8A3490CBB4FDAF1C8DF6BF8F5F1"
+  },
+  {
+    "path": "resources/views/doctor/medical-notes/index.blade.php",
+    "sha256": "1913338313E92B31F7F28DD33C29E2A413D57260C06882575721A7D5C6A0F8D3"
+  },
+  {
+    "path": "resources/views/doctor/medical-reports/review.blade.php",
+    "sha256": "4F1966BFF954CACD6EC754B3587B5A726889E4DA803AC285B7886B34814590A5"
+  },
+  {
+    "path": "resources/views/doctor/profile/edit.blade.php",
+    "sha256": "5DB08917B9C0A18CFA86BE1947380B9DBB762CB1B5CBD65C7EDC50692621BADB"
+  },
+  {
+    "path": "resources/views/doctor/profile/show.blade.php",
+    "sha256": "EFD0BB1076AD87AB747E64D1E313655B7606487A4D036323B94C757175F720F5"
+  },
+  {
+    "path": "resources/views/doctor/schedules/edit.blade.php",
+    "sha256": "18943DC65C1EFD5F8E389FA6E93FC0ECD220594C111D6728D50696B7F35A4263"
+  },
+  {
+    "path": "resources/views/doctor/schedules/index.blade.php",
+    "sha256": "1B6E9CA3D178C1377F78255725BEE55FBF7E6B0D2F7D4BFB246653A7203A67E4"
+  },
+  {
+    "path": "resources/views/doctor/services/edit.blade.php",
+    "sha256": "BB2576E85E2515B246912335B28883BDA47BB6559F681392F630023458EEADC2"
+  },
+  {
+    "path": "resources/views/doctor/services/index.blade.php",
+    "sha256": "DCF325F3B9381F6CF1D7D641700B681BEC9429F8C951565440B886D7CC3E8C19"
+  },
+  {
+    "path": "resources/views/errors/403.blade.php",
+    "sha256": "E96674E81E5658486BA275D7199F0D45E8FA95DFC48472A35733BAB79CBB3B78"
+  },
+  {
+    "path": "resources/views/errors/404.blade.php",
+    "sha256": "4274298C908A9B07BFF434D150325585BB743F4F69D1C44EE3DD2CF43DB0264D"
+  },
+  {
+    "path": "resources/views/errors/419.blade.php",
+    "sha256": "B72350728EA27002C8514DE437DB15CE5C60E0133C2A66DF66A404E6070031CD"
+  },
+  {
+    "path": "resources/views/errors/429.blade.php",
+    "sha256": "DD1971CF2B211113FBB0602658F396C2E1E23F7A82528024B76627CDF44961DA"
+  },
+  {
+    "path": "resources/views/errors/500.blade.php",
+    "sha256": "98F2449B3DF297882B5CFC6A3CFD4199D714D646E5A7F90B68C5D601CEEA08F5"
+  },
+  {
+    "path": "resources/views/errors/503.blade.php",
+    "sha256": "746C42D84EAD14191F4EDB72E6FD56018CCB2660D26D53A600F76FD6C7B4896C"
+  },
+  {
+    "path": "resources/views/errors/layout.blade.php",
+    "sha256": "C6BF262C518ED071D4DC24933161DCA8775074DCE44C9E8C0E6F138CE83A6237"
+  },
+  {
+    "path": "resources/views/home.blade.php",
+    "sha256": "30BA8C582997AC322AD1D2D3C3A97567D2404872D804F555372E0CEB7C3C7838"
+  },
+  {
+    "path": "resources/views/layouts/app.blade.php",
+    "sha256": "234524D43EF8132F629D969AA4E2BB9D4EAFC90E35A8E03F4506256842661B1D"
+  },
+  {
+    "path": "resources/views/patient/appointment.blade.php",
+    "sha256": "153323BC59DC057E39CE2EF41CDA51A1A61B05C5AEFA3B651F5A865AEF473FA1"
+  },
+  {
+    "path": "resources/views/patient/booking-review.blade.php",
+    "sha256": "C20C10C12BC8508F697E9D8A640E96888DC81E9D526D2C2D39B9320C32111E23"
+  },
+  {
+    "path": "resources/views/patient/booking-success.blade.php",
+    "sha256": "EAFD7D210F82017FE78F32FFBEC225D31A34D1BBD417DA623B2A1DFC1F492AF2"
+  },
+  {
+    "path": "resources/views/patient/booking.blade.php",
+    "sha256": "283088673D081DB5CBA4E4278E0B50DFFB47D504358DBEDE813AB14F9E0710CA"
+  },
+  {
+    "path": "resources/views/patient/dashboard.blade.php",
+    "sha256": "60EF71D3BDC5F61DB506C6A8CA8AE656DAD4318D69B96DB4FE9C835E786F80FA"
+  },
+  {
+    "path": "resources/views/patient/medical-reports/show.blade.php",
+    "sha256": "94282155A76A43D18C493917FA8375DF8826558520BDF762C6A91CFF101AACA0"
+  },
+  {
+    "path": "resources/views/patient/profile/edit.blade.php",
+    "sha256": "83CA45D41A2C5A253E6A3DAC9BD6309B840CA4D65EA85399CF43D607A210BDF3"
+  },
+  {
+    "path": "resources/views/patient/profile/show.blade.php",
+    "sha256": "3F1289595958DFA426E75878B05CFD1EBD6CE9B2CB199BFF8613F7AC36954C2F"
+  },
+  {
+    "path": "resources/views/patient/workspace.blade.php",
+    "sha256": "134EBBECE7F72E8C0CFD2F9E4313E145A6F9DE7E6AA4FABFAD7EA0F90E376ED0"
+  },
+  {
+    "path": "resources/views/public/dentist.blade.php",
+    "sha256": "685ED20B06650D077B1CF850FD321A3ABBD78F4399AC212AC32CD11120E9CC05"
+  },
+  {
+    "path": "resources/views/public/dentists.blade.php",
+    "sha256": "E52FDD2B2ADB808F335F94D785A957538B4FEBB5BC3E335FD5D2021A5A0BC2FD"
+  },
+  {
+    "path": "resources/views/smile-simulation/ai-create.blade.php",
+    "sha256": "CB4AD2B80A292430CD7CE4E3C37AD2B02EB2E2D612D1093B787BFEEEF1F2C8F4"
+  },
+  {
+    "path": "resources/views/smile-simulation/ai-gallery.blade.php",
+    "sha256": "7BE7899358CF39029B3C9E96B8627DD338FC5FC9097D443603472766BB6A8BBF"
+  },
+  {
+    "path": "resources/views/smile-simulation/ai-result.blade.php",
+    "sha256": "0157968150CFC05EECA4FD6115171B5BF33842149B0651019B197E86364B0EFF"
+  },
+  {
+    "path": "resources/views/smile-simulation/create.blade.php",
+    "sha256": "2572DCF19F5C5753FDD0E05C21A16EE3FFD090592F186C43A9205BA42EAFDAFA"
+  },
+  {
+    "path": "resources/views/taqweem-landing.blade.php",
+    "sha256": "AC74B05F49DDB79D75A888045CC997D142A2086F476697B990F1E1D3765EBDBF"
+  },
+  {
+    "path": "resources/views/welcome.blade.php",
+    "sha256": "15F606BC8D902C497F0D567146F97E65B56A4C410761D592DCFA32F22012E7D2"
+  },
+  {
+    "path": "routes/console.php",
+    "sha256": "9ADCCC33E7DD400683E434774077C7FDB2F299C5712CEDF16A43FDF56F2850FA"
+  },
+  {
+    "path": "routes/smile-ai.routes.php",
+    "sha256": "54DFBC6B7B144A5B6505FC3393815F5494A6B082345C028405E7BA2C06F3CEC6"
+  },
+  {
+    "path": "routes/web.php",
+    "sha256": "A2CEDFC46B74FC18C75A44C9B5306F1D8B8D6245C4E56CF4C0D1344D2D793D9F"
+  },
+  {
+    "path": "tests/Feature/ExampleTest.php",
+    "sha256": "AAA4A192FB4AA96D4E81EDA06A29968DA3D9A73B71026B87A67297E66DD985B8"
+  },
+  {
+    "path": "tests/Feature/TaqweemIntegrationTest.php",
+    "sha256": "BB98C8CF93B1EDF1C6A3C2872788F2654BE90443B1ABB026227DA479F3CC260D"
+  },
+  {
+    "path": "tests/TestCase.php",
+    "sha256": "C7C209F5579C42647C1F7B2A79AC828E8B54AC62A98442045A6E94FA2C0D0EBC"
+  },
+  {
+    "path": "tests/Unit/ExampleTest.php",
+    "sha256": "FFACAE5C1A2A44C809420AF5B3B404910DA1B12167D58764DAC6D10B8BA8CFAF"
+  },
+  {
+    "path": "tools/adapt-existing-views.mjs",
+    "sha256": "F61D049292B4B1BB0AB3A34743013798E15C8D7A44FC70D53B9308F438CCA3C8"
+  },
+  {
+    "path": "tools/add-error-translations.mjs",
+    "sha256": "17200FBCB99A11DD9DCA05B763EA7C845A34827606BC64653E8808ACEF8F624C"
+  },
+  {
+    "path": "tools/delivery-report.mjs",
+    "sha256": "D0D2669F7427F1D08B20863948DA2853C34A83FBF1E55F06CD51DB4D2C377BF0"
+  },
+  {
+    "path": "tools/final-navigation.mjs",
+    "sha256": "7D0E76B8288B12FA8781115A8140508DE4F73BCA158918CD015A4A393B02D4F6"
+  },
+  {
+    "path": "tools/finish-view-localization.mjs",
+    "sha256": "8AD4077E469AAE95B1F98A9A0AA93D65AF28D81349E0CDBC9333903CAFB0B929"
+  },
+  {
+    "path": "tools/localization-cleanup.mjs",
+    "sha256": "D37081557BEF7C4F4F9E6E4C8E62AAF628ECBEE028E3B0CA5DF1892ED549DF9B"
+  },
+  {
+    "path": "tools/localize-landing.mjs",
+    "sha256": "D88BCD428A678DCB24AFEFEB68DA3DD01214440051F0452B3F2C8C6B51030158"
+  },
+  {
+    "path": "tools/localize-views.mjs",
+    "sha256": "C2DFFA0902E70D8FF06146D28DF07A996F10585630742E4A3FC058FD71027981"
+  },
+  {
+    "path": "tools/package-review.ps1",
+    "sha256": "98753019AB5D43324515A7A06AC579DC273B43F6FA1168C5A1D35A370A4D3E0E"
+  },
+  {
+    "path": "tools/prepare-translations.mjs",
+    "sha256": "A93B8E9D98B0EDF119701C31DF32297351DAA5DD62F69C3AAD42604ACADC375C"
+  },
+  {
+    "path": "tools/qa-app.php",
+    "sha256": "7B169EE5CCEFCC20C5E3CE43890C5EC4911E5D74336E8C1950396CC7A3A08620"
+  },
+  {
+    "path": "tools/qa-browser.mjs",
+    "sha256": "2A23130CCDE268114BDC199A6BD9B9844A03AA73D312737DF6D80853FD00E6AC"
+  },
+  {
+    "path": "tools/qa-cinematic.mjs",
+    "sha256": "16FD9EB20BD844C62ADB7796DA66E949880ABF06D65D37B6863558EBFD477638"
+  },
+  {
+    "path": "tools/qa-fixes.mjs",
+    "sha256": "17132F7D499E2D173E57B3A8746C5F876B753FA95FDAB040D32607D562C41749"
+  },
+  {
+    "path": "tools/qa-locale-error.mjs",
+    "sha256": "24A15D2AEAFB0E50E7CDEBB58EBD64739CF02D1424BC5A83FBA1B70D267BE7CE"
+  },
+  {
+    "path": "tools/qa-navigation.mjs",
+    "sha256": "38B803C96DEAC0064C57A82795520D72BAE7819CCDEB26B71EA537EE7B8ED9B4"
+  },
+  {
+    "path": "tools/qa-responsive.mjs",
+    "sha256": "54F25B85E36F71C4DDB0A033F32D9F95D720728959EA3B4BCE017407C2A41FFC"
+  },
+  {
+    "path": "tools/qa-router.php",
+    "sha256": "36FA40E806A7B81674D90A9447394DCABD6FAB16A79C2EE592C5DD1EB08A0C38"
+  },
+  {
+    "path": "tools/qa-services.php",
+    "sha256": "E7613903D6BF5380F4B0A35EBC92A8839DC63DB9E2F49F1C6395087C5EDE889B"
+  },
+  {
+    "path": "tools/qa-setup.php",
+    "sha256": "EAC8C220F0D3A9916A0A3CFAA433EE7ADA9F92E34368B8E22735CBDBE0DB6519"
+  },
+  {
+    "path": "tools/route-inventory.php",
+    "sha256": "D3D9D7C679E24D802D2719176D192CD024F41D10B9383DFACBC4542A4F4FD99A"
+  },
+  {
+    "path": "tools/test-landing.cjs",
+    "sha256": "1AC5675FCACA8821B60D85EF191886A4CDAE32B1544CF4FCFC1AFA6EB00B45E3"
+  },
+  {
+    "path": "vite.config.js",
+    "sha256": "B981A284135BCB7DA21EA5E1AAA2DC31C8DAEEF92D9B4E5C79538BDB8DFAF6F0"
+  }
+]

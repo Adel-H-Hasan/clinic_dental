@@ -1,56 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>specialities</title>
-</head>
-<body>
-    <h1>Dental specialities</h1>
+<x-workspace title="{{ __('specialities') }}">
+<div class="panel">
+
     <a href="{{ route('admin.specialities.create') }}">
-     Add New Speciality
+     {{ __('Add New Speciality') }}
     </a>
 
-    <table>
+    <div class="workspace-table" role="region" aria-label="{{ __('Records') }}" tabindex="0"><table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-               
+                <th>{{ __('ID') }}</th>
+                <th>{{ __('Name') }}</th>
+                <th>{{ __('Description') }}</th>
+                <th>{{ __('Actions') }}</th>
+
             </tr>
         </thead>
 
         <tbody>
             @forelse($specialities as $speciality)
             <tr>
-                
+
                    <td>{{ $speciality->id }}</td>
                    <td>{{ $speciality->name }}</td>
-                   <td>{{ $speciality->description ?? 'No description' }}</td>
+                   <td>{{ $speciality->description ?? __('No description') }}</td>
                    <td>
                     <a href="{{ route('admin.specialities.edit',$speciality->id) }}">
-                        Edit
+                        {{ __('Edit') }}
                     </a>
 
                      <form action="{{ route('admin.specialities.destroy',$speciality->id)}}" method="POST">
                         @csrf
                         @method('DELETE')
 
-                    <button type="submit" 
-                    onclick="return confirm('Are you sure you want to delete this speciality?')">Delete</button>
+                    <button type="submit"
+                    onclick="return confirm(@js(__('Are you sure you want to delete this speciality?')))">{{ __('Delete') }}</button>
                     </form>
                    </td>
-                   
+
             </tr>
-            @empty 
+            @empty
             <tr>
-                <td>No specialities found</td>
+                <td>{{ __('No specialities found') }}</td>
             </tr>
             @endforelse
         </tbody>
-    </table>
-    
-</body>
-</html>
+    </table></div>
+
+
+</div>
+</x-workspace>

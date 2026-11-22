@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'medassist_ai' => [
+        'url' => env('MEDASSIST_AI_URL', 'http://127.0.0.1:8001'),
+        'token' => env('MEDASSIST_AI_TOKEN'),
+        'timeout' => (int) env('MEDASSIST_AI_TIMEOUT', 900),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +29,9 @@ return [
 
     'gemini' => [
         'key' => env('GEMINI_API_KEY'),
-        'demo_review' => false,
+        // Explicit opt-in; never activate a potentially billed API merely because a key exists.
+        'demo_review' => (bool) env('GEMINI_REVIEW_ENABLED', false),
+        'model' => env('GEMINI_MODEL', 'gemini-3.1-flash-lite'),
     ],
 
     'ses' => [

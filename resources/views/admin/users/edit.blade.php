@@ -1,11 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit User</title>
-</head>
-<body>
-    <h1>This is the Edit User page.</h1>
-</body>
-</html>
+<x-workspace title="{{ __('Manage account access') }}"><section><h2>{{ $user->name }}</h2><p>{{ $user->email }}</p><form method="post" action="{{ route('admin.users.update',$user->id) }}">@csrf @method('PUT')<label for="is_active">{{ __('Account access') }}</label><select name="is_active" id="is_active"><option value="1" @selected(old('is_active',$user->is_active)==1)>{{ __('Active') }}</option><option value="0" @selected(old('is_active',$user->is_active)==0)>{{ __('Inactive') }}</option></select><p class="muted">{{ __('Inactive accounts cannot sign in. This does not delete the user\'s records.') }}</p><button>{{ __('Save access') }}</button><a href="{{ route('admin.users.index') }}">{{ __('Cancel') }}</a></form></section></x-workspace>
