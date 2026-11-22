@@ -26,7 +26,7 @@ class DoctorProfileController extends Controller
      */
     public function edit(Request $request)
     {
-        $profile = $request->user()->doctor_profile->firstOrFail();
+        $profile = $request->user()->doctor_profile()->firstOrFail();
 
         return view('doctor.profile.edit', compact('profile'));
     }

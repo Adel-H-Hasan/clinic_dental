@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-workspace title="{{ __('Patient Profile') }}">
+<div class="panel">
+    <div class="view-content">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patient Profile</title>
-</head>
-
-<body>
-    <main>
-    <h1>My profile</h1>
 
     @if (session('success'))
-        <p role="status">{{ session('success') }}</p>
+        <p role="status">{{ __(session('success')) }}</p>
     @endif
 
     <dl>
-        <dt>Full name</dt>
+        <dt>{{ __('Full name') }}</dt>
         <dd>{{ $patient->name }}</dd>
 
-        <dt>Email address</dt>
+        <dt>{{ __('Email address') }}</dt>
         <dd>{{ $patient->email }}</dd>
 
-        <dt>Phone number</dt>
+        <dt>{{ __('Phone number') }}</dt>
         <dd>{{ $patient->phone }}</dd>
 
-        <dt>Date of birth</dt>
-        <dd>{{ $patient->date_of_birth ?? 'Not provided' }}</dd>
+        <dt>{{ __('Date of birth') }}</dt>
+        <dd>{{ $patient->date_of_birth ?? __('Not provided') }}</dd>
 
-        <dt>Gender</dt>
-        <dd>{{ $patient->gender ? ucfirst($patient->gender) : 'Not provided' }}</dd>
+        <dt>{{ __('Gender') }}</dt>
+        <dd>{{ $patient->gender ? __(ucfirst($patient->gender)) : __('Not provided') }}</dd>
     </dl>
 
-    <a href="{{ route('patient.profile.edit') }}">Edit my profile</a>
-</main>
-</body>
+    <a href="{{ route('patient.profile.edit') }}">{{ __('Edit my profile') }}</a>
+</div>
 
-</html>
+</div>
+</x-workspace>

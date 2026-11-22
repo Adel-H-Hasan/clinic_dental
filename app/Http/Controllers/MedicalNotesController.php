@@ -86,14 +86,18 @@ class MedicalNotesController extends Controller
 
         $note = $this->findEditableNote($request, $id, $noteId);
 
+        $suggestions = $reviewer->review($note);
+
         return redirect()
-            ->route('doctor.appointments.medical-notes.index', $id)
+            ->to(
+                route('doctor.appointments.medical-notes.index', $id)
+                    . '#review-result-' . $note->id
+            )
             ->with('medical_note_review', [
                 'note_id' => $note->id,
-                'suggestions' => $reviewer->review($note),
+                'suggestions' => $suggestions,
             ]);
     }
-
     private function findEditableNote(Request $request, $id, $noteId)
     {
         $doctor = $request->user()->doctor_profile;

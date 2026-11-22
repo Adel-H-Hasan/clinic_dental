@@ -1,0 +1,41 @@
+/* TAQWEEM v4 / X-ray → live GLB. Anchored to actual video monitor pixels.
+   All animation is driven by the existing deterministic chapter progress. */
+.portal-gateway{position:absolute;inset:0;z-index:9;overflow:hidden;isolation:isolate;opacity:0;pointer-events:none;background:#061d2b;will-change:clip-path,opacity;contain:layout paint}
+.portal-surface{position:absolute;z-index:1;overflow:hidden;background:#071c29;transform:translateZ(0);will-change:left,top,width,height}
+.portal-reference,.portal-xray{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.portal-reference{filter:contrast(1.12) saturate(.75)}
+.portal-xray{opacity:0;filter:brightness(.86) saturate(.78);mix-blend-mode:screen;will-change:opacity}
+.portal-glass{position:absolute;inset:0;border:1px solid #a8e6ec81;box-shadow:inset 0 0 21px #68e5e360,0 0 30px #68e5e32b;pointer-events:none}
+.portal-glass:before,.portal-glass:after{content:"";position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#b8f9f0ad,transparent)}
+.portal-glass:before{top:23%}.portal-glass:after{bottom:19%}
+.portal-depth{position:absolute;inset:0;z-index:3;overflow:hidden;opacity:0;background:radial-gradient(ellipse at 50% 49%,#174557 0%,#092739 38%,#03121f 85%);will-change:opacity}
+.portal-perspective-grid{position:absolute;inset:-70%;opacity:.45;background-image:linear-gradient(#62d7d031 1px,transparent 1px),linear-gradient(90deg,#62d7d02a 1px,transparent 1px);background-size:62px 62px;transform:perspective(800px) rotateX(71deg) scale(1.35);transform-origin:50% 50%;mask-image:radial-gradient(ellipse at center,#000 3%,transparent 68%);will-change:transform}
+.portal-slice{position:absolute;left:50%;top:50%;width:min(74vw,87vh);aspect-ratio:1.45;border:1px solid #8fe5db65;border-radius:22%/35%;opacity:0;box-shadow:inset 0 0 21px #75d3d022,0 0 26px #72f5ed15;transform:translate(-50%,-50%) scale(.35);will-change:transform,opacity}
+.portal-slice:before,.portal-slice:after{content:"";position:absolute;width:16px;height:16px;border-color:#a4e9df9c;border-style:solid}
+.portal-slice:before{top:0;left:0;border-width:1px 0 0 1px}.portal-slice:after{bottom:0;right:0;border-width:0 1px 1px 0}
+.portal-depth-ray{position:absolute;inset:0;background:linear-gradient(115deg,transparent 38%,#85eee515 49%,#ccffff2e 51%,transparent 63%);mix-blend-mode:screen;opacity:.65;transform:translateX(-50%);will-change:transform}
+.portal-core{position:absolute;z-index:4;left:50%;top:50%;width:min(32vw,32vh);height:min(58vw,55vh);transform:translate(-50%,-50%) scale(.45);opacity:0;filter:grayscale(1) brightness(1.7) sepia(.3) hue-rotate(130deg) drop-shadow(0 0 22px #74eef09c);mix-blend-mode:screen;will-change:transform,opacity}
+.portal-core img{display:block;width:100%;height:100%;object-fit:contain;mask-image:linear-gradient(180deg,#000 8%,#000 76%,transparent 100%)}
+.portal-filmgrain{position:absolute;z-index:6;inset:0;opacity:.35;pointer-events:none;background:repeating-linear-gradient(0deg,transparent 0 5px,#8ae5ea08 6px,transparent 7px)}
+.portal-metadata{position:absolute;z-index:8;left:clamp(21px,6vw,100px);right:clamp(21px,6vw,100px);bottom:30px;display:flex;justify-content:space-between;align-items:center;gap:20px;color:#b8e7e6;font-size:9px;letter-spacing:.13em;text-shadow:0 2px 8px #01121c}
+/* GLB fallback must be there before fetch/render finishes. */
+body.model-pending #world .tooth-fallback{display:grid;opacity:.72}
+body.model-pending #world .tooth-actions,body.model-pending #tooth-actions{pointer-events:none!important;opacity:0!important}
+body.model-pending #world #tooth-canvas{opacity:0}
+body:not(.model-pending):not(.no-webgl) #world #tooth-canvas{opacity:1;transition:opacity .38s ease}
+/* Visual states after loading; never claim a functioning 3D control if fallback is active. */
+.no-webgl #portal-core{opacity:1}
+@media(max-width:600px){
+ .portal-metadata{left:17px;right:17px;bottom:65px;font-size:7px;letter-spacing:.08em}
+ .portal-metadata span:nth-child(2){max-width:145px;text-align:right}
+ .portal-slice{width:95vw;aspect-ratio:.9;border-radius:24%}
+ .portal-core{width:min(45vw,27vh);height:50vh;top:53%}
+ .portal-perspective-grid{background-size:45px 45px}
+}
+@media(prefers-reduced-motion:reduce){.portal-gateway{display:none!important}}
+
+/* v4.1: the monitor image travels inward instead of staying flat. */
+.portal-xray{transform-origin:69% 45%;will-change:opacity,transform,filter}
+.portal-depth{background:radial-gradient(ellipse at 50% 47%,#1a5364 0%,#0b3041 25%,#041624 77%,#03111b 100%)}
+.portal-slice{box-shadow:inset 0 0 29px #75d3d022,0 0 40px #72f5ed22}
+/* Maintain original reduced-motion and fallback behavior. */

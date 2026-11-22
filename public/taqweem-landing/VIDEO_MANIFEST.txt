@@ -1,0 +1,5 @@
+TAQWEEM v3 — source metadata
+entrance_complete_building_scrub.mp4 | 1280x720 | ~3.83s | begins AFTER building construction
+interior-scrub.mp4 | 1280x720 | 10.0s | older MedAssist reference plate, monitor signage
+ treatment.mp4 | 1280x720 | 10.0s | clinical treatment concept, one on-page section
+Source resolution is 720p. Videos do not share a verified physically continuous camera or architecture.
