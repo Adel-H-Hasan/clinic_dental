@@ -29,7 +29,9 @@ return [
 
     'gemini' => [
         'key' => env('GEMINI_API_KEY'),
-        'demo_review' => false,
+        // Explicit opt-in; never activate a potentially billed API merely because a key exists.
+        'demo_review' => (bool) env('GEMINI_REVIEW_ENABLED', false),
+        'model' => env('GEMINI_MODEL', 'gemini-3.1-flash-lite'),
     ],
 
     'ses' => [

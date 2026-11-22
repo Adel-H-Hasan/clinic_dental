@@ -1,0 +1,44 @@
+{
+  "changed": [
+    "app/Services/GeminiClient.php",
+    "app/Services/GeminiNoteReviewer.php",
+    "app/Services/SmileAiClient.php",
+    "app/Http/Controllers/AiImageAnalysesController.php",
+    "app/Http/Controllers/MedicalReportsController.php",
+    "app/Http/Controllers/SmileAiController.php",
+    "app/Http/Requests/GenerateSmileRequest.php",
+    "config/services.php",
+    "lang/ar.json",
+    "lang/en.json",
+    "tests/Feature/SmileFailureAuditTest.php",
+    "tests/Feature/TaqweemIntegrationTest.php",
+    "medassist-ai-engine/app/main.py",
+    "medassist-ai-engine/run.ps1",
+    "medassist-ai-engine/README.md"
+  ],
+  "added": [
+    "resources/views/mail/verification-plain.blade.php",
+    "tests/Feature/AiRecoveryTest.php",
+    "tests/Fixtures/synthetic-smile.png",
+    "tools/demo-app.php",
+    "tools/demo-router.php",
+    "tools/demo-setup.php",
+    "tools/demo-smoke.mjs",
+    "tools/qa-ai-browser.mjs",
+    "tools/recovery-ai-status.php",
+    "tools/recovery-finalize.mjs",
+    "tools/recovery-mail-trace.php",
+    "tools/recovery-user-status.php",
+    "medassist-ai-engine/requirements-health.txt",
+    "medassist-ai-engine/tests/test_api.py"
+  ],
+  "envUnchanged": true,
+  "otherOutputs": [
+    ".gitignore",
+    "medassist-ai-engine/.venv/ (local runtime)",
+    "storage/app/recovery-20261122/ (local backup and Python runtime)",
+    "output/recovery-evidence/",
+    "docs/taqweem/RECOVERY_FINAL_AR.md",
+    "public/build/ (rebuilt)"
+  ]
+}

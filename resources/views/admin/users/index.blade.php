@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users List</title>
-</head>
-<body>
-    <h1>This is the Users List page.</h1>
-</body>
-</html>
+<x-workspace title="{{ __('Patient accounts & doctors') }}" subtitle="{{ __('Manage access to the clinic. Clinical notes remain restricted to the care team.') }}">
+<div class="panel"><div class="workspace-table" role="region" aria-label="{{ __('Users') }}" tabindex="0"><table><thead><tr><th>{{ __('Name') }}</th><th>{{ __('Email') }}</th><th>{{ __('Role') }}</th><th>{{ __('Access') }}</th><th>{{ __('Manage') }}</th></tr></thead><tbody>
+@forelse($users as $user)<tr><td><a href="{{ route('admin.users.show',$user->id) }}">{{ $user->name }}</a></td><td>{{ $user->email }}</td><td>{{ __($user->role) }}</td><td>{{ __($user->is_active ? 'Active' : 'Inactive') }}</td><td><a href="{{ route('admin.users.edit',$user->id) }}">{{ __('Manage account') }}</a></td></tr>@empty<tr><td colspan="5">{{ __('No patient or doctor accounts found.') }}</td></tr>@endforelse
+</tbody></table></div></div></x-workspace>

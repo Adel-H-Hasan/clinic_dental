@@ -43,11 +43,17 @@ class AuthController extends Controller
         $request->session()->regenerate();
 
         $fallback = match ($request->user()->role) {
-            'patient' => route('patient.profile.show'),
+            'patient' => route('patient.dashboard'),
             'doctor' => route('doctor.dashboard'),
             'admin' => route('admin.dashboard'),
         };
 
+        // Retain only same-origin destinations within the authenticated role.
+        $intended = $request->session()->get('url.intended');
+        $prefix = $request->getSchemeAndHttpHost().'/'.$request->user()->role.'/';
+        if (!is_string($intended) || !str_starts_with($intended, $prefix) || str_contains($intended, '/..')) {
+            $request->session()->forget('url.intended');
+        }
         return redirect()->intended($fallback);
     }
 
@@ -93,9 +99,17 @@ class AuthController extends Controller
 
         $user = User::create($data);
 
-        event(new Registered($user));
+        try {
+            event(new Registered($user));
+        } catch (\Throwable $exception) {
+            // Never log the transport message: it can contain recipient information.
+            \Illuminate\Support\Facades\Log::warning('Verification delivery failed', ['exception_type' => get_class($exception)]);
+            return redirect()->route('verification.notice')->withErrors([
+                'email' => __('Your account was created, but the verification email could not be sent. Please request another link.'),
+            ]);
+        }
 
-        return redirect()->route('verification.notice');;
+        return redirect()->route('verification.notice');
     }
 
 
@@ -157,9 +171,11 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
+        $locale = app()->getLocale();
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerate();
+        $request->session()->put('locale', $locale);
 
         return redirect('/');
     }

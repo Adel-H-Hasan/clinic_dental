@@ -22,8 +22,30 @@ use Illuminate\Support\Facades\Route;
 // Number of middlewares used => 7
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('taqweem-landing');
+})->name('landing');
+
+Route::get('/dentists', [\App\Http\Controllers\WorkspaceController::class, 'directory'])->name('dentists.index');
+Route::get('/dentists/{id}', [\App\Http\Controllers\WorkspaceController::class, 'dentist'])->whereNumber('id')->name('dentists.show');
+Route::middleware(['auth', 'patientOnly', 'verified'])->prefix('patient')->name('patient.')->group(function () {
+    Route::get('/dashboard', [\App\Http\Controllers\WorkspaceController::class, 'dashboard'])->name('dashboard');
+    Route::get('/booking', [\App\Http\Controllers\WorkspaceController::class, 'booking'])->name('booking');
+    Route::post('/booking/review', [\App\Http\Controllers\WorkspaceController::class, 'reviewBooking'])->name('booking.review');
+    Route::get('/booking/review', function () {
+        if (session('success') === 'Appointment booked successfully.') return view('patient.booking-success');
+        session()->reflash();
+        return redirect()->route('patient.booking');
+    });
+    Route::get('/visits/{id}', [\App\Http\Controllers\WorkspaceController::class, 'detail'])->whereNumber('id')->name('visits.show');
 });
+
+// Additive HTML screens: retain the original appointment JSON contracts.
+Route::get('/patient/workspace', [\App\Http\Controllers\WorkspaceController::class, 'patient'])
+    ->middleware(['auth', 'patientOnly', 'verified'])->name('patient.workspace');
+Route::get('/doctor/workspace', [\App\Http\Controllers\WorkspaceController::class, 'doctor'])
+    ->middleware(['auth', 'doctorOnly'])->name('doctor.workspace');
+Route::get('/admin/service-catalog', [\App\Http\Controllers\WorkspaceController::class, 'types'])
+    ->middleware(['auth', 'adminOnly'])->name('admin.types.workspace');
 
 // Admin doctors CRUD routes
 Route::middleware(['auth', 'adminOnly'])
@@ -169,8 +191,12 @@ Route::middleware('guest')
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
             ->name('password.update');
 
-        Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
+
     });
+
+Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
+Route::post('email/verification-notification', \App\Http\Controllers\VerificationNotificationController::class)
+    ->middleware('throttle:6,1')->name('verification.send');
 
 Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
     $user = User::findOrFail ($id);
@@ -186,7 +212,7 @@ Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
         ->with('status', 'Your email is verified. You can now log in.');
     // Signed: Laravel’s built-in middleware 
     //for checking that the link Laravel generated hasn’t been changed or expired.
-})->middleware('signed')->name('verification.verify');;
+})->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 
 
 
@@ -208,7 +234,7 @@ Route::middleware('auth')->group(function () {
 Route::post('/smile-simulation/upload', [
     \App\Http\Controllers\AiImageAnalysesController::class,
     'store'
-])->middleware('auth')->name('smile.upload');
+])->middleware(['auth', 'patientOnly', 'verified'])->name('smile.upload');
 
 Route::get('/smile-simulation', function () {
     return redirect()->route('smile.ai.create');
@@ -230,7 +256,12 @@ Route::get('/language/{locale}', function (string $locale) {
 
     session(['locale' => $locale]);
 
-    return redirect()->route('home');
+    $return = request()->query('return', '/');
+    if (!is_string($return) || !str_starts_with($return, '/') || str_starts_with($return, '//') || str_contains($return, '\\') || preg_match('/[\x00-\x20]/', $return)) {
+        $return = '/';
+    }
+    session()->reflash();
+    return redirect($return);
 })->name('language.switch');
 
 // Smile AI routes

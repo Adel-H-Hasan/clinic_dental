@@ -1,0 +1,37 @@
+import { chromium } from '@playwright/test';import fs from 'node:fs';
+const language=process.env.QA_LANGUAGE || 'en';
+const base='http://127.0.0.1:8199',runtime=JSON.parse(fs.readFileSync('output/qa-local/runtime.json','utf8')),fixture=JSON.parse(fs.readFileSync('output/qa-local/fixture.json','utf8'));
+const browser=await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:true,args:['--no-sandbox']});
+const results=[],errors=[];const check=(condition,label)=>{if(!condition)throw new Error(label);results.push({test:label,passed:true});};
+const context=await browser.newContext({viewport:{width:1440,height:1000}});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+async function go(url){const r=await page.goto(base+url);check(r.status()<400,'HTTP '+url+' '+r.status());}
+async function login(email){await go('/login');await page.locator('#email').fill(email);await page.locator('#password').fill(runtime.password);await Promise.all([page.waitForURL(u=>!u.pathname.endsWith('/login')),page.locator('button[type=submit]').click()]);}
+async function logout(){await Promise.all([page.waitForURL(base+'/'),page.locator('form[action$="/logout"] button').click()]);}
+try {
+ await go('/');if(language==='ar'){await page.locator('a[lang=ar]:visible').first().click();await page.waitForLoadState();}await page.screenshot({path:'output/qa-evidence/landing-en-desktop.png'});check(await page.locator('a[href$="/login"]').count()>0,'الرئيسية تعرض رابط الدخول');check(await page.locator('a[href$="/register"]').count()>0,'الرئيسية تعرض رابط التسجيل');
+ await page.locator('a[href$="/register"]').first().click();const email='patient-'+Date.now()+'@taqweem.test';
+ await page.locator('#name').fill('QA Patient');await page.locator('#email').fill(email);await page.locator('#phone').fill('+962790000002');await page.locator('#password').fill(runtime.password);await page.locator('#password_confirmation').fill(runtime.password);
+ await Promise.all([page.waitForURL('**/email/verify'),page.locator('button[type=submit]').click()]);check(true,'التسجيل عبر النموذج الحقيقي وإظهار طلب التحقق');
+ await go('/login');await page.locator('#email').fill(email);await page.locator('#password').fill(runtime.password);await page.locator('button[type=submit]').click();await page.waitForLoadState();check(new URL(page.url()).pathname==='/login','منع دخول المريض قبل التحقق من البريد');
+ const log=fs.readFileSync('output/qa-local/application.log','utf8');const urls=log.match(/http:\/\/127\.0\.0\.1:8199\/email\/verify\/[^\s<>"]+/g)||[];check(urls.length>0,'توليد رابط تحقق موقّع بواسطة Laravel');
+ const verification=urls.at(-1).replaceAll('&amp;','&').replace(/[).]+$/,'');await page.goto(verification);check(new URL(page.url()).pathname==='/login','تفعيل الحساب عبر رابط التحقق الفعلي');
+ await login(email);check(new URL(page.url()).pathname==='/patient/dashboard','توجيه المريض إلى لوحته بعد الدخول');check(await page.locator('#main h1').count()===1,'عرض لوحة المريض دون خطأ في القالب');await page.screenshot({path:'output/qa-evidence/patient-en-desktop.png'});
+ await page.locator('a[href$="/dentists"]').first().click();await page.locator('a[href$="/dentists/'+fixture.doctor+'"]').click();await page.locator('a[href*="/patient/booking"]').first().click();await page.locator('#date').fill(fixture.date);await page.locator('form[method=get] button').click();await page.waitForLoadState();check(await page.locator('input[name=scheduled_at]').count()>0,'عرض أوقات متاحة من بيانات الطبيب الفعلية');
+ await page.locator('input[name=scheduled_at]').first().check();await page.locator('#reason').fill('QA isolated booking');await page.locator('form[action$="/booking/review"] button').click();await page.waitForLoadState();await page.locator('form[action$="/patient/appointments"] button').click();await page.waitForLoadState();check(new URL(page.url()).pathname==='/patient/booking/review','الوصول إلى نتيجة الطلب بعد الحفظ');await page.locator('a[href$="/patient/workspace"]').first().click();check(await page.locator('tbody').innerText().then(t=>t.includes(language==='ar'?'قيد الانتظار':'Pending')),'المريض يرى الطلب بحالة معلّقة');await page.screenshot({path:'output/qa-evidence/booking-en-desktop.png'});
+ const visitHref=await page.locator('a[href*="/patient/visits/"]').first().getAttribute('href');const visitId=visitHref.split('/').at(-1);
+ await logout();await login('doctor@taqweem.test');check(new URL(page.url()).pathname==='/doctor/dashboard','توجيه الطبيب إلى لوحة الطبيب');await go('/doctor/workspace');await page.locator(`form[action$="/appointments/${visitId}/status"] button`).click();await page.waitForLoadState();check(await page.locator('tbody').innerText().then(t=>t.includes(language==='ar'?'مؤكد':'Confirmed')),'الطبيب يؤكد الموعد عبر إجراء الخلفية الأصلي');await page.screenshot({path:'output/qa-evidence/doctor-en-desktop.png'});
+ await logout();await login(email);await go('/patient/workspace');check(await page.locator('tbody').innerText().then(t=>t.includes(language==='ar'?'مؤكد':'Confirmed')),'المريض يرى حالة الموعد المؤكدة بعد تحديث الطبيب');
+ const denied=await page.goto(base+'/admin/dashboard');check(denied.status()===403,'منع المريض من لوحة المدير');await go('/patient/dashboard');
+ await page.locator('a[lang=ar]:visible').first().click();await page.waitForLoadState();check(await page.locator('html').getAttribute('dir')==='rtl','التبديل إلى العربية واتجاه RTL');await page.screenshot({path:'output/qa-evidence/patient-ar-desktop.png'});
+ await page.setViewportSize({width:390,height:844});await page.screenshot({path:'output/qa-evidence/patient-ar-mobile.png'});check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'عدم تجاوز عرض شاشة الهاتف في لوحة المريض العربية');
+ await page.locator('[data-menu]').click();await logout();check(await page.locator('html').getAttribute('lang')==='ar','بقاء العربية بعد تسجيل الخروج');await page.screenshot({path:'output/qa-evidence/landing-ar-mobile.png'});
+ const guest=await page.goto(base+'/patient/dashboard');check(new URL(page.url()).pathname==='/login','إعادة الزائر إلى الدخول عند فتح صفحة محمية');
+ await context.clearCookies();if(language==='ar')await go('/language/ar?return=%2Flogin');await page.setViewportSize({width:1440,height:1000});await login('admin@taqweem.test');check(new URL(page.url()).pathname==='/admin/dashboard','توجيه المدير إلى لوحة الإدارة');await page.screenshot({path:'output/qa-evidence/admin-ar-desktop.png'});await go('/admin/users');check((await page.locator('tbody').innerText()).includes('QA Patient'),'عرض الحساب المسجل في إدارة المستخدمين');
+ await go('/admin/service-catalog');await page.locator('#name').fill('QA type '+Date.now());await page.locator('#description').fill('Isolated test');await page.locator('form[action$="/admin/appointment-types"] button').click();await page.waitForLoadState();check(await page.locator('[role=status]').count()>0,'إضافة نوع موعد من لوحة المدير');
+ await logout();await go('/smile-ai');check(await page.locator('#smile-form').count()===1,'عرض واجهة Smile AI الحقيقية');
+ fs.writeFileSync('output/qa-local/patient.json',JSON.stringify({email,visitId}));
+} catch(e){results.push({test:e.message,passed:false});await page.screenshot({path:'output/qa-evidence/failure.png'});console.error(e.stack);}
+finally {fs.writeFileSync(`output/qa-evidence/browser-results-${language}.json`,JSON.stringify({results,errors},null,2));console.log(JSON.stringify({results,errors},null,2));await browser.close();}
+
+
+
