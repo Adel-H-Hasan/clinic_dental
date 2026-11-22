@@ -25,7 +25,16 @@ window.addEventListener('pageshow', () => document.querySelectorAll('form[data-s
 // Preserve non-sensitive form drafts only for an explicit language change.
 // Passwords, file uploads, clinical notes, and free-text reasons are never stored.
 const draftKey = 'taqweem-language-draft:' + location.pathname;
-const draftFields = 'input:not([type=password]):not([type=file]):not([type=hidden]), select';
+const draftFields = 'input:not([type=password]):not([autocomplete$="-password"]):not([type=file]):not([type=hidden]), select';
+document.querySelectorAll('.password-eye').forEach(button => {
+    const input = document.getElementById(button.getAttribute('aria-controls'));
+    button.hidden = false;
+    button.addEventListener('click', () => {
+        const reveal = input.type === 'password';
+        input.type = reveal ? 'text' : 'password';
+        button.setAttribute('aria-pressed', String(reveal));
+    });
+});
 document.querySelectorAll('[data-language-switch]').forEach(link => link.addEventListener('click', () => {
     if (['ar', 'en'].includes(link.lang)) document.cookie = 'taqweem_ui_locale=' + link.lang + '; Path=/; SameSite=Lax';
     const values = [...document.querySelectorAll(draftFields)].filter(el => el.name && !['diagnosis','prescription','notes','content','reason'].includes(el.name)).map(el=>({name:el.name,value:el.value,checked:el.checked}));

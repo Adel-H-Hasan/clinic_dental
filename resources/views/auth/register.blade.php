@@ -31,11 +31,11 @@
     <div class="auth-two-col auth-password-row">
       <div class="auth-field">
         <label for="password">{{ __('Password') }}</label>
-        <input type="password" id="password" name="password" autocomplete="new-password" minlength="8" required>
+        <x-password-input id="password" name="password" autocomplete="new-password" minlength="8" required />
       </div>
       <div class="auth-field">
         <label for="password_confirmation">{{ __('Confirm password') }}</label>
-        <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" required>
+        <x-password-input id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" required />
       </div>
     </div>
     <p class="auth-hint auth-password-hint">{{ __('At least 8 characters with upper and lowercase letters, a number and a symbol.') }}</p>

@@ -6,11 +6,11 @@
     <p class="auth-reset-email">{{ __('Choose a new password for') }} <strong>{{ $email }}</strong></p>
     <div class="auth-field">
       <label for="password">{{ __('New password') }}</label>
-      <input id="password" type="password" name="password" autocomplete="new-password" minlength="8" required>
+      <x-password-input id="password" name="password" autocomplete="new-password" minlength="8" required />
     </div>
     <div class="auth-field">
       <label for="password_confirmation">{{ __('Confirm new password') }}</label>
-      <input id="password_confirmation" type="password" name="password_confirmation" autocomplete="new-password" minlength="8" required>
+      <x-password-input id="password_confirmation" name="password_confirmation" autocomplete="new-password" minlength="8" required />
     </div>
     <p class="auth-hint">{{ __('At least 8 characters with upper and lowercase letters, a number and a symbol.') }}</p>
     @error('email')<a href="{{ route('password.request') }}">{{ __('Request a new reset link') }}</a>@enderror

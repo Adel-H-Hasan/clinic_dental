@@ -10,7 +10,7 @@
         <label for="password">{{ __('Password') }}</label>
         <a href="{{ route('password.request') }}">{{ __('Forgot password?') }}</a>
       </div>
-      <input type="password" id="password" name="password" autocomplete="current-password" required>
+      <x-password-input id="password" name="password" autocomplete="current-password" required />
     </div>
     <label class="auth-remember"><input type="checkbox" name="remember" value="1"> {{ __('Remember me') }}</label>
     <button class="auth-submit" type="submit">{{ __('Sign in') }}</button>
