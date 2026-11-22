@@ -43,7 +43,23 @@ class PatientProfileController extends Controller
             'gender' => ['nullable', 'in:male,female']
         ]);
 
-        $user->update ($data);
+        $user->fill($data);
+        $emailChanged = $user->isDirty('email');
+        if ($emailChanged) {
+            $user->email_verified_at = null;
+        }
+        $user->save();
+        if ($emailChanged) {
+            try {
+                $user->sendEmailVerificationNotification();
+            } catch (\Throwable $exception) {
+                \Illuminate\Support\Facades\Log::warning('Verification delivery failed', ['exception_type' => get_class($exception)]);
+                return redirect()->route('verification.notice')->withErrors([
+                    'email' => __('Your email was updated, but the verification message could not be sent. Please request another link.'),
+                ]);
+            }
+            return redirect()->route('verification.notice');
+        }
 
         return redirect()->route('patient.profile.show')->with('success', 'Patient updated successfully');
     }

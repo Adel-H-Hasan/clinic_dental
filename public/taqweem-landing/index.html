@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#081e2a"><meta name="description" content="TAQWEEM — an immersive cinematic dental care experience, frontend concept.">
+<title>TAQWEEM — A Different Perspective on Dental Care</title>
+<link rel="preload" as="image" href="./assets/img/exterior-poster.jpg">
+<link rel="stylesheet" href="./css/scan-base.css"><link rel="stylesheet" href="./css/site.css">
+<link rel="stylesheet" href="./css/portal.css"><script src="./js/site.js" defer></script><script src="./js/portal.js" defer></script><script src="./js/scan-engine.js" defer></script>
+</head>
+<body data-hero-mode="CONTINUOUS" class="model-pending">
+<a class="skip-to-content" href="#approach">Skip cinematic intro</a>
+<div class="top-progress" aria-hidden="true"><div id="top-progress"></div></div>
+<header class="global-header" id="global-header">
+  <a class="brand-logo" href="#top" aria-label="TAQWEEM — start"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 40" width="31" height="31" fill="none"><path d="M10 7C5 12 7 20 11 27c2 5 3 8 6 8 3 0 3-8 6-8s3 8 6 8c3 0 4-4 6-8 3-7 5-15 0-20-4-4-10-3-13-1-3-2-9-3-12 1Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M30 9v9M25.5 13.5h9" stroke="currentColor" stroke-width="1.4"/></svg></span><span class="logo-type">TAQWEEM<small>THE DENTAL EXPERIENCE</small></span></a>
+  <nav class="global-nav" aria-label="Primary navigation"><a href="#approach">Our approach</a><a href="#specialists">The people</a><a href="#journey">3D experience</a><a href="#care-process">Care journey</a><a href="#visit">Your visit</a></nav>
+  <div class="header-right"><a class="nav-book" href="#visit">BOOKING PREVIEW <span>↗</span></a><button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open navigation"><span></span><span></span></button></div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" hidden><a href="#approach">Our approach</a><a href="#specialists">The people</a><a href="#journey">3D experience</a><a href="#care-process">Care journey</a><a href="#visit">Booking preview</a></nav>
+</header>
+<main id="top">
+<section id="cinema" class="cinema" aria-label="Scroll-controlled entrance and clinical journey">
+ <div class="cinema-stage" id="cinema-stage">
+  <div class="cinema-media" aria-hidden="true">
+   <img id="cinema-poster" class="cinema-poster" src="./assets/img/exterior-poster.jpg" alt="" fetchpriority="high">
+   <video id="film-outside" class="cinema-video" muted playsinline preload="metadata" disablepictureinpicture aria-hidden="true"></video>
+   <video id="film-inside" class="cinema-video inside-layer" muted playsinline preload="metadata" disablepictureinpicture aria-hidden="true"></video>
+   <div class="cinema-overlay"></div><div class="cinema-grain"></div><div class="cinema-mask" id="cinema-mask"></div><div class="cinema-endwash" id="cinema-endwash"></div>
+  </div>
+  <div class="cinema-coordinate" aria-hidden="true"><span>TAQWEEM / ARCHITECTURAL JOURNEY</span><span>36°  //  EVERY DETAIL MATTERS</span></div>
+  <div class="cinema-wordmark" id="cinema-intro"><span class="kicker light">01 / YOUR JOURNEY BEGINS</span><h1>A different<br>kind of <em>care.</em></h1><p>An immersive journey from our doors to the science behind the smile.</p><a href="#approach" class="cinema-link">DISCOVER WHAT'S INSIDE <span>↗</span></a></div>
+  <div class="cinema-wordmark cinema-wordmark-next" id="cinema-welcome"><span class="kicker light">02 / WELCOME INSIDE</span><h2>Welcome to<br><em>TAQWEEM.</em></h2><p>An experience designed around clarity, comfort and the people behind care.</p></div>
+  <div class="cinema-bridge" id="cinema-bridge" aria-hidden="true"><span>BEYOND THE ENTRANCE</span><strong>Care begins with <em>understanding.</em></strong><i></i></div>
+  <div class="cinema-bottom"><span class="cinema-hint"><i class="scroll-indicator"></i> SCROLL TO ENTER</span><span class="cinema-time" id="cinema-scene-index">01 <i></i> 02</span><a href="#approach" class="cinema-skip">SKIP INTRO ↗</a></div>
+  <div class="cinema-progress" aria-hidden="true"><div id="cinema-progress-fill"></div></div>
+ </div>
+</section>
+
+
+<!-- One brief editorial bridge introduces the care philosophy; no repeat of the opening footage. -->
+<section id="approach" class="approach-section section-light" aria-labelledby="approach-title">
+ <div class="wrap approach-grid">
+  <div class="approach-aside"><span class="kicker ink">02 / OUR APPROACH</span><span class="approach-side-note">A CONSIDERED WAY TO CARE</span></div>
+  <div class="approach-story"><span class="approach-continuity">FROM THE DOORWAY TO WHAT MATTERS</span><h2 id="approach-title">It starts with<br><em>feeling understood.</em></h2><div class="approach-baseline"><p>A visit is more than a treatment. It's a conversation, a sense of calm, and a clearer understanding of what comes next.</p><a href="#specialists" class="underlined-link">MEET THE PEOPLE <span>↗</span></a></div></div>
+  <div class="approach-ornament" aria-hidden="true"><svg viewBox="0 0 370 340" fill="none"><path d="M112 35C57 30 20 89 40 159c18 68 41 148 81 148 33 0 26-113 64-113s30 113 63 113c40 0 64-80 81-148C349 89 313 30 258 35c-34 2-52 18-73 18s-38-16-73-18Z" stroke="currentColor" stroke-width="1.6"/><path d="M185 54V194M46 155h277M94 70c45-26 67 13 91 13 27 0 52-40 97-12" stroke="currentColor" stroke-width=".7" stroke-dasharray="5 8"/><circle cx="185" cy="194" r="7" stroke="currentColor"/><circle cx="185" cy="194" r="2" fill="currentColor"/></svg></div>
+ </div>
+</section>
+
+<section id="specialists" class="specialists section-light">
+ <div class="wrap">
+  <div class="section-header"><div><span class="kicker ink">03 / THE HUMAN CONNECTION</span><h2>People make<br><em>care personal.</em></h2></div><p>A calmer experience depends on the people you meet. These roles are illustrative; verified clinician profiles will be shown after database integration.</p></div>
+  <div class="specialists-editorial">
+   <div class="specialists-image"><img src="./assets/img/interior-4.50.jpg" alt="Illustrative dental clinic team and hallway" loading="lazy"><div class="vertical-title">A BETTER KIND OF EXPERIENCE / TAQWEEM</div><div class="image-count">A CALM, CONSIDERED EXPERIENCE</div></div>
+   <div class="specialist-list" aria-label="Preview of clinical disciplines">
+    <button class="specialist-row active" data-specialist="0" type="button" aria-pressed="true"><span>01</span><strong>Dental clinicians</strong><span class="row-arrow">↗</span></button>
+    <button class="specialist-row" data-specialist="1" type="button" aria-pressed="false"><span>02</span><strong>Clinical support</strong><span class="row-arrow">↗</span></button>
+    <button class="specialist-row" data-specialist="2" type="button" aria-pressed="false"><span>03</span><strong>Patient coordination</strong><span class="row-arrow">↗</span></button>
+    <div class="specialist-detail" id="specialist-detail"><span id="specialist-detail-num">01 / CARE DISCIPLINE</span><p id="specialist-detail-copy">Clinicians guide consultations, explain options and develop appropriate care plans.</p><span class="specialist-disclaimer">ILLUSTRATIVE ROLES · VERIFIED PROFILES TO BE CONNECTED</span></div>
+    <a href="#visit" class="underlined-link">EXPLORE THE VISIT <span>↗</span></a>
+   </div>
+  </div>
+ </div>
+</section>
+
+
+<!-- Standalone dental scan prototype is embedded here as one native section, not an iframe. -->
+<section aria-label="Interactive treatment-to-tooth cinematic journey" class="journey" id="journey">
+<div class="theatre" id="theatre">
+<div aria-hidden="true" class="ambient ambient-left"></div><div aria-hidden="true" class="ambient ambient-right"></div>
+<div class="film-layer" id="film-layer">
+<video aria-hidden="true" class="film" id="treatment-video" loop="" muted="" playsinline="" poster="./assets/img/treatment_poster.jpg" preload="none" data-src="./assets/video/treatment.mp4"></video>
+<img alt="" aria-hidden="true" class="film film-still" id="film-still" src="./assets/img/treatment_at_9_5.jpg"/>
+<div class="film-vignette"></div>
+<div class="film-caption" id="film-caption"><span class="eyebrow pale">THE HUMAN MOMENT / 01</span><h2>Every detail.<br/><em>Every smile.</em></h2><p>Behind every confident smile is care that puts people first.</p></div>
+<div class="film-corner" id="film-corner"><span>TAQWEEM</span><span>THE TREATMENT ROOM / CONCEPT</span></div>
+</div>
+<div aria-hidden="true" class="lens" id="lens"><div class="lens-inner"><span class="bracket tl"></span><span class="bracket tr"></span><span class="bracket bl"></span><span class="bracket br"></span><span class="lens-name">FROM THE SCAN TO THE STORY</span></div></div>
+<!-- True monitor-anchored, scroll-reversible transition. This is illustrative, not a real X-ray. -->
+<div aria-hidden="true" class="portal-gateway" id="portal-gateway">
+ <div class="portal-surface" id="portal-surface">
+  <img class="portal-reference" src="./assets/img/portal_monitor_match.jpg" alt="" decoding="async">
+  <img class="portal-xray" id="portal-xray" src="./assets/img/portal_xray_illustrative.svg" alt="" decoding="async">
+  <div class="portal-glass"></div>
+ </div>
+ <div class="portal-depth" id="portal-depth">
+  <div class="portal-perspective-grid" id="portal-perspective-grid"></div>
+  <div class="portal-slice" data-depth="0"></div><div class="portal-slice" data-depth="1"></div>
+  <div class="portal-slice" data-depth="2"></div><div class="portal-slice" data-depth="3"></div>
+  <div class="portal-slice" data-depth="4"></div>
+  <div class="portal-depth-ray" id="portal-depth-ray"></div>
+  <div class="portal-core" id="portal-core"><img src="./assets/img/tooth_visual_preview.png" alt="" decoding="async"></div>
+ </div>
+ <div class="portal-filmgrain"></div>
+ <div class="portal-metadata"><span>TAQWEEM / IMAGING EXPLORATION</span><span>ILLUSTRATIVE SCAN · NOT A DIAGNOSTIC IMAGE</span></div>
+</div>
+<div aria-hidden="true" class="scan-veil" id="scan-veil">
+<div class="data-grid"></div><div class="scan-orbit scan-orbit-a"></div><div class="scan-orbit scan-orbit-b"></div><div class="scan-flare"></div>
+<div class="scan-readout"><span class="scan-label">TAQWEEM / VISUAL EXPLORATION</span><strong>Look a little <em>closer.</em></strong><small>AN ILLUSTRATIVE 3D JOURNEY · NOT A DIAGNOSTIC SCAN</small></div>
+<div class="scan-flash" id="scan-flash"></div>
+</div>
+<div class="world" id="world">
+<div aria-hidden="true" class="world-halo"></div><div aria-hidden="true" class="world-grain"></div>
+<canvas aria-label="Illustrative interactive 3D molar. Drag left and right or use arrow keys to rotate." id="tooth-canvas" role="img" tabindex="0"></canvas>
+<div aria-hidden="true" class="tooth-fallback" id="tooth-fallback"><img alt="" src="./assets/img/tooth_visual_preview.png"/></div>
+<div aria-hidden="true" class="scan-plane" id="scan-plane"></div>
+<div class="tooth-copy" id="tooth-copy"><span class="eyebrow pale">02 / THE REVEAL</span><h2>Surface<br/><em>revealed.</em></h2><p>An illustrative molar emerges from a digital scan environment — then responds to your touch.</p></div>
+<div class="scan-copy" id="scan-copy"><span class="eyebrow pale">03 / THE SCIENCE</span><h2>From stained<br/>to <em>bright.</em></h2><p>Watch the simulated surface transform as the teal scan passes from crown to roots.</p></div>
+<div class="services" id="services"><span class="eyebrow pale">04 / WHAT COMES NEXT</span><h2>Care made<br/><em>clear.</em></h2><p>Discover services and trusted specialists — shown here as layout concepts, not live clinic data.</p>
+<div class="service-list"><div class="service"><span>01</span><div><b>Examination</b><small>Start with a clearer understanding</small></div></div><div class="service"><span>02</span><div><b>Restorative care</b><small>Thoughtful treatment planning</small></div></div><div class="service"><span>03</span><div><b>Orthodontics</b><small>Care tailored to your smile</small></div></div></div>
+</div>
+<div class="enamel-status" id="enamel-status" aria-live="polite"><span class="enamel-status-dot"></span><span id="enamel-status-text">01 / STAINED SURFACE · CONCEPT</span></div>
+  <div class="world-footer" id="world-footer"><span>ILLUSTRATIVE 3D MOLAR · NOT AN ANATOMICAL DIAGNOSTIC MODEL</span><span>DRAG TO ROTATE · SCROLL TO CONTINUE</span></div>
+</div>
+<div aria-hidden="true" class="chapter-rail"><span>THE JOURNEY</span><div class="rail-segments"><i></i><i></i><i></i><i></i></div><span id="chapter-text">01 / CARE</span></div>
+<div aria-hidden="true" class="side-progress"><i id="side-progress"></i></div>
+<div aria-hidden="true" class="gesture-hint" id="gesture-hint">SCROLL TO EXPLORE <span>↓</span></div>
+<div class="tooth-actions" id="tooth-actions"><button aria-label="Reset 3D tooth rotation" id="reset-tooth" type="button">RESET VIEW ↺</button></div>
+<div aria-live="polite" class="sr-only" id="live-status"></div>
+</div>
+<div class="reduced-journey wrap" aria-label="Technology chapter text alternative"><img src="./assets/img/tooth_visual_preview.png" alt="Illustrative 3D molar concept" loading="lazy"><div><span class="kicker light">04 / THE TECHNOLOGY EXPERIENCE</span><h2>A closer look,<br><em>made clearer.</em></h2><p>Explore an illustrative view of dental imaging and a simulated molar surface transformation. This visual demonstration does not provide diagnosis.</p><a href="#care-process" class="underlined-link">CONTINUE THE JOURNEY <span>↗</span></a></div></div>
+</section>
+
+
+<section id="care-process" class="care-process section-light" aria-labelledby="care-title">
+ <div class="wrap"><div class="care-heading"><div><span class="kicker ink">05 / THE CARE EXPERIENCE</span><h2 id="care-title">Every step<br><em>has a purpose.</em></h2></div><p>From first conversation to next steps, the experience is designed around understanding — not just technology.</p></div>
+ <div class="care-principles"><article><span>01 / LISTEN</span><h3>Start with a conversation.</h3><p>Make space for questions and concerns before discussing possible care.</p></article><article><span>02 / EXPLAIN</span><h3>Understand your options.</h3><p>Use clear visual information to support meaningful conversations with clinicians.</p></article><article><span>03 / PLAN</span><h3>Move forward with clarity.</h3><p>Agree on the next step through the clinic's real patient appointment flow.</p></article></div>
+ <div class="care-process-bottom"><span>TAQWEEM / A THOUGHTFUL EXPERIENCE</span><a href="#visit" class="underlined-link">EXPLORE YOUR VISIT <span>↗</span></a></div></div>
+</section>
+
+<section id="visit" class="visit-section"><div class="visit-glow"></div><div class="wrap visit-grid"><div><span class="kicker light">06 / YOUR NEXT STEP</span><h2>Your visit<br><em>starts here.</em></h2><p>Explore how booking will connect to the existing patient-authenticated Laravel application. This preview creates no appointments.</p><div class="visit-steps" aria-label="Booking journey"><button type="button" class="visit-step active" data-step="0"><span>01</span> Explore care</button><button type="button" class="visit-step" data-step="1"><span>02</span> Select your doctor</button><button type="button" class="visit-step" data-step="2"><span>03</span> Choose an appointment</button></div><div id="visit-step-message" class="visit-step-message" aria-live="polite">Start with the care you're interested in. Available services will come from your Laravel system.</div><button type="button" id="booking-preview" class="main-button">PREVIEW BOOKING FLOW <span>↗</span></button><p class="booking-notice" id="booking-notice" role="status">PREVIEW ONLY · NO APPOINTMENT IS CREATED</p></div><div class="visit-photo"><img src="./assets/img/interior-7.50.jpg" alt="Concept view of modern treatment facilities" loading="lazy"><span>TAQWEEM / YOUR EXPERIENCE STARTS HERE</span></div></div></section>
+
+
+</main>
+<footer class="site-footer"><div class="foot-brand">TAQWEEM<small>THE DENTAL EXPERIENCE</small></div><div><span>EXPLORE</span><a href="#approach">Our approach</a><a href="#specialists">The people</a><a href="#journey">3D experience</a><a href="#care-process">The care journey</a><a href="#visit">Booking preview</a></div><div><span>PROJECT NOTE</span><p>Immersive visual prototype. Architectural scenes, clinical imagery and 3D anatomy are illustrative. Real profiles and booking endpoints require integration with Laravel.</p></div><div class="foot-bottom">© TAQWEEM — CONCEPT 2026 · INDEPENDENT FRONTEND · NO LARAVEL FILES MODIFIED</div></footer>
+</body></html>

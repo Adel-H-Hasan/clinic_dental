@@ -75,9 +75,17 @@ class AppointmentsController extends Controller
             $start
         ) {
             // Lock this doctor while checking and booking
-            DoctorProfile::whereKey($service->doctor_profile_id)
+            $doctor = DoctorProfile::whereKey($service->doctor_profile_id)
                 ->lockForUpdate()
                 ->firstOrFail();
+
+            // Never accept a direct POST for an inactive doctor or suspended account.
+            // Recheck under the same lock used for overlap prevention.
+            if (! $doctor->is_active || ! $doctor->user()->where('is_active', true)->exists()) {
+                throw ValidationException::withMessages([
+                    'doctor_appointment_type_id' => __('This doctor is not available for bookings.'),
+                ]);
+            }
 
 
             // Read the latest service data after locking the doctor
@@ -279,9 +287,15 @@ class AppointmentsController extends Controller
         ) {
             $doctorId = $service->doctor_profile_id;
 
-            DoctorProfile::whereKey($doctorId)
+            $doctor = DoctorProfile::whereKey($doctorId)
                 ->lockForUpdate()
                 ->firstOrFail();
+
+            if (! $doctor->is_active || ! $doctor->user()->where('is_active', true)->exists()) {
+                throw ValidationException::withMessages([
+                    'scheduled_at' => __('This doctor is not available for bookings.'),
+                ]);
+            }
 
             // Recheck the appointment after locking the doctor
             $appointment = Appointments::where(

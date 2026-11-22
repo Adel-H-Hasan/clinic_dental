@@ -1,24 +1,17 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Edit medical note | MedAssist Dental</title>
-    <link rel="stylesheet" href="{{ asset('css/medical-reports.css') }}">
-</head>
-<body class="report-page medical-notes">
-    <header class="report-brand">MedAssist <span>Dental</span></header>
+<x-workspace title="{{ __('Edit medical note') }}">
+<div class="panel">
 
-    <main class="report-shell">
+
+    <div class="view-content">
         <a class="report-back" href="{{ route('doctor.appointments.medical-notes.index', $note->appointment_id) }}">
-            Back to medical notes
+            {{ __('Back to medical notes') }}
         </a>
 
         <article class="report-card">
             <header class="report-card-heading">
                 <div>
-                    <h1>Edit medical note</h1>
-                    <p>Appointment #{{ $note->appointment_id }}</p>
+
+                    <p>{{ __('Appointment #') }}{{ $note->appointment_id }}</p>
                 </div>
             </header>
 
@@ -37,35 +30,32 @@
 
                 <div class="note-fields">
                     <div class="note-field">
-                        <label class="report-label" for="diagnosis">Diagnosis</label>
+                        <label class="report-label" for="diagnosis">{{ __('Diagnosis') }}</label>
                         <textarea id="diagnosis" name="diagnosis" rows="3" dir="auto" required>{{ old('diagnosis', $note->diagnosis) }}</textarea>
                     </div>
 
                     <div class="note-field">
-                        <label class="report-label" for="prescription">Prescription</label>
+                        <label class="report-label" for="prescription">{{ __('Prescription') }}</label>
                         <textarea id="prescription" name="prescription" rows="3" dir="auto">{{ old('prescription', $note->prescription) }}</textarea>
                     </div>
 
                     <div class="note-field note-field-wide">
-                        <label class="report-label" for="notes">Notes</label>
+                        <label class="report-label" for="notes">{{ __('Notes') }}</label>
                         <textarea id="notes" name="notes" rows="3" dir="auto">{{ old('notes', $note->notes) }}</textarea>
                     </div>
 
                     <div class="note-field">
-                        <label class="report-label" for="next_visit">Next visit</label>
+                        <label class="report-label" for="next_visit">{{ __('Next visit') }}</label>
                         <input id="next_visit" name="next_visit" type="datetime-local" value="{{ old('next_visit', $nextVisit) }}">
                     </div>
                 </div>
 
-                @foreach ($errors->all() as $error)
-                    <p class="report-error" role="alert">{{ $error }}</p>
-                @endforeach
-
                 <div class="report-actions">
-                    <button type="submit" class="report-primary">Save changes</button>
+                    <button type="submit" class="report-primary">{{ __('Save changes') }}</button>
                 </div>
             </form>
         </article>
-    </main>
-</body>
-</html>
+    </div>
+
+</div>
+</x-workspace>

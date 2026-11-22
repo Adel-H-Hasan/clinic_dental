@@ -1,38 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-workspace title="{{ __('Doctors List') }}">
+<div class="panel">
+    <div class="view-content">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctors List</title>
-</head>
-
-<body>
-    <main>
-        <h1>Doctors</h1>
 
         @if (session('status'))
-            <p role="status">{{ session('status') }}</p>
+            <p role="status">{{ __(session('status')) }}</p>
         @endif
 
         <p>
-            <a href="{{ route('admin.doctors.create') }}">Add doctor</a>
+            <a href="{{ route('admin.doctors.create') }}">{{ __('Add doctor') }}</a>
         </p>
 
         @if ($doctors->isEmpty())
-            <p>No active doctor profiles to display.</p>
+            <p>{{ __('No active doctor profiles to display.') }}</p>
         @else
-            <table>
+            <div class="workspace-table" role="region" aria-label="{{ __('Records') }}" tabindex="0"><table>
                 <thead>
                     <tr>
-                        <th scope="col">Full name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Speciality</th>
-                        <th scope="col">License number</th>
-                        <th scope="col">Consultation fee</th>
-                        <th scope="col">Profile status</th>
-                        <th scope="col">actions</th>
+                        <th scope="col">{{ __('Full name') }}</th>
+                        <th scope="col">{{ __('Email') }}</th>
+                        <th scope="col">{{ __('Phone') }}</th>
+                        <th scope="col">{{ __('Speciality') }}</th>
+                        <th scope="col">{{ __('License number') }}</th>
+                        <th scope="col">{{ __('Consultation fee') }}</th>
+                        <th scope="col">{{ __('Profile status') }}</th>
+                        <th scope="col">{{ __('actions') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +32,7 @@
                         <tr>
                             <td>
                                 <a href="{{ route ('admin.doctors.show', $doctor->id) }}">
-                                    {{ $doctor->user?->name ?? 'Account unavailable' }}
+                                    {{ $doctor->user?->name ?? __('Account unavailable') }}
                                 </a>
                             </td>
                             <td>{{ $doctor->user?->email ?? '—' }}</td>
@@ -48,14 +40,14 @@
                             <td>{{ $doctor->speciality->name }}</td>
                             <td>{{ $doctor->license_number }}</td>
                             <td>{{ number_format($doctor->consultation_fee, 2) }}</td>
-                            <td>{{ $doctor->is_active ? 'Active' : 'Inactive' }}</td>
-                            <td><a href="{{ route('admin.doctors.edit', $doctor->id) }}">Edit</a></td>
+                            <td>{{ __($doctor->is_active ? 'Active' : 'Inactive') }}</td>
+                            <td><a href="{{ route('admin.doctors.edit', $doctor->id) }}">{{ __('Edit') }}</a></td>
                         </tr>
                     @endforeach
                 </tbody>
-            </table>
+            </table></div>
         @endif
-    </main>
-</body>
+    </div>
 
-</html>
+</div>
+</x-workspace>

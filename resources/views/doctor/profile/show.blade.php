@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-workspace title="{{ __('Doctor Profile') }}">
+<div class="panel">
+    <div class="view-content">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Doctor Profile</title>
-</head>
-
-<body>
-    <main>
-        <h1>My profile</h1>
 
         <h2>{{ $doctor->name }}</h2>
         @if ($profile->image)
@@ -18,30 +10,30 @@
         <p>{{ $profile->speciality->name }}</p>
 
         <dl>
-            <dt>Email</dt>
+            <dt>{{ __('Email') }}</dt>
             <dd>{{ $doctor->email }}</dd>
 
-            <dt>Phone</dt>
+            <dt>{{ __('Phone') }}</dt>
             <dd>{{ $doctor->phone }}</dd>
 
-            <dt>License number</dt>
+            <dt>{{ __('License number') }}</dt>
             <dd>{{ $profile->license_number }}</dd>
 
-            <dt>Bio</dt>
+            <dt>{{ __('Bio') }}</dt>
             <dd>{{ $profile->bio }}</dd>
 
-            <dt>Years of experience</dt>
+            <dt>{{ __('Years of experience') }}</dt>
             <dd>{{ $profile->years_experience }}</dd>
 
-            <dt>Consultation fee</dt>
+            <dt>{{ __('Consultation fee') }}</dt>
             <dd>{{ number_format($profile->consultation_fee, 2) }}</dd>
 
-            <dt>Profile status</dt>
-            <dd>{{ $profile->is_active ? 'Active' : 'Inactive' }}</dd>
+            <dt>{{ __('Profile status') }}</dt>
+            <dd>{{ __($profile->is_active ? 'Active' : 'Inactive') }}</dd>
         </dl>
 
-        <a href="{{ route('doctor.profile.edit') }}">Edit my profile</a>
-    </main>
-</body>
+        <a href="{{ route('doctor.profile.edit') }}">{{ __('Edit my profile') }}</a>
+    </div>
 
-</html>
+</div>
+</x-workspace>

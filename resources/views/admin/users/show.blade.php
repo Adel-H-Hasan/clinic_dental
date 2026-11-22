@@ -1,11 +1,1 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Details</title>
-</head>
-<body>
-    <h1>This is the User Details page.</h1>
-</body>
-</html>
+<x-workspace title="{{ __('Account details') }}"><section><h2>{{ $user->name }}</h2><dl><dt>{{ __('Email') }}</dt><dd>{{ $user->email }}</dd><dt>{{ __('Phone') }}</dt><dd>{{ $user->phone }}</dd><dt>{{ __('Role') }}</dt><dd>{{ __($user->role) }}</dd><dt>{{ __('Access') }}</dt><dd>{{ __($user->is_active ? 'Active' : 'Inactive') }}</dd><dt>{{ __('Email verification') }}</dt><dd>{{ __($user->email_verified_at ? 'Verified' : 'Not verified') }}</dd></dl><a class="button" href="{{ route('admin.users.edit',$user->id) }}">{{ __('Manage access') }}</a></section></x-workspace>
