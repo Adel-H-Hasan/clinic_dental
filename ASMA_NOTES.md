@@ -3,3 +3,6 @@
 - `doctors` can reset thier password at first login because the password is randomly created in the database -> going to intended or doctor dashboard
 
 - `admin` will login by the pre-created account in database going to intended or admin dashboard
+
+- AI image command: after `php artisan serve`
+`powershell -ExecutionPolicy Bypass -File .\medassist-ai-engine\run.ps1`
