@@ -42,16 +42,21 @@ class TaqweemLocalSeeder extends Seeder
                 ['omar@taqweem.test', 'عمر النجار', 'patient', 'male'],
             ];
             $users = [];
+            $phoneSuffix = 1;
             foreach ($people as [$email, $name, $role, $gender]) {
                 $user = User::withTrashed()->where('email', $email)->first();
                 if (!$user) {
+                    do {
+                        $phone = sprintf('+96279%07d', $phoneSuffix++);
+                    } while (User::withTrashed()->where('phone', $phone)->exists());
+
                     $user = new User();
                     $user->forceFill([
                         'email' => $email,
                         'name' => $name,
                         'role' => $role,
                         'gender' => $gender,
-                        'phone' => '+962790000001',
+                        'phone' => $phone,
                         'password' => self::TEST_PASSWORD,
                         'is_active' => true,
                         // Local test accounts don't depend on the external mail provider.
@@ -119,13 +124,15 @@ class TaqweemLocalSeeder extends Seeder
                 ['layan@taqweem.test', 'yazan@taqweem.test', 4, '11:00', 'confirmed', 'متابعة التقويم'],
                 ['omar@taqweem.test', 'hiba@taqweem.test', 5, '12:00', 'cancelled', 'استشارة تجميل الأسنان'],
                 ['ahmad@taqweem.test', 'yazan@taqweem.test', -7, '11:00', 'completed', 'متابعة جلسة سابقة'],
+                ['ahmad@taqweem.test', 'yazan@taqweem.test', -1, '10:00', 'completed', Appointments::AI_REPORT_DEMO_REASON],
             ];
             foreach ($specs as [$patient, $doctor, $offset, $time, $status, $reason]) {
+                $isReportDemo = $reason === Appointments::AI_REPORT_DEMO_REASON;
                 $at = now()->startOfDay()->addDays($offset)->setTimeFromTimeString($time);
                 $visit = Appointments::firstOrCreate([
                     'patient_id' => $users[$patient]->id,
                     'doctor_appointment_type_id' => $services[$doctor][0]->id,
-                    'reason' => 'LOCAL-TEST: ' . $reason,
+                    'reason' => $isReportDemo ? $reason : 'LOCAL-TEST: ' . $reason,
                 ], [
                     'scheduled_at' => $at,
                     'status' => $status,
@@ -140,14 +147,16 @@ class TaqweemLocalSeeder extends Seeder
                         $note->forceFill([
                             'appointment_id' => $visit->id,
                             'doctor_profile_id' => $doctorProfile->id,
-                            'diagnosis' => 'مراجعة متابعة روتينية (سجل تدريبي، ليس تشخيصاً طبياً حقيقياً).',
-                            'notes' => 'مثال على ملاحظة يراجعها الطبيب بعد إتمام الموعد.',
+                            'diagnosis' => $isReportDemo
+                                ? 'زيارة متابعة للتقويم الثابت. الحاصرات مستقرة ولا توجد حاصرات مفكوكة.'
+                                : 'مراجعة متابعة روتينية (سجل تدريبي، ليس تشخيصاً طبياً حقيقياً).',
+                            'notes' => $isReportDemo
+                                ? 'فحص الطبيب السلك والحاصرات. أكد ضرورة تنظيف ما حول الحاصرات يومياً، والمتابعة بعد أربعة أسابيع.'
+                                : 'مثال على ملاحظة يراجعها الطبيب بعد إتمام الموعد.',
                             'prescription' => null,
                         ])->save();
-                        $note = MedicalNotes::where('appointment_id', $visit->id)
-                            ->where('doctor_profile_id', $doctorProfile->id)->firstOrFail();
                     }
-                    if (! $note->medical_report()->exists()) {
+                    if (! $isReportDemo && ! $note->medical_report()->exists()) {
                         // status and approved_at are guarded on MedicalReport by design.
                         $report = new MedicalReport();
                         $report->forceFill([

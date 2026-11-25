@@ -24,6 +24,7 @@
 </section>
 <section aria-labelledby="reports-title"><h2 id="reports-title">{{ __('Your approved reports') }}</h2>
 <ul>@forelse($reports as $report)<li><a href="{{ route('patient.reports.show', $report->id) }}">{{ __('Read report #') }}{{ $report->id }}</a></li>@empty<li>{{ __('No approved reports yet.') }}</li>@endforelse</ul>
+<div class="pagination">{{ $reports->links() }}</div>
 </section>
 </x-workspace>
 

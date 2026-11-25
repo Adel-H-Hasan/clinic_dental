@@ -1,11 +1,14 @@
 <x-workspace title="{{ __('مراجعة مسودّة التقرير') }}">
 <div class="panel">
-    @php($appointment = $report->medical_note->appointment)
+    @php
+        $appointment = $report->medical_note->appointment;
+        $notesPage = request()->only('notes_page');
+    @endphp
 
 
 
     <div class="view-content">
-        <a class="report-back" href="{{ route('doctor.appointments.medical-notes.index', $appointment->id) }}">
+        <a class="report-back" href="{{ route('doctor.appointments.medical-notes.index', [$appointment->id, ...$notesPage]) }}">
             {{ __('العودة إلى الملاحظات الطبية') }}
         </a>
 
@@ -29,7 +32,7 @@
                 </div>
             </dl>
 
-            <form method="POST" action="{{ route('doctor.medical-notes.report.approve', $report->medical_note_id) }}">
+            <form method="POST" action="{{ route('doctor.medical-notes.report.approve', [$report->medical_note_id, ...$notesPage]) }}">
                 @csrf
 
                 <label class="report-label" for="report-content">{{ __('نص التقرير للمريض') }}</label>

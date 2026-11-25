@@ -87,11 +87,17 @@ class WorkspaceController extends Controller
     public function patient(Request $request)
     {
         $appointments = Appointments::with('doctor_appointment_type.appointment_type', 'doctor_appointment_type.doctor_profile.user')
-            ->where('patient_id', $request->user()->id)->orderByDesc('scheduled_at')->paginate(15);
+            ->where('patient_id', $request->user()->id)->orderByDesc('scheduled_at')->paginate(15)
+            ->appends($request->only('reports_page'));
         $services = DoctorAppointmentTypes::with('appointment_type', 'doctor_profile.user', 'doctor_profile.doctor_schedules')
             ->whereHas('doctor_profile', fn ($query) => $query->where('is_active', true)->whereHas('user', fn ($q) => $q->where('is_active', true)))->get();
         $reports = MedicalReport::where('status', 'approved')
-            ->whereRelation('medical_note.appointment', 'patient_id', $request->user()->id)->latest()->get();
+            ->whereRelation('medical_note.appointment', 'patient_id', $request->user()->id)
+            ->latest()
+            ->orderByDesc('id')
+            ->paginate(5, pageName: 'reports_page')
+            ->appends($request->only('page'))
+            ->fragment('reports-title');
 
         return response()->view('patient.workspace', compact('appointments', 'services', 'reports'))
             ->header('Cache-Control', 'private, no-store');
