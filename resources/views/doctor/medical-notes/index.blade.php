@@ -51,7 +51,10 @@
         </section>
 
         <section class="note-list">
-            <h2>{{ __('Saved notes') }}</h2>
+            <h2 id="saved-notes">{{ __('Saved notes') }}</h2>
+            @php
+                $notesPage = request()->only('notes_page');
+            @endphp
 
             @forelse ($medicalNotes as $note)
                 <article class="report-card">
@@ -86,13 +89,13 @@
                     @if ($appointment->status === 'completed')
                         <div class="report-actions">
                             <a class="note-secondary"
-                               href="{{ route('doctor.appointments.medical-notes.edit', [$appointment->id, $note->id]) }}">
+                               href="{{ route('doctor.appointments.medical-notes.edit', [$appointment->id, $note->id, ...$notesPage]) }}">
                                 {{ __('Edit note') }}
                             </a>
 
                             @if (config('services.gemini.demo_review'))
                                 <form method="POST"
-                                      action="{{ route('doctor.appointments.medical-notes.review', [$appointment->id, $note->id]) }}">
+                                      action="{{ route('doctor.appointments.medical-notes.review', [$appointment->id, $note->id, ...$notesPage]) }}">
                                     @csrf
                                     <button type="submit" class="note-secondary">{{ __('Review note') }}</button>
                                 </form>
@@ -140,13 +143,13 @@
                             @if ($note->medical_report->status === 'draft' && $appointment->status === 'completed')
                                 <div class="report-actions">
                                     <a class="note-secondary"
-                                       href="{{ route('doctor.medical-notes.report.review', $note->id) }}">{{ __('Review draft') }}</a>
+                                       href="{{ route('doctor.medical-notes.report.review', [$note->id, ...$notesPage]) }}">{{ __('Review draft') }}</a>
                                 </div>
                             @endif
                         </section>
                     @elseif (config('services.gemini.demo_review') && $appointment->status === 'completed')
                         <form method="POST" class="note-section"
-                              action="{{ route('doctor.medical-notes.report.store', $note->id) }}">
+                              action="{{ route('doctor.medical-notes.report.store', [$note->id, ...$notesPage]) }}">
                             @csrf
 
                             <div class="note-field">
@@ -168,6 +171,7 @@
             @empty
                 <p>{{ __('No medical notes have been added.') }}</p>
             @endforelse
+            <div class="pagination">{{ $medicalNotes->links() }}</div>
         </section>
     </div>
 

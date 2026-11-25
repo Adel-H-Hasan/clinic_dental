@@ -10,6 +10,8 @@ use App\Models\MedicalNotes;
 
 class Appointments extends Model
 {
+    public const AI_REPORT_DEMO_REASON = 'LOCAL-TEST: زيارة تجريبية – تقرير AI';
+
     public function user(){
         return $this->belongsTo(User::class, 'patient_id');
     }
