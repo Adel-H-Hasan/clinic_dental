@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\AppointmentsController;
 use App\Http\Controllers\AppointmentTypesController;
 use App\Http\Controllers\Admin\DoctorController;
@@ -18,7 +19,7 @@ use App\Http\Controllers\DoctorDashboardController;
 use App\Models\User;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PaymentController;
 // Number of middlewares used => 7
 
 Route::get('/', function () {
@@ -74,7 +75,7 @@ Route::middleware(['auth', 'doctorOnly'])
     ->prefix('doctor')
     ->name('doctor.')
     ->group(function () {
-        Route::get('/dashboard', [DoctorDashboardController::class,'index'])->name('dashboard');
+        Route::get('/dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
 
         //? singleton() => generates exactly [show, edit, and update]
         Route::singleton('/profile', DoctorProfileController::class);
@@ -190,8 +191,6 @@ Route::middleware('guest')
 
         Route::post('/reset-password', [AuthController::class, 'resetPassword'])
             ->name('password.update');
-
-
     });
 
 Route::view('email/verify', 'auth.verify-email')->name('verification.notice');
@@ -199,12 +198,12 @@ Route::post('email/verification-notification', \App\Http\Controllers\Verificatio
     ->middleware('throttle:6,1')->name('verification.send');
 
 Route::get('email/verify/{id}/{hash}', function (string $id, string $hash) {
-    $user = User::findOrFail ($id);
+    $user = User::findOrFail($id);
 
-     $expectedHash = sha1($user->getEmailForVerification());
-     abort_unless(hash_equals($expectedHash, $hash), 403);
+    $expectedHash = sha1($user->getEmailForVerification());
+    abort_unless(hash_equals($expectedHash, $hash), 403);
 
-     if (! $user->hasVerifiedEmail() && $user->markEmailAsVerified()) {
+    if (! $user->hasVerifiedEmail() && $user->markEmailAsVerified()) {
         event(new Verified($user));
     }
 
@@ -265,4 +264,26 @@ Route::get('/language/{locale}', function (string $locale) {
 })->name('language.switch');
 
 // Smile AI routes
-require __DIR__.'/smile-ai.routes.php';
+require __DIR__ . '/smile-ai.routes.php';
+
+Route::middleware(['auth', 'patientOnly', 'verified'])
+    ->prefix('patient')
+    ->name('patient.')
+    ->group(function () {
+
+        Route::post(
+            '/payment/{id}/checkout',
+            [PaymentController::class, 'checkout']
+        )
+            ->name('payment.checkout');
+
+        Route::get(
+            '/payment/success',
+            [PaymentController::class, 'success']
+        )
+            ->name('payment.success');
+    });
+
+
+Route::post('/stripe/webhook', [StripeWebhookController::class, 'handle'])
+    ->name('stripe.webhook');

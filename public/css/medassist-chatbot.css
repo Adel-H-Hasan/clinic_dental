@@ -1,0 +1,455 @@
+
+/* ==========================================
+   TAQWEEM Dental - Floating Chatbot
+   Arabic & English | Responsive Design
+========================================== */
+
+.medassist-chatbot {
+    --chat-primary: #0d9488;
+    --chat-primary-dark: #0f766e;
+    --chat-primary-light: #ccfbf1;
+    --chat-background: #ffffff;
+    --chat-text: #1e293b;
+    --chat-muted: #64748b;
+    --chat-border: #e2e8f0;
+
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 9999;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.medassist-chatbot,
+.medassist-chatbot * {
+    box-sizing: border-box;
+}
+
+/* Floating button */
+
+.medassist-chat-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 62px;
+    height: 62px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        var(--chat-primary),
+        var(--chat-primary-dark)
+    );
+
+    color: #ffffff;
+    font-size: 27px;
+
+    cursor: pointer;
+
+    box-shadow: 0 8px 28px rgba(13, 148, 136, 0.3);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.medassist-chat-toggle:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(13, 148, 136, 0.4);
+}
+
+.medassist-chat-toggle:active {
+    transform: scale(0.95);
+}
+
+/* Chat popup */
+
+.medassist-chat-window {
+    position: absolute;
+    bottom: 78px;
+    right: 0;
+
+    width: 370px;
+    height: min(520px, calc(100dvh - 120px));
+
+    background: var(--chat-background);
+
+    border: 1px solid var(--chat-border);
+    border-radius: 20px;
+
+    box-shadow: 0 20px 65px rgba(15, 23, 42, 0.18);
+
+    overflow: hidden;
+    flex-direction: column;
+
+    animation: chatFadeIn 0.2s ease;
+}
+
+.medassist-chat-window:not([hidden]) {
+    display: flex;
+}
+
+.medassist-chat-window[hidden] {
+    display: none !important;
+}
+
+@keyframes chatFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Chat header */
+
+.medassist-chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 16px 18px;
+
+    background: linear-gradient(
+        135deg,
+        var(--chat-primary),
+        var(--chat-primary-dark)
+    );
+
+    color: white;
+}
+
+.medassist-chat-brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.medassist-chat-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    border-radius: 13px;
+    font-size: 24px;
+}
+
+.medassist-chat-brand strong {
+    display: block;
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.medassist-chat-brand small {
+    display: block;
+    margin-top: 3px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+}
+
+.medassist-chat-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+    border-radius: 10px;
+
+    color: white;
+    font-size: 19px;
+
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.medassist-chat-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Messages area */
+
+.medassist-chat-messages {
+    flex: 1;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    padding: 18px;
+
+    background: #f8fafc;
+
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+}
+
+.medassist-chat-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.medassist-chat-messages::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Message bubbles */
+
+.medassist-chat-message {
+    max-width: 88%;
+    width: fit-content;
+
+    padding: 11px 14px;
+
+    border-radius: 15px;
+
+    font-size: 13px;
+    line-height: 1.7;
+
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+
+    animation: messageAppear 0.2s ease;
+}
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.medassist-chat-message.bot {
+    align-self: flex-start;
+
+    background: white;
+    color: var(--chat-text);
+
+    border: 1px solid var(--chat-border);
+
+    border-start-start-radius: 5px;
+}
+
+.medassist-chat-message.user {
+    align-self: flex-end;
+
+    background: var(--chat-primary);
+    color: white;
+
+    border-end-end-radius: 5px;
+}
+
+/* Quick action buttons */
+
+.medassist-chat-quick-actions {
+    display: flex;
+    gap: 8px;
+
+    padding: 12px;
+
+    overflow-x: auto;
+
+    background: white;
+
+    border-top: 1px solid #f1f5f9;
+
+    scrollbar-width: none;
+}
+
+.medassist-chat-quick-actions::-webkit-scrollbar {
+    display: none;
+}
+
+.medassist-chat-quick-actions button {
+    flex-shrink: 0;
+
+    padding: 8px 12px;
+
+    border: 1px solid var(--chat-primary-light);
+    border-radius: 20px;
+
+    background: #f0fdfa;
+    color: var(--chat-primary-dark);
+
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.medassist-chat-quick-actions button:hover {
+    background: var(--chat-primary-light);
+}
+
+/* Message form */
+
+.medassist-chat-form {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+
+    padding: 13px;
+
+    background: white;
+
+    border-top: 1px solid var(--chat-border);
+}
+
+.medassist-chat-form input {
+    flex: 1;
+    min-width: 0;
+
+    padding: 12px 13px;
+
+    border: 1px solid var(--chat-border);
+    border-radius: 12px;
+
+    background: white;
+    color: var(--chat-text);
+
+    font-family: inherit;
+    font-size: 13px;
+
+    outline: none;
+
+    transition: border-color 0.2s ease;
+}
+
+.medassist-chat-form input:focus {
+    border-color: var(--chat-primary);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
+}
+
+.medassist-chat-form input::placeholder {
+    color: #94a3b8;
+}
+
+.medassist-chat-form button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 43px;
+    height: 43px;
+
+    flex-shrink: 0;
+
+    border: none;
+    border-radius: 12px;
+
+    background: var(--chat-primary);
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease;
+}
+
+.medassist-chat-form button:hover {
+    background: var(--chat-primary-dark);
+}
+
+.medassist-chatbot button:focus-visible,
+.medassist-chat-form input:focus-visible {
+    outline: 3px solid #99f6e4;
+    outline-offset: 2px;
+}
+
+/* Arabic support */
+
+.medassist-chatbot[dir="rtl"] {
+    right: auto;
+    left: 24px;
+}
+
+.medassist-chatbot[dir="rtl"] .medassist-chat-window {
+    right: auto;
+    left: 0;
+}
+
+.medassist-chatbot[dir="rtl"] .medassist-chat-form input {
+    text-align: right;
+}
+
+.medassist-chatbot[dir="ltr"] .medassist-chat-form input {
+    text-align: left;
+}
+
+/* Mobile responsive */
+
+@media (max-width: 480px) {
+    .medassist-chatbot {
+        right: 14px;
+        bottom: 82px;
+    }
+
+    .medassist-chatbot[dir="rtl"] {
+        right: auto;
+        left: 14px;
+    }
+
+    .medassist-chat-toggle {
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+
+    .medassist-chat-window {
+        bottom: 68px;
+
+        width: min(370px, calc(100vw - 28px));
+        height: min(490px, calc(100dvh - 175px));
+
+        border-radius: 18px;
+    }
+
+    .medassist-chat-header {
+        padding: 14px;
+    }
+
+    .medassist-chat-messages {
+        padding: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .medassist-chat-window,
+    .medassist-chat-message {
+        animation: none;
+    }
+
+    .medassist-chatbot * {
+        scroll-behavior: auto;
+        transition: none;
+    }
+}
