@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Foundation\Application;
@@ -36,6 +37,11 @@ return Application::configure(basePath: dirname(__DIR__))
             'adminOnly' => \App\Http\Middleware\AdminOnly::class,
             'doctorOnly' => \App\Http\Middleware\DoctorOnly::class,
             'patientOnly' => \App\Http\Middleware\PatientOnly::class,
+        ]);
+
+        // Stripe Webhook - Abdullah
+        $middleware->validateCsrfTokens(except: [
+            'stripe/webhook',
         ]);
 
     })
