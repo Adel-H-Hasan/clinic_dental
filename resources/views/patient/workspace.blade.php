@@ -1,4 +1,5 @@
 <x-workspace title="{{ __('Your appointments') }}">
+
     <p>{{ __('Book care, manage upcoming visits, and read reports approved by your doctor.') }}</p>
 
     @if(session('success'))
@@ -16,9 +17,11 @@
     </p>
 
     <section aria-labelledby="appointments-title">
+
         <h2 id="appointments-title">{{ __('Appointment history') }}</h2>
 
         <div class="workspace-table" tabindex="0" role="region" aria-label="{{ __('Appointments') }}">
+
             <table>
                 <thead>
                     <tr>
@@ -31,6 +34,7 @@
 
                 <tbody>
                     @forelse($appointments as $appointment)
+
                     <tr>
                         <td>
                             {{ $appointment->scheduled_at->locale(app()->getLocale())->translatedFormat('d M Y, H:i') }}
@@ -54,6 +58,7 @@
 
                             {{-- Stripe Payment --}}
                             <div style="margin-top: 10px;">
+
                                 <strong>
                                     {{ number_format($appointment->doctor_appointment_type->price, 3) }} JOD
                                 </strong>
@@ -69,14 +74,17 @@
                                 <form method="POST"
                                     action="{{ route('patient.payment.checkout', $appointment->id) }}"
                                     style="margin-top: 8px;">
+
                                     @csrf
 
                                     <button type="submit" class="button">
                                         {{ __('Pay Now') }}
                                     </button>
+
                                 </form>
 
                                 @endif
+
                             </div>
                             {{-- End Stripe Payment --}}
 
@@ -88,6 +96,7 @@
                                 </summary>
 
                                 <form method="post" action="{{ route('patient.appointments.reschedule', $appointment->id) }}">
+
                                     @csrf
                                     @method('PATCH')
 
@@ -101,6 +110,7 @@
                                         required>
 
                                     <button>{{ __('Request new time') }}</button>
+
                                 </form>
                             </details>
 
@@ -112,10 +122,12 @@
                                 <p>{{ __('This releases your appointment time.') }}</p>
 
                                 <form method="post" action="{{ route('patient.appointments.cancel', $appointment->id) }}">
+
                                     @csrf
                                     @method('PATCH')
 
                                     <button>{{ __('Confirm cancellation') }}</button>
+
                                 </form>
                             </details>
 
@@ -124,11 +136,13 @@
                     </tr>
 
                     @empty
+
                     <tr>
                         <td colspan="4">
                             {{ __('You have no appointments yet.') }}
                         </td>
                     </tr>
+
                     @endforelse
                 </tbody>
             </table>
@@ -137,21 +151,33 @@
         <div class="pagination">
             {{ $appointments->links() }}
         </div>
+
     </section>
 
     <section aria-labelledby="reports-title">
+
         <h2 id="reports-title">{{ __('Your approved reports') }}</h2>
 
         <ul>
             @forelse($reports as $report)
+
             <li>
                 <a href="{{ route('patient.reports.show', $report->id) }}">
                     {{ __('Read report #') }}{{ $report->id }}
                 </a>
             </li>
+
             @empty
+
             <li>{{ __('No approved reports yet.') }}</li>
+
             @endforelse
         </ul>
+
+        <div class="pagination">
+            {{ $reports->links() }}
+        </div>
+
     </section>
+
 </x-workspace>

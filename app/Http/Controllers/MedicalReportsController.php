@@ -37,7 +37,7 @@ class MedicalReportsController extends Controller
         }
 
         if ($note->medical_report) {
-            return redirect()->route('doctor.appointments.medical-notes.index', $appointment->id);
+            return redirect()->route('doctor.appointments.medical-notes.index', [$appointment->id, ...$request->only('notes_page')]);
         }
 
         $data = $request->validate([
@@ -81,7 +81,7 @@ PROMPT;
             ['content' => trim($content)]
         );
 
-        return redirect()->route('doctor.appointments.medical-notes.index', $appointment->id);
+        return redirect()->route('doctor.appointments.medical-notes.index', [$appointment->id, ...$request->only('notes_page')]);
     }
 
     public function review(Request $request, $noteId)
@@ -113,7 +113,7 @@ PROMPT;
 
         return redirect()->route(
             'doctor.appointments.medical-notes.index',
-            $report->medical_note->appointment_id
+            [$report->medical_note->appointment_id, ...$request->only('notes_page')]
         );
     }
 

@@ -3,7 +3,10 @@
 
 
     <div class="view-content">
-        <a class="report-back" href="{{ route('doctor.appointments.medical-notes.index', $note->appointment_id) }}">
+        @php
+            $notesPage = request()->only('notes_page');
+        @endphp
+        <a class="report-back" href="{{ route('doctor.appointments.medical-notes.index', [$note->appointment_id, ...$notesPage]) }}">
             {{ __('Back to medical notes') }}
         </a>
 
@@ -24,7 +27,7 @@
             @endphp
 
             <form method="POST" class="note-form"
-                  action="{{ route('doctor.appointments.medical-notes.update', [$note->appointment_id, $note->id]) }}">
+                  action="{{ route('doctor.appointments.medical-notes.update', [$note->appointment_id, $note->id, ...$notesPage]) }}">
                 @csrf
                 @method('PUT')
 

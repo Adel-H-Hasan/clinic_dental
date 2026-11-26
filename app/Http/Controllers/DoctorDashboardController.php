@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DoctorProfile;
+use App\Models\Appointments;
 
 
 
@@ -56,6 +56,16 @@ class DoctorDashboardController extends Controller
          ->sortBy('scheduled_at')
          ->first();
 
+        $reportDemoAppointment = null;
+        if (app()->environment('local') && config('services.gemini.demo_review')
+            && $request->user()->email === 'yazan@taqweem.test') {
+            $reportDemoAppointment = $appointments->first(
+                fn (Appointments $appointment) => $appointment->status === 'completed'
+                    && $appointment->reason === Appointments::AI_REPORT_DEMO_REASON
+                    && $appointment->user?->email === 'ahmad@taqweem.test'
+            );
+        }
+
         return view('doctor.dashboard', compact(
            'doctor',
            'appointments',
@@ -65,7 +75,8 @@ class DoctorDashboardController extends Controller
            'totalPatients',
            'upcomingAppointments',
            'appointmentsPerMonth',
-           'nextAppointment'
+           'nextAppointment',
+           'reportDemoAppointment'
             ));
 
      

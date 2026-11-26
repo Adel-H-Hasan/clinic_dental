@@ -17,7 +17,9 @@ class MedicalNotesController extends Controller
         $medicalNotes = $appointment->medical_notes()
             ->where('doctor_profile_id', $doctor->id)
             ->with('medical_report')
-            ->get();
+            ->orderByDesc('id')
+            ->paginate(5, pageName: 'notes_page')
+            ->fragment('saved-notes');
 
         return view('doctor.medical-notes.index', [
             'appointment' => $appointment,
@@ -75,7 +77,7 @@ class MedicalNotesController extends Controller
 
         $note->save();
 
-        return redirect()->route('doctor.appointments.medical-notes.index', $id);
+        return redirect()->route('doctor.appointments.medical-notes.index', [$id, ...$request->only('notes_page')]);
     }
 
     public function review(Request $request, $id, $noteId, GeminiNoteReviewer $reviewer)
@@ -90,7 +92,7 @@ class MedicalNotesController extends Controller
 
         return redirect()
             ->to(
-                route('doctor.appointments.medical-notes.index', $id)
+                route('doctor.appointments.medical-notes.index', [$id, ...$request->only('notes_page')])
                     . '#review-result-' . $note->id
             )
             ->with('medical_note_review', [
